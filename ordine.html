@@ -61,9 +61,10 @@ font-size:35px;
 <h1>🍕 ORDINE DOLCE VITA</h1>
 
 
+
 <div class="box">
 
-<h2>🍕 Menu pizze</h2>
+<h2>🍕 MENU PIZZE</h2>
 
 <div id="menuPizze"></div>
 
@@ -71,9 +72,10 @@ font-size:35px;
 
 
 
+
 <div class="box">
 
-<h2>🧾 Ordine</h2>
+<h2>🧾 ORDINE</h2>
 
 <div id="lista">
 Nessun prodotto
@@ -105,9 +107,7 @@ Totale € <span id="totale">0.00</span>
 
 
 
-
 <script src="pizze.js"></script>
-
 
 
 <script>
@@ -120,10 +120,32 @@ let totale=0;
 
 
 
+let pizzaSalvata =
+JSON.parse(localStorage.getItem("pizzaModificata"));
+
+
+
+if(pizzaSalvata){
+
+prodotti.push(pizzaSalvata);
+
+totale += pizzaSalvata.prezzo;
+
+
+localStorage.removeItem("pizzaModificata");
+
+}
+
+
+
+
+
+
 pizze.forEach(function(p){
 
 
 document.getElementById("menuPizze").innerHTML +=
+
 
 `
 
@@ -133,11 +155,17 @@ document.getElementById("menuPizze").innerHTML +=
 
 </button>
 
+
 `;
 
-
-
 });
+
+
+
+
+
+
+mostra();
 
 
 
@@ -164,28 +192,6 @@ prezzo;
 
 
 
-function aggiungi(nome,prezzo){
-
-
-prodotti.push({
-
-nome:nome,
-
-prezzo:prezzo
-
-});
-
-
-totale += prezzo;
-
-
-mostra();
-
-
-}
-
-
-
 
 
 function mostra(){
@@ -198,24 +204,34 @@ prodotti.forEach(function(p){
 
 
 testo +=
-"🍕 "
-+p.nome+
-" €"
-+p.prezzo+
+
+"🍕 "+p.nome+
+" €"+p.prezzo+
 "<br>";
+
 
 
 });
 
 
+if(testo==""){
+
+testo="Nessun prodotto";
+
+}
+
+
+
 document.getElementById("lista").innerHTML=testo;
 
 
-document.getElementById("totale").innerHTML=
+
+document.getElementById("totale").innerHTML =
 totale.toFixed(2);
 
 
 }
+
 
 
 
@@ -226,19 +242,26 @@ function inviaCucina(){
 
 let ordine={
 
+
 tipo:"Tavolo",
+
 
 prodotti:prodotti,
 
+
 totale:totale,
 
+
 stato:"In preparazione"
+
 
 };
 
 
 
+
 let ordini =
+
 JSON.parse(localStorage.getItem("ordini")) || [];
 
 
@@ -248,13 +271,17 @@ ordini.push(ordine);
 
 
 localStorage.setItem(
+
 "ordini",
+
 JSON.stringify(ordini)
+
 );
 
 
 
 alert("Ordine inviato in cucina ✅");
+
 
 
 window.location.href="cucina.html";
