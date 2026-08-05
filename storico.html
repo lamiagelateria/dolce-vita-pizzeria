@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Storico Incassi</title>
+
+<style>
+
+body{
+background:#181818;
+color:white;
+font-family:Arial;
+}
+
+h1{
+text-align:center;
+color:#ffd000;
+}
+
+.box{
+background:#333;
+margin:15px;
+padding:20px;
+border-radius:20px;
+}
+
+.totale{
+color:#4cff4c;
+font-size:30px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:0;
+border-radius:15px;
+background:#555;
+color:white;
+font-size:20px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>📊 STORICO INCASSI</h1>
+
+
+<div class="box">
+
+<button onclick="home()">
+
+🏠 TORNA ALLA HOME
+
+</button>
+
+</div>
+
+
+
+<div id="storico"></div>
+
+
+
+
+
+<script>
+
+
+let dati =
+
+JSON.parse(localStorage.getItem("storico")) || [];
+
+
+
+let area=document.getElementById("storico");
+
+
+
+let totale=0;
+
+let testo="";
+
+
+
+
+if(dati.length==0){
+
+
+testo=
+
+`
+
+<div class="box">
+
+<h2>Nessun incasso registrato</h2>
+
+</div>
+
+`;
+
+
+
+}else{
+
+
+dati.forEach(function(o,index){
+
+
+totale += o.totale;
+
+
+
+testo +=
+
+
+`
+
+<div class="box">
+
+
+<h2>🧾 Conto ${index+1}</h2>
+
+
+🍽️ Tavolo: ${o.tavolo || "1"}
+
+<br><br>
+
+
+`;
+
+
+
+o.prodotti.forEach(function(p){
+
+
+testo +=
+
+"🍕 "+p.nome+
+" €"+p.prezzo+
+"<br>";
+
+
+
+});
+
+
+
+testo +=
+
+
+`
+
+<br>
+
+💶 Totale: €${o.totale.toFixed(2)}
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+testo +=
+
+
+`
+
+<div class="box totale">
+
+💰 INCASSO TOTALE: €${totale.toFixed(2)}
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+area.innerHTML=testo;
+
+
+
+
+
+function home(){
+
+window.location.href="index.html";
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
