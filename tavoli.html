@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,69 +11,68 @@
 <style>
 
 body {
-    margin: 0;
-    background: #181818;
-    color: white;
-    font-family: Arial, sans-serif;
+    margin:0;
+    background:#181818;
+    color:white;
+    font-family:Arial,sans-serif;
 }
 
 h1 {
-    text-align: center;
-    font-size: 40px;
-    margin: 25px;
+    text-align:center;
+    font-size:40px;
 }
 
 h2 {
-    margin-left: 25px;
-    font-size: 30px;
+    margin-left:25px;
+    font-size:30px;
 }
 
 
 .container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    padding: 20px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    padding:20px;
 }
 
 
 .tavolo {
-    background: #333;
-    border: 3px solid #555;
-    border-radius: 20px;
-    padding: 25px 10px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-}
 
+    background:#333;
+    border:3px solid #555;
+    border-radius:20px;
+    padding:25px 10px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
 
-.libero {
-    color: #39ff39;
 }
 
 
 button {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    color: inherit;
-    font-size: inherit;
-    font-weight: bold;
+
+    width:100%;
+    background:none;
+    border:none;
+    color:#39ff39;
+    font-size:22px;
+    font-weight:bold;
+
 }
 
 
 .indietro {
-    display: block;
-    margin: 25px;
-    padding: 20px;
-    background: #333;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
-    text-decoration: none;
-    font-size: 25px;
+
+    display:block;
+    margin:25px;
+    padding:20px;
+    background:#333;
+    border-radius:20px;
+    text-align:center;
+    color:white;
+    text-decoration:none;
+    font-size:25px;
+
 }
 
 </style>
@@ -104,59 +105,92 @@ button {
 
 <script>
 
+
 let interno = document.getElementById("interno");
 let esterno = document.getElementById("esterno");
 
 
-// 80 tavoli interni
-for(let i = 1; i <= 80; i++){
 
-    interno.innerHTML += `
-    <div class="tavolo libero">
-        <button onclick="apriTavolo('Tavolo ${i}')">
-        🍽️<br>
-        Tavolo ${i}<br>
-        🟢 Libero
-        </button>
-    </div>
-    `;
+for(let i=1;i<=80;i++){
+
+interno.innerHTML += `
+
+<div class="tavolo">
+
+<button onclick="apriTavolo('Tavolo ${i}')">
+
+🍽️
+<br>
+Tavolo ${i}
+<br>
+🟢 Libero
+
+</button>
+
+</div>
+
+`;
+
 }
 
 
-// 40 tavoli esterni
-for(let i = 1; i <= 40; i++){
 
-    esterno.innerHTML += `
-    <div class="tavolo libero">
-        <button onclick="apriTavolo('Esterno ${i}')">
-        🌳<br>
-        Esterno ${i}<br>
-        🟢 Libero
-        </button>
-    </div>
-    `;
+
+for(let i=1;i<=40;i++){
+
+esterno.innerHTML += `
+
+<div class="tavolo">
+
+<button onclick="apriTavolo('Esterno ${i}')">
+
+🌳
+<br>
+Esterno ${i}
+<br>
+🟢 Libero
+
+</button>
+
+</div>
+
+`;
+
 }
+
+
 
 
 
 function apriTavolo(nome){
 
-    let persone = prompt(
-        "Quante persone ci sono al " + nome + "?"
-    );
+
+let persone = prompt(
+"Quante persone ci sono al " + nome + "?"
+);
 
 
-    if(persone){
 
-        let coperto = persone * 0.50;
+if(persone){
 
-        alert(
-        nome +
-        "\nPersone: " + persone +
-        "\nCoperto: € " + coperto.toFixed(2)
-        );
 
-    }
+let coperto = persone * 0.50;
+
+
+
+window.location.href =
+"ordine.html?tavolo="
++ nome
++ "&persone="
++ persone
++ "&coperto="
++ coperto.toFixed(2);
+
+
+
+}
+
+
 
 }
 
@@ -165,4 +199,5 @@ function apriTavolo(nome){
 
 
 </body>
+
 </html>
