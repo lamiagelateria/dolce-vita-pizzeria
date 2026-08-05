@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dolce Vita - Pagamento</title>
+
+
+<style>
+
+body{
+margin:0;
+background:#181818;
+color:white;
+font-family:Arial,sans-serif;
+}
+
+
+h1{
+text-align:center;
+font-size:40px;
+}
+
+
+.box{
+
+background:#333;
+margin:20px;
+padding:25px;
+border-radius:20px;
+
+}
+
+
+button{
+
+width:100%;
+padding:22px;
+margin:10px 0;
+border:none;
+border-radius:20px;
+font-size:23px;
+font-weight:bold;
+color:white;
+
+}
+
+
+.contanti{
+background:#197619;
+}
+
+
+.bancomat{
+background:#005f9e;
+}
+
+
+.stampa{
+background:#8a5a00;
+}
+
+
+.chiudi{
+background:#8a1616;
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<h1>💳 PAGAMENTO</h1>
+
+
+
+<div class="box">
+
+
+<h2>
+Totale conto:
+€ <span id="totale">0</span>
+</h2>
+
+
+</div>
+
+
+
+<div class="box">
+
+
+<h2>Metodo pagamento</h2>
+
+
+<button class="contanti" onclick="pagamento('Contanti')">
+
+💶 CONTANTI
+
+</button>
+
+
+
+<button class="bancomat" onclick="pagamento('Bancomat')">
+
+💳 BANCOMAT
+
+</button>
+
+
+
+</div>
+
+
+
+
+<div class="box">
+
+
+<h2>Scontrino</h2>
+
+
+<button class="stampa" onclick="scontrino(true)">
+
+🧾 STAMPA SCONTRINO
+
+</button>
+
+
+
+<button onclick="scontrino(false)">
+
+❌ NON STAMPARE
+
+</button>
+
+
+
+</div>
+
+
+
+
+<div class="box">
+
+
+<button class="chiudi" onclick="chiudiConto()">
+
+✅ CHIUDI CONTO
+
+</button>
+
+
+</div>
+
+
+
+
+<script>
+
+
+let metodo="";
+
+
+let stampa=false;
+
+
+
+function pagamento(tipo){
+
+metodo=tipo;
+
+
+alert(
+"Pagamento scelto: "+tipo
+);
+
+}
+
+
+
+
+function scontrino(scelta){
+
+stampa=scelta;
+
+
+if(scelta){
+
+alert("Scontrino pronto 🧾");
+
+}
+else{
+
+alert("Senza stampa");
+
+}
+
+}
+
+
+
+
+function chiudiConto(){
+
+
+alert(
+"Conto chiuso ✅\n"+
+"Pagamento: "+metodo
+);
+
+
+localStorage.removeItem("ordini");
+
+
+window.location.href="tavoli.html";
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
