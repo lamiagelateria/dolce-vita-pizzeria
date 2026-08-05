@@ -19,45 +19,38 @@ font-family:Arial,sans-serif;
 
 h1{
 text-align:center;
-font-size:38px;
 }
-
 
 .box{
 background:#333;
 margin:20px;
-padding:25px;
+padding:20px;
 border-radius:20px;
 }
-
 
 button{
 width:100%;
 padding:18px;
 margin:8px 0;
-border:none;
+border:0;
 border-radius:15px;
 background:#444;
 color:white;
-font-size:22px;
+font-size:20px;
 font-weight:bold;
 }
-
 
 .extra{
 background:#197619;
 }
 
-
 .togli{
 background:#8a1616;
 }
 
-
 .conferma{
 background:#005f9e;
 }
-
 
 </style>
 
@@ -73,46 +66,32 @@ background:#005f9e;
 
 <div class="box">
 
+<h2 id="nomePizza"></h2>
 
-<h2>Pizza scelta</h2>
-
-
-<div id="pizza">
-
-Margherita €7
-
+<div id="prezzo">
 </div>
 
-
 </div>
-
 
 
 
 <div class="box">
-
 
 <h2>❌ Togli ingredienti</h2>
 
 
-<button class="togli">
-
-❌ Senza mozzarella
-
+<button onclick="togli('senza mozzarella')">
+Senza mozzarella
 </button>
 
 
-<button class="togli">
-
-❌ Senza pomodoro
-
+<button onclick="togli('senza pomodoro')">
+Senza pomodoro
 </button>
 
 
-<button class="togli">
-
-❌ Senza basilico
-
+<button onclick="togli('senza basilico')">
+Senza basilico
 </button>
 
 
@@ -122,50 +101,32 @@ Margherita €7
 
 
 <div class="box">
-
 
 <h2>➕ Extra</h2>
 
 
-<button class="extra">
-
-➕ Bufala +2 €
-
+<button class="extra" onclick="extra('Bufala',2)">
+Bufala +2 €
 </button>
 
 
-<button class="extra">
-
-➕ Prosciutto +1,50 €
-
+<button class="extra" onclick="extra('Prosciutto',1.5)">
+Prosciutto +1,50 €
 </button>
 
 
-<button class="extra">
-
-➕ Funghi +1 €
-
+<button class="extra" onclick="extra('Funghi',1)">
+Funghi +1 €
 </button>
 
 
-<button class="extra">
-
-➕ Olive +1 €
-
+<button class="extra" onclick="extra('Olive',1)">
+Olive +1 €
 </button>
 
 
-<button class="extra">
-
-➕ Salame piccante +1,50 €
-
-</button>
-
-
-<button class="extra">
-
-➕ Verdure grigliate +2 €
-
+<button class="extra" onclick="extra('Salame piccante',1.5)">
+Salame piccante +1,50 €
 </button>
 
 
@@ -177,15 +138,13 @@ Margherita €7
 <div class="box">
 
 
-<h2>Prezzo finale</h2>
+<h2>
+Totale pizza:
+€ <span id="totale"></span>
+</h2>
 
 
-<h1>
-€7,00
-</h1>
-
-
-<button class="conferma">
+<button class="conferma" onclick="conferma()">
 
 ✅ CONFERMA PIZZA
 
@@ -193,6 +152,107 @@ Margherita €7
 
 
 </div>
+
+
+
+
+<script>
+
+
+let dati =
+new URLSearchParams(window.location.search);
+
+
+
+let nome =
+dati.get("nome");
+
+
+let prezzo =
+Number(dati.get("prezzo"));
+
+
+let tavolo =
+dati.get("tavolo");
+
+
+let coperto =
+dati.get("coperto");
+
+
+
+let modifiche=[];
+
+
+
+document.getElementById("nomePizza").innerHTML=
+"🍕 "+nome;
+
+
+document.getElementById("totale").innerHTML=
+prezzo.toFixed(2);
+
+
+
+
+
+function extra(nomeExtra,costo){
+
+modifiche.push(
+" + "+nomeExtra
+);
+
+
+prezzo += costo;
+
+
+document.getElementById("totale").innerHTML=
+prezzo.toFixed(2);
+
+}
+
+
+
+
+
+function togli(cosa){
+
+modifiche.push(
+" "+cosa
+);
+
+}
+
+
+
+
+
+function conferma(){
+
+
+let descrizione =
+nome +
+modifiche.join(",");
+
+
+
+window.location.href =
+
+"ordine.html?tavolo="
++tavolo+
+"&coperto="
++coperto+
+"&pizza="
++encodeURIComponent(descrizione)+
+"&prezzo="
++prezzo;
+
+
+}
+
+
+
+</script>
 
 
 
