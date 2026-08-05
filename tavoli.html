@@ -25,16 +25,20 @@ color:#ffd000;
 padding:15px;
 }
 
-button{
+.menu button{
 width:100%;
 padding:15px;
+margin-bottom:12px;
 border:0;
 border-radius:15px;
 font-size:20px;
 font-weight:bold;
-background:#005f9e;
 color:white;
-margin-bottom:15px;
+background:#005f9e;
+}
+
+.home{
+background:#555 !important;
 }
 
 .container{
@@ -71,11 +75,22 @@ background:#9b1616;
 
 <div class="menu">
 
+
+<button class="home" onclick="vaiHome()">
+
+🏠 TORNA ALLA HOME
+
+</button>
+
+
+
 <button onclick="vaiCassa()">
 
 💶 VAI ALLA CASSA
 
 </button>
+
+
 
 </div>
 
@@ -97,6 +112,7 @@ JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 let area = document.getElementById("tavoli");
+
 
 
 
@@ -141,6 +157,8 @@ ${occupato ? "🔴 Occupato" : "🟢 Libero"}
 
 
 
+
+
 function apriTavolo(numero){
 
 
@@ -167,6 +185,18 @@ function vaiCassa(){
 
 
 window.location.href="cassa.html";
+
+
+}
+
+
+
+
+
+function vaiHome(){
+
+
+window.location.href="index.html";
 
 
 }
