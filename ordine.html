@@ -32,10 +32,10 @@ border-radius:20px;
 button{
 width:100%;
 padding:18px;
-margin:8px;
+margin:8px 0;
 border:0;
 border-radius:15px;
-font-size:22px;
+font-size:21px;
 background:#555;
 color:white;
 font-weight:bold;
@@ -61,44 +61,21 @@ color:#4cff4c;
 <h1>🍕 ORDINE DOLCE VITA</h1>
 
 
+
 <div class="box">
 
-<h2>🍕 Menu</h2>
+<h2>🍕 PIZZE</h2>
 
-
-<button onclick="aggiungi('Margherita',7)">
-Margherita €7
-</button>
-
-
-<button onclick="aggiungi('Diavola',8)">
-Diavola €8
-</button>
-
-
-<button onclick="aggiungi('4 Formaggi',9)">
-4 Formaggi €9
-</button>
-
-
-<button onclick="aggiungi('Patatine',4)">
-Patatine €4
-</button>
-
-
-<button onclick="aggiungi('Coca Cola',3)">
-Coca Cola €3
-</button>
-
+<div id="menuPizze"></div>
 
 </div>
 
 
 
+
 <div class="box">
 
-<h2>🧾 Ordine</h2>
-
+<h2>🧾 ORDINE</h2>
 
 <div id="lista">
 Nessun prodotto
@@ -114,7 +91,6 @@ Totale € <span id="totale">0.00</span>
 
 </div>
 
-
 </div>
 
 
@@ -122,16 +98,17 @@ Totale € <span id="totale">0.00</span>
 
 <div class="box">
 
-
 <button class="invia" onclick="inviaCucina()">
 
 👨‍🍳 INVIA IN CUCINA
 
 </button>
 
-
 </div>
 
+
+
+<script src="pizze.js"></script>
 
 
 
@@ -141,6 +118,31 @@ Totale € <span id="totale">0.00</span>
 let prodotti=[];
 
 let totale=0;
+
+
+
+
+pizze.forEach(function(p){
+
+
+document.getElementById("menuPizze").innerHTML +=
+
+
+`
+
+<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+
+🍕 ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+
+});
+
+
+
 
 
 
@@ -167,6 +169,7 @@ mostra();
 
 
 
+
 function mostra(){
 
 
@@ -176,13 +179,17 @@ let testo="";
 prodotti.forEach(function(p){
 
 
-testo += "🍕 "+p.nome+" €"+p.prezzo+"<br>";
+testo +=
+"🍕 "+p.nome+
+" €"+p.prezzo+
+"<br>";
 
 
 });
 
 
-document.getElementById("lista").innerHTML=testo;
+document.getElementById("lista").innerHTML =
+testo;
 
 
 document.getElementById("totale").innerHTML =
@@ -190,6 +197,7 @@ totale.toFixed(2);
 
 
 }
+
 
 
 
@@ -230,7 +238,6 @@ JSON.stringify(ordini)
 alert("Ordine inviato in cucina ✅");
 
 
-
 window.location.href="cucina.html";
 
 
@@ -239,6 +246,7 @@ window.location.href="cucina.html";
 
 
 </script>
+
 
 
 </body>
