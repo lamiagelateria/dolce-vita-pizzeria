@@ -21,24 +21,16 @@ text-align:center;
 color:#ffd000;
 }
 
-.menu{
+.home{
+margin:15px;
+width:calc(100% - 30px);
 padding:15px;
-}
-
-.menu button{
-width:100%;
-padding:15px;
-margin-bottom:12px;
 border:0;
 border-radius:15px;
 font-size:20px;
 font-weight:bold;
+background:#555;
 color:white;
-background:#005f9e;
-}
-
-.home{
-background:#555 !important;
 }
 
 .container{
@@ -72,28 +64,11 @@ background:#9b1616;
 <h1>🍽️ TAVOLI DOLCE VITA</h1>
 
 
-
-<div class="menu">
-
-
 <button class="home" onclick="vaiHome()">
 
 🏠 TORNA ALLA HOME
 
 </button>
-
-
-
-<button onclick="vaiCassa()">
-
-💶 VAI ALLA CASSA
-
-</button>
-
-
-
-</div>
-
 
 
 
@@ -112,7 +87,6 @@ JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 let area = document.getElementById("tavoli");
-
 
 
 
@@ -157,8 +131,6 @@ ${occupato ? "🔴 Occupato" : "🟢 Libero"}
 
 
 
-
-
 function apriTavolo(numero){
 
 
@@ -173,18 +145,6 @@ numero
 
 
 window.location.href="ordine.html";
-
-
-}
-
-
-
-
-
-function vaiCassa(){
-
-
-window.location.href="cassa.html";
 
 
 }
