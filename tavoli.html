@@ -7,50 +7,83 @@
 <title>Dolce Vita - Tavoli</title>
 
 <style>
+
 body {
     margin: 0;
-    background: #1e1e1e;
+    background: #181818;
     color: white;
     font-family: Arial, sans-serif;
 }
 
 h1 {
     text-align: center;
-    padding: 20px;
+    font-size: 40px;
+    margin: 25px;
 }
 
 h2 {
-    margin-left: 20px;
+    margin-left: 25px;
+    font-size: 30px;
 }
+
 
 .container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    padding: 20px;
+    gap: 18px;
+    padding: 25px;
 }
+
 
 .tavolo {
     background: #333;
-    border: 2px solid #555;
-    border-radius: 15px;
-    padding: 25px;
+    border-radius: 20px;
+    padding: 25px 10px;
     text-align: center;
     font-size: 22px;
     font-weight: bold;
+    border: 3px solid #555;
 }
 
+
 .libero {
-    color: #4cff4c;
+    color: #35ff35;
 }
+
+
+.occupato {
+    color: #ff4444;
+}
+
+
+.prenotato {
+    color: #ffd633;
+}
+
+
+.indietro {
+    display: block;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    background: #333;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+}
+
 
 </style>
 
 </head>
 
+
 <body>
 
+
 <h1>🍽️ TAVOLI</h1>
+
 
 <h2>🏠 Sala interna</h2>
 
@@ -58,22 +91,31 @@ h2 {
 
 <div class="tavolo libero">Tavolo 1<br>🟢 Libero</div>
 <div class="tavolo libero">Tavolo 2<br>🟢 Libero</div>
-<div class="tavolo libero">Tavolo 3<br>🟢 Libero</div>
-<div class="tavolo libero">Tavolo 4<br>🟢 Libero</div>
+<div class="tavolo occupato">Tavolo 3<br>🔴 Occupato</div>
+<div class="tavolo prenotato">Tavolo 4<br>🟡 Prenotato</div>
 
 </div>
 
 
+
 <h2>🌳 Sala esterna</h2>
+
 
 <div class="container">
 
 <div class="tavolo libero">Esterno 1<br>🟢 Libero</div>
 <div class="tavolo libero">Esterno 2<br>🟢 Libero</div>
-<div class="tavolo libero">Esterno 3<br>🟢 Libero</div>
-<div class="tavolo libero">Esterno 4<br>🟢 Libero</div>
+<div class="tavolo occupato">Esterno 3<br>🔴 Occupato</div>
+<div class="tavolo prenotato">Esterno 4<br>🟡 Prenotato</div>
 
 </div>
+
+
+
+<a class="indietro" href="index.html">
+⬅️ Torna alla cassa
+</a>
+
 
 
 </body>
