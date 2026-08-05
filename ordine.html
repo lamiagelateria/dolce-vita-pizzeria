@@ -69,52 +69,32 @@ color:#4cff4c;
 <h1>🍕 ORDINE DOLCE VITA</h1>
 
 
-
 <div class="box">
 
-
 <h2>🍕 PIZZE</h2>
-
 <div id="menuPizze"></div>
 
-
 <hr>
-
 
 <h2>🥤 BIBITE</h2>
-
 <div id="menuBibite"></div>
 
-
 <hr>
-
 
 <h2>🍺 BIRRE</h2>
-
 <div id="menuBirre"></div>
 
-
 <hr>
-
 
 <h2>🍷 VINI</h2>
-
 <div id="menuVini"></div>
-
 
 <hr>
 
-
 <h2>🍟 FRITTI</h2>
-
 <div id="menuFritti"></div>
 
-
-
 </div>
-
-
-
 
 
 <div class="box">
@@ -125,51 +105,31 @@ color:#4cff4c;
 Nessun prodotto
 </div>
 
-
 <br>
 
-
 <div class="totale">
-
 Totale € <span id="totale">0.00</span>
-
 </div>
 
-
 </div>
-
-
-
 
 
 <div class="box">
 
 <button class="invia" onclick="inviaCucina()">
-
 👨‍🍳 INVIA IN CUCINA
-
 </button>
 
 </div>
 
 
-
-
-
 <script src="pizze.js"></script>
-
 <script src="prodotti.js"></script>
-
-
-
-
 <script>
-
 
 let prodottiOrdine=[];
 
 let totale=0;
-
 
 
 
@@ -187,7 +147,6 @@ totale += salvata.prezzo;
 localStorage.removeItem("pizzaModificata");
 
 }
-
 
 
 
@@ -216,7 +175,6 @@ document.getElementById("menuPizze").innerHTML +=
 
 
 
-
 prodotti.forEach(function(p){
 
 
@@ -224,19 +182,15 @@ let box="menuBibite";
 
 
 if(p.categoria.includes("Birre"))
-
 box="menuBirre";
 
 
 if(p.categoria.includes("Vini"))
-
 box="menuVini";
 
 
 if(p.categoria.includes("Fritti"))
-
 box="menuFritti";
-
 
 
 
@@ -247,7 +201,7 @@ document.getElementById(box).innerHTML +=
 
 <button onclick="aggiungi('${p.nome}',${p.prezzo})">
 
-${p.categoria} ${p.nome} €${p.prezzo}
+${p.nome} €${p.prezzo}
 
 </button>
 
@@ -284,16 +238,17 @@ mostra();
 
 
 
-
-
 function modificaPizza(nome,prezzo){
 
 
-window.location.href=
+window.location.href =
 
-"modifica_pizza.html?nome="+
-encodeURIComponent(nome)+
-"&prezzo="+
+"modifica_pizza.html?nome="
++
+encodeURIComponent(nome)
++
+"&prezzo="
++
 prezzo;
 
 
@@ -321,6 +276,7 @@ testo +=
 "<br>";
 
 
+
 });
 
 
@@ -333,13 +289,13 @@ testo="Nessun prodotto";
 document.getElementById("lista").innerHTML=testo;
 
 
-document.getElementById("totale").innerHTML=
+
+document.getElementById("totale").innerHTML =
 
 totale.toFixed(2);
 
 
 }
-
 
 
 
@@ -357,19 +313,28 @@ function inviaCucina(){
 
 let ordine={
 
+
 tipo:"Tavolo",
+
+
+tavolo: localStorage.getItem("tavoloAttivo") || "1",
+
 
 prodotti:prodottiOrdine,
 
+
 totale:totale,
 
+
 stato:"In preparazione"
+
 
 };
 
 
 
-let ordini=
+
+let ordini =
 
 JSON.parse(localStorage.getItem("ordini")) || [];
 
@@ -390,6 +355,7 @@ JSON.stringify(ordini)
 
 
 alert("Ordine inviato in cucina ✅");
+
 
 
 window.location.href="cucina.html";
