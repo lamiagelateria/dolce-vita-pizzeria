@@ -14,7 +14,6 @@ body{
 background:#181818;
 color:white;
 font-family:Arial;
-margin:0;
 }
 
 h1{
@@ -29,16 +28,25 @@ padding:20px;
 border-radius:20px;
 }
 
+h2{
+color:#ffd000;
+}
+
 button{
 width:100%;
-padding:16px;
-margin:6px 0;
+padding:15px;
+margin:5px 0;
 border:0;
 border-radius:15px;
-font-size:18px;
-font-weight:bold;
 background:#555;
 color:white;
+font-size:18px;
+font-weight:bold;
+}
+
+hr{
+border:1px solid #777;
+margin:20px 0;
 }
 
 .invia{
@@ -46,8 +54,8 @@ background:#197619;
 }
 
 .totale{
-color:#4cff4c;
 font-size:35px;
+color:#4cff4c;
 }
 
 </style>
@@ -64,11 +72,47 @@ font-size:35px;
 
 <div class="box">
 
-<h2>🍕 MENU</h2>
 
-<div id="menu"></div>
+<h2>🍕 PIZZE</h2>
+
+<div id="menuPizze"></div>
+
+
+<hr>
+
+
+<h2>🥤 BIBITE</h2>
+
+<div id="menuBibite"></div>
+
+
+<hr>
+
+
+<h2>🍺 BIRRE</h2>
+
+<div id="menuBirre"></div>
+
+
+<hr>
+
+
+<h2>🍷 VINI</h2>
+
+<div id="menuVini"></div>
+
+
+<hr>
+
+
+<h2>🍟 FRITTI</h2>
+
+<div id="menuFritti"></div>
+
+
 
 </div>
+
 
 
 
@@ -84,13 +128,16 @@ Nessun prodotto
 
 <br>
 
+
 <div class="totale">
 
 Totale € <span id="totale">0.00</span>
 
 </div>
 
+
 </div>
+
 
 
 
@@ -108,9 +155,11 @@ Totale € <span id="totale">0.00</span>
 
 
 
+
 <script src="pizze.js"></script>
 
 <script src="prodotti.js"></script>
+
 
 
 
@@ -124,22 +173,88 @@ let totale=0;
 
 
 
-
-let pizzaSalvata =
+let salvata =
 JSON.parse(localStorage.getItem("pizzaModificata"));
 
 
 
-if(pizzaSalvata){
+if(salvata){
 
-prodottiOrdine.push(pizzaSalvata);
+prodottiOrdine.push(salvata);
 
-totale += pizzaSalvata.prezzo;
-
+totale += salvata.prezzo;
 
 localStorage.removeItem("pizzaModificata");
 
 }
+
+
+
+
+
+
+pizze.forEach(function(p){
+
+
+document.getElementById("menuPizze").innerHTML +=
+
+
+`
+
+<button onclick="modificaPizza('${p.nome}',${p.prezzo})">
+
+🍕 ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
+
+prodotti.forEach(function(p){
+
+
+let box="menuBibite";
+
+
+if(p.categoria.includes("Birre"))
+
+box="menuBirre";
+
+
+if(p.categoria.includes("Vini"))
+
+box="menuVini";
+
+
+if(p.categoria.includes("Fritti"))
+
+box="menuFritti";
+
+
+
+
+document.getElementById(box).innerHTML +=
+
+
+`
+
+<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+
+${p.categoria} ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
 
 
 
@@ -163,8 +278,8 @@ totale += prezzo;
 
 mostra();
 
-
 }
+
 
 
 
@@ -174,64 +289,15 @@ mostra();
 function modificaPizza(nome,prezzo){
 
 
-window.location.href =
+window.location.href=
 
-"modifica_pizza.html?nome="
-+
-encodeURIComponent(nome)
-+
-"&prezzo="
-+
+"modifica_pizza.html?nome="+
+encodeURIComponent(nome)+
+"&prezzo="+
 prezzo;
 
 
 }
-
-
-
-
-
-
-pizze.forEach(function(p){
-
-
-document.getElementById("menu").innerHTML +=
-
-
-`
-
-<button onclick="modificaPizza('${p.nome}',${p.prezzo})">
-
-🍕 ${p.nome} €${p.prezzo}
-
-</button>
-
-`;
-
-});
-
-
-
-
-
-
-prodotti.forEach(function(p){
-
-
-document.getElementById("menu").innerHTML +=
-
-
-`
-
-<button onclick="aggiungi('${p.nome}',${p.prezzo})">
-
-${p.categoria} - ${p.nome} €${p.prezzo}
-
-</button>
-
-`;
-
-});
 
 
 
@@ -255,16 +321,13 @@ testo +=
 "<br>";
 
 
-
 });
 
 
 
-if(testo==""){
-
+if(testo=="")
 testo="Nessun prodotto";
 
-}
 
 
 document.getElementById("lista").innerHTML=testo;
@@ -289,7 +352,6 @@ mostra();
 
 
 
-
 function inviaCucina(){
 
 
@@ -307,7 +369,7 @@ stato:"In preparazione"
 
 
 
-let ordini =
+let ordini=
 
 JSON.parse(localStorage.getItem("ordini")) || [];
 
@@ -330,12 +392,10 @@ JSON.stringify(ordini)
 alert("Ordine inviato in cucina ✅");
 
 
-
 window.location.href="cucina.html";
 
 
 }
-
 
 
 </script>
