@@ -6,64 +6,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Cassa</title>
+<title>Cassa Dolce Vita</title>
 
 <style>
 
 body{
-margin:0;
 background:#181818;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial;
 }
 
 h1{
 text-align:center;
-font-size:40px;
+color:#ffd000;
 }
-
 
 .box{
 background:#333;
-margin:20px;
-padding:25px;
+margin:15px;
+padding:20px;
 border-radius:20px;
-font-size:22px;
 }
-
 
 button{
 width:100%;
-padding:22px;
-margin:10px 0;
-border:none;
-border-radius:20px;
-font-size:22px;
+padding:15px;
+margin-top:10px;
+border:0;
+border-radius:15px;
+font-size:18px;
 font-weight:bold;
 color:white;
+background:#197619;
 }
 
+.home{
+background:#555;
+}
 
-.pagamento{
+.storico{
 background:#005f9e;
 }
 
-
-.ordine{
-background:#222;
-padding:15px;
-border-radius:15px;
-}
-
-
-.totale{
-color:#4cff4c;
-font-size:38px;
-}
-
-
 </style>
-
 
 </head>
 
@@ -71,44 +56,23 @@ font-size:38px;
 <body>
 
 
-<h1>💳 CASSA</h1>
+<h1>💶 CASSA DOLCE VITA</h1>
 
 
 
 <div class="box">
 
 
-<h2>🧾 Ordini aperti</h2>
+<button class="home" onclick="home()">
+
+🏠 HOME
+
+</button>
 
 
-<div id="lista" class="ordine">
+<button class="storico" onclick="vaiStorico()">
 
-Nessun ordine
-
-</div>
-
-
-<br>
-
-
-<div class="totale">
-
-Totale € <span id="totale">0</span>
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="box">
-
-
-<button class="pagamento" onclick="vaiPagamento()">
-
-💳 VAI AL PAGAMENTO
+📊 STORICO INCASSI
 
 </button>
 
@@ -117,8 +81,8 @@ Totale € <span id="totale">0</span>
 
 
 
+<div id="conti"></div>
 
-<script src="gestione.js"></script>
 
 
 
@@ -127,35 +91,71 @@ Totale € <span id="totale">0</span>
 
 
 let ordini =
-prendiOrdini();
+
+JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 
-let totale=0;
+let area=document.getElementById("conti");
+
+
+
+
+
+function mostra(){
 
 
 let testo="";
 
 
 
-ordini.forEach(ordine=>{
+if(ordini.length==0){
 
 
-totale += ordine.totale;
+testo=
+
+`
+
+<div class="box">
+
+<h2>Nessun conto aperto</h2>
+
+</div>
+
+`;
+
+
+
+}else{
+
+
+ordini.forEach(function(o,index){
 
 
 
 testo +=
 
-"🍕 "+ordine.tipo+
-"<br>"+
 
-(ordine.tavolo || ordine.cliente || "")+
+`
 
-"<br>€ "+
-ordine.totale+
+<div class="box">
 
-"<br><br>";
+
+<h2>🍽️ Tavolo ${o.tavolo || "1"}</h2>
+
+
+`;
+
+
+
+o.prodotti.forEach(function(p){
+
+
+testo +=
+
+"🍕 "+p.nome+
+" €"+p.prezzo+
+"<br>";
 
 
 
@@ -163,36 +163,124 @@ ordine.totale+
 
 
 
-if(testo==""){
+testo +=
 
-testo="Nessun ordine aperto";
+
+`
+
+<br>
+
+💶 Totale: €${o.totale.toFixed(2)}
+
+
+
+<button onclick="chiudiConto(${index})">
+
+✅ CHIUDI CONTO
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
 
 }
 
 
 
-document.getElementById("lista").innerHTML=testo;
-
-
-document.getElementById("totale").innerHTML=
-totale.toFixed(2);
-
-
-
-
-
-function vaiPagamento(){
-
-
-window.location.href="pagamento.html";
+area.innerHTML=testo;
 
 
 }
 
+
+
+
+
+
+
+function chiudiConto(index){
+
+
+let storico =
+
+JSON.parse(localStorage.getItem("storico")) || [];
+
+
+
+storico.push(ordini[index]);
+
+
+
+localStorage.setItem(
+
+"storico",
+
+JSON.stringify(storico)
+
+);
+
+
+
+ordini.splice(index,1);
+
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
+);
+
+
+
+alert("Conto chiuso e salvato ✅");
+
+
+
+mostra();
+
+
+}
+
+
+
+
+
+function vaiStorico(){
+
+
+window.location.href="storico.html";
+
+
+}
+
+
+
+
+function home(){
+
+
+window.location.href="index.html";
+
+
+}
+
+
+
+mostra();
 
 
 </script>
-
 
 
 </body>
