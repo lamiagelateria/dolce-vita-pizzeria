@@ -6,24 +6,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modifica Pizza</title>
+<title>Modifica Pizza - Dolce Vita</title>
 
 <style>
 
 body{
-margin:0;
 background:#181818;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial;
+margin:0;
 }
 
 h1{
 text-align:center;
+color:#ffd000;
 }
 
 .box{
 background:#333;
-margin:20px;
+margin:15px;
 padding:20px;
 border-radius:20px;
 }
@@ -34,10 +35,9 @@ padding:18px;
 margin:8px 0;
 border:0;
 border-radius:15px;
-background:#444;
-color:white;
 font-size:20px;
 font-weight:bold;
+color:white;
 }
 
 .extra{
@@ -63,15 +63,16 @@ background:#005f9e;
 <h1>🍕 MODIFICA PIZZA</h1>
 
 
-
 <div class="box">
 
-<h2 id="nomePizza"></h2>
+<h2 id="pizza"></h2>
 
-<div id="prezzo">
+<h2>
+Prezzo: € <span id="prezzo"></span>
+</h2>
+
 </div>
 
-</div>
 
 
 
@@ -79,21 +80,17 @@ background:#005f9e;
 
 <h2>❌ Togli ingredienti</h2>
 
-
-<button onclick="togli('senza mozzarella')">
-Senza mozzarella
+<button class="togli" onclick="modifica('senza mozzarella',0)">
+❌ Senza mozzarella
 </button>
 
-
-<button onclick="togli('senza pomodoro')">
-Senza pomodoro
+<button class="togli" onclick="modifica('senza pomodoro',0)">
+❌ Senza pomodoro
 </button>
 
-
-<button onclick="togli('senza basilico')">
-Senza basilico
+<button class="togli" onclick="modifica('senza basilico',0)">
+❌ Senza basilico
 </button>
-
 
 </div>
 
@@ -105,28 +102,28 @@ Senza basilico
 <h2>➕ Extra</h2>
 
 
-<button class="extra" onclick="extra('Bufala',2)">
-Bufala +2 €
+<button class="extra" onclick="modifica('bufala',2)">
+➕ Bufala +2 €
 </button>
 
 
-<button class="extra" onclick="extra('Prosciutto',1.5)">
-Prosciutto +1,50 €
+<button class="extra" onclick="modifica('prosciutto',1.5)">
+➕ Prosciutto +1,50 €
 </button>
 
 
-<button class="extra" onclick="extra('Funghi',1)">
-Funghi +1 €
+<button class="extra" onclick="modifica('funghi',1)">
+➕ Funghi +1 €
 </button>
 
 
-<button class="extra" onclick="extra('Olive',1)">
-Olive +1 €
+<button class="extra" onclick="modifica('olive',1)">
+➕ Olive +1 €
 </button>
 
 
-<button class="extra" onclick="extra('Salame piccante',1.5)">
-Salame piccante +1,50 €
+<button class="extra" onclick="modifica('salame piccante',1.5)">
+➕ Salame piccante +1,50 €
 </button>
 
 
@@ -137,19 +134,11 @@ Salame piccante +1,50 €
 
 <div class="box">
 
-
-<h2>
-Totale pizza:
-€ <span id="totale"></span>
-</h2>
-
-
 <button class="conferma" onclick="conferma()">
 
 ✅ CONFERMA PIZZA
 
 </button>
-
 
 </div>
 
@@ -163,7 +152,6 @@ let dati =
 new URLSearchParams(window.location.search);
 
 
-
 let nome =
 dati.get("nome");
 
@@ -172,57 +160,34 @@ let prezzo =
 Number(dati.get("prezzo"));
 
 
-let tavolo =
-dati.get("tavolo");
-
-
-let coperto =
-dati.get("coperto");
-
-
-
 let modifiche=[];
 
 
 
-document.getElementById("nomePizza").innerHTML=
+document.getElementById("pizza").innerHTML =
 "🍕 "+nome;
 
 
-document.getElementById("totale").innerHTML=
+document.getElementById("prezzo").innerHTML =
 prezzo.toFixed(2);
 
 
 
 
+function modifica(tipo,costo){
 
-function extra(nomeExtra,costo){
 
-modifiche.push(
-" + "+nomeExtra
-);
+modifiche.push(tipo);
 
 
 prezzo += costo;
 
 
-document.getElementById("totale").innerHTML=
+document.getElementById("prezzo").innerHTML =
 prezzo.toFixed(2);
 
-}
-
-
-
-
-
-function togli(cosa){
-
-modifiche.push(
-" "+cosa
-);
 
 }
-
 
 
 
@@ -231,21 +196,15 @@ function conferma(){
 
 
 let descrizione =
-nome +
-modifiche.join(",");
+nome+" ("+modifiche.join(", ")+")";
 
 
 
 window.location.href =
-
-"ordine.html?tavolo="
-+tavolo+
-"&coperto="
-+coperto+
-"&pizza="
-+encodeURIComponent(descrizione)+
-"&prezzo="
-+prezzo;
+"ordine.html?pizza="+
+encodeURIComponent(descrizione)+
+"&prezzo="+
+prezzo;
 
 
 }
