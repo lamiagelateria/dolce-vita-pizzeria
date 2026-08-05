@@ -14,7 +14,6 @@ body{
 background:#181818;
 color:white;
 font-family:Arial;
-margin:0;
 }
 
 h1{
@@ -33,24 +32,22 @@ border-radius:20px;
 background:#444;
 padding:15px;
 border-radius:15px;
-margin-top:10px;
 }
 
 button{
 width:100%;
-padding:18px;
+padding:15px;
 margin-top:10px;
 border:0;
 border-radius:15px;
-font-size:20px;
+font-size:18px;
 font-weight:bold;
-background:#197619;
 color:white;
+background:#197619;
 }
 
-.vuoto{
-text-align:center;
-font-size:25px;
+.cassa{
+background:#005f9e;
 }
 
 </style>
@@ -62,6 +59,18 @@ font-size:25px;
 
 
 <h1>👨‍🍳 CUCINA DOLCE VITA</h1>
+
+
+<div class="box">
+
+<button class="cassa" onclick="tornaCassa()">
+
+💶 TORNA AI TAVOLI
+
+</button>
+
+</div>
+
 
 
 <div id="lista"></div>
@@ -78,29 +87,41 @@ JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 
-let contenuto="";
+let lista = document.getElementById("lista");
 
 
 
+function mostra(){
 
-if(ordini.length===0){
+
+let testo="";
 
 
-contenuto=
+if(ordini.length==0){
 
-"<div class='box vuoto'>Nessun ordine</div>";
+
+testo=
+
+`
+
+<div class="box">
+
+<h2>Nessun ordine</h2>
+
+</div>
+
+`;
 
 
 
 }else{
 
 
-
 ordini.forEach(function(o,index){
 
 
 
-contenuto +=
+testo +=
 
 
 `
@@ -108,7 +129,7 @@ contenuto +=
 <div class="box">
 
 
-<h2>🍕 Ordine ${index+1}</h2>
+<h2>🍽️ Tavolo ${o.tavolo || "1"}</h2>
 
 
 <div class="ordine">
@@ -121,7 +142,7 @@ contenuto +=
 o.prodotti.forEach(function(p){
 
 
-contenuto +=
+testo +=
 
 "🍕 "+p.nome+
 " €"+p.prezzo+
@@ -133,7 +154,7 @@ contenuto +=
 
 
 
-contenuto +=
+testo +=
 
 
 `
@@ -141,8 +162,6 @@ contenuto +=
 <br>
 
 💶 Totale: €${o.totale.toFixed(2)}
-
-<br>
 
 
 <button onclick="pronto(${index})">
@@ -154,7 +173,6 @@ contenuto +=
 
 </div>
 
-
 </div>
 
 
@@ -165,17 +183,14 @@ contenuto +=
 });
 
 
-
 }
 
 
 
+lista.innerHTML=testo;
 
 
-document.getElementById("lista").innerHTML =
-contenuto;
-
-
+}
 
 
 
@@ -197,15 +212,29 @@ JSON.stringify(ordini)
 
 
 
-location.reload();
+mostra();
 
 
 }
 
 
 
-</script>
 
+
+function tornaCassa(){
+
+
+window.location.href="tavoli.html";
+
+
+}
+
+
+
+mostra();
+
+
+</script>
 
 
 </body>
