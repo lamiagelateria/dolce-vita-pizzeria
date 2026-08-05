@@ -10,85 +10,69 @@
 
 <style>
 
-body {
-    margin:0;
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
-}
-
-
-h1 {
-    text-align:center;
-    font-size:40px;
-}
-
-
-.box {
-    background:#333;
-    margin:20px;
-    padding:25px;
-    border-radius:20px;
-    font-size:25px;
-}
-
-
-button {
-
-    width:100%;
-    padding:25px;
-    margin:10px 0;
-    border:none;
-    border-radius:20px;
-    background:#444;
-    color:white;
-    font-size:25px;
-    font-weight:bold;
-
-}
-
-
-.contanti {
-    background:#197619;
-}
-
-
-.bancomat {
-    background:#005f9e;
-}
-
-
-.stampa {
-    background:#8a5a00;
-}
-
-
-.chiudi {
-    background:#8a1616;
-}
-
-
-.totale {
-
-    color:#4cff4c;
-    font-size:40px;
-
-}
-
-
-.indietro {
-
-display:block;
-margin:20px;
-padding:20px;
-background:#333;
-border-radius:20px;
-text-align:center;
+body{
+margin:0;
+background:#181818;
 color:white;
-text-decoration:none;
-font-size:25px;
+font-family:Arial,sans-serif;
+}
+
+h1{
+text-align:center;
+font-size:40px;
+}
+
+
+.box{
+background:#333;
+margin:20px;
+padding:25px;
+border-radius:20px;
+font-size:22px;
+}
+
+
+button{
+
+width:100%;
+padding:22px;
+margin:10px 0;
+border:none;
+border-radius:20px;
+font-size:23px;
+font-weight:bold;
+color:white;
 
 }
+
+
+.contanti{
+background:#197619;
+}
+
+
+.bancomat{
+background:#005f9e;
+}
+
+
+.stampa{
+background:#8a5a00;
+}
+
+
+.chiudi{
+background:#8a1616;
+}
+
+
+.totale{
+
+color:#4cff4c;
+font-size:38px;
+
+}
+
 
 </style>
 
@@ -104,28 +88,23 @@ font-size:25px;
 
 <div class="box">
 
-<h2>🧾 Conto</h2>
 
-Prodotti:
+<h2>🧾 Conto aperto</h2>
+
+
+<div id="conto">
+
+Nessun ordine
+
+</div>
+
+
 <br>
-🍕 Margherita €7
-<br>
-🍺 Moretti €4
-<br>
-🍟 Patatine €4
 
-<br><br>
-
-Coperto:
-€2,00
-
-
-<hr>
 
 <div class="totale">
 
-Totale:
-€17,00
+Totale € <span id="totale">0</span>
 
 </div>
 
@@ -136,17 +115,22 @@ Totale:
 
 
 <div class="box">
+
 
 <h2>Pagamento</h2>
 
 
 <button class="contanti">
+
 💶 CONTANTI
+
 </button>
 
 
 <button class="bancomat">
+
 💳 BANCOMAT
+
 </button>
 
 
@@ -157,17 +141,22 @@ Totale:
 
 
 <div class="box">
+
 
 <h2>Scontrino</h2>
 
 
 <button class="stampa">
+
 🧾 STAMPA SCONTRINO
+
 </button>
 
 
 <button>
+
 ❌ NON STAMPARE
+
 </button>
 
 
@@ -179,7 +168,7 @@ Totale:
 <div class="box">
 
 
-<button class="chiudi">
+<button class="chiudi" onclick="chiudi()">
 
 ✅ CHIUDI CONTO
 
@@ -190,10 +179,85 @@ Totale:
 
 
 
+<script src="gestione.js"></script>
 
-<a class="indietro" href="index.html">
-⬅️ Torna alla cassa
-</a>
+
+
+<script>
+
+
+let ordini =
+prendiOrdini();
+
+
+
+let totale=0;
+
+
+
+let testo="";
+
+
+
+ordini.forEach((ordine,index)=>{
+
+
+totale += ordine.totale;
+
+
+testo +=
+
+"🍕 "+ordine.tipo+
+"<br>"+
+
+(ordine.tavolo || ordine.cliente || "")+
+
+"<br>€ "+
+ordine.totale+
+
+"<br><br>";
+
+
+
+});
+
+
+
+if(testo==""){
+
+testo="Nessun ordine aperto";
+
+}
+
+
+
+document.getElementById("conto").innerHTML=
+testo;
+
+
+document.getElementById("totale").innerHTML=
+totale.toFixed(2);
+
+
+
+
+
+function chiudi(){
+
+
+svuotaOrdini();
+
+
+alert("Conto chiuso ✅");
+
+
+location.reload();
+
+
+}
+
+
+</script>
 
 
 
