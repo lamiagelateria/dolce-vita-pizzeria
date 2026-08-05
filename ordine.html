@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
 
 <meta charset="UTF-8">
@@ -19,80 +20,78 @@ body {
 
 h1 {
     text-align:center;
-    font-size:38px;
+    font-size:40px;
 }
 
 
 .box {
+
     background:#333;
     margin:20px;
     padding:25px;
     border-radius:20px;
     font-size:25px;
+
 }
 
 
 button {
+
     width:100%;
     padding:25px;
     margin:10px 0;
-    border-radius:20px;
-    border:none;
     background:#444;
     color:white;
+    border:none;
+    border-radius:20px;
     font-size:25px;
     font-weight:bold;
+
 }
 
 
 button:hover {
+
     background:#555;
+
 }
 
 
 .totale {
-    color:#4cff4c;
+
+    color:#39ff39;
     font-size:35px;
+
 }
 
-
-.indietro {
-    display:block;
-    text-align:center;
-    margin:20px;
-    padding:20px;
-    background:#333;
-    border-radius:20px;
-    color:white;
-    text-decoration:none;
-    font-size:25px;
-}
 
 </style>
 
 </head>
 
 
+
 <body>
 
 
-<h1>🍕 ORDINE</h1>
+<h1>🍕 DOLCE VITA</h1>
+
 
 
 <div class="box">
 
-Tavolo:
-<span id="tavolo">-</span>
+🍽️ Tavolo:
+<span id="tavolo"></span>
 
 <br><br>
 
-Persone:
-<span id="persone">-</span>
+👥 Persone:
+<span id="persone"></span>
 
 <br><br>
 
-Coperto:
-€ <span id="coperto">0.00</span>
+💶 Coperto:
+€ <span id="coperto"></span>
 
 </div>
 
@@ -100,30 +99,32 @@ Coperto:
 
 <div class="box">
 
-<h2>Menu</h2>
+
+<h2>🍕 Menu</h2>
+
 
 <button onclick="aggiungi('Margherita',7)">
-🍕 Margherita €7,00
+🍕 Margherita - €7
 </button>
 
 
 <button onclick="aggiungi('Diavola',8)">
-🍕 Diavola €8,00
+🍕 Diavola - €8
 </button>
 
 
-<button onclick="aggiungi('Quattro Formaggi',9)">
-🍕 Quattro Formaggi €9,00
+<button onclick="aggiungi('4 Formaggi',9)">
+🍕 4 Formaggi - €9
 </button>
 
 
 <button onclick="aggiungi('Patatine',4)">
-🍟 Patatine €4,00
+🍟 Patatine - €4
 </button>
 
 
 <button onclick="aggiungi('Bibita',3)">
-🥤 Bibita €3,00
+🥤 Bibita - €3
 </button>
 
 
@@ -133,7 +134,9 @@ Coperto:
 
 <div class="box">
 
-<h2>Ordine</h2>
+
+<h2>🧾 Ordine</h2>
+
 
 <div id="lista">
 Nessun prodotto
@@ -142,41 +145,90 @@ Nessun prodotto
 
 <br>
 
+
 <div class="totale">
 
-Totale: € <span id="totale">0.00</span>
+Totale:
+€ <span id="totale">0.00</span>
 
 </div>
 
 
 </div>
-
-
-
-<a class="indietro" href="tavoli.html">
-⬅️ Torna ai tavoli
-</a>
-
 
 
 
 <script>
 
+
 let totale = 0;
+
+
+let parametri = new URLSearchParams(
+window.location.search
+);
+
+
+
+let tavolo =
+parametri.get("tavolo");
+
+
+let persone =
+parametri.get("persone");
+
+
+let coperto =
+parametri.get("coperto");
+
+
+
+document.getElementById("tavolo").innerHTML =
+tavolo;
+
+
+document.getElementById("persone").innerHTML =
+persone;
+
+
+document.getElementById("coperto").innerHTML =
+coperto;
+
+
+
+totale = Number(coperto);
+
+
+document.getElementById("totale").innerHTML =
+totale.toFixed(2);
+
+
+
 
 
 function aggiungi(nome,prezzo){
 
-let lista=document.getElementById("lista");
+
+let lista =
+document.getElementById("lista");
+
 
 
 if(lista.innerHTML=="Nessun prodotto"){
-    lista.innerHTML="";
+
+lista.innerHTML="";
+
 }
 
 
-lista.innerHTML += 
-"🍕 " + nome + " €" + prezzo.toFixed(2) + "<br>";
+
+lista.innerHTML +=
+"🍕 "
++ nome
++ " €"
++ prezzo.toFixed(2)
++ "<br>";
+
 
 
 totale += prezzo;
@@ -185,6 +237,7 @@ totale += prezzo;
 document.getElementById("totale").innerHTML =
 totale.toFixed(2);
 
+
 }
 
 
@@ -192,4 +245,5 @@ totale.toFixed(2);
 
 
 </body>
+
 </html>
