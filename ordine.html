@@ -6,19 +6,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Ordine</title>
+<title>Ordine Dolce Vita</title>
 
 <style>
 
 body{
-margin:0;
 background:#181818;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial;
+margin:0;
 }
 
 h1{
 text-align:center;
+color:#ffd000;
 }
 
 .box{
@@ -34,44 +35,36 @@ padding:18px;
 margin:8px 0;
 border:0;
 border-radius:15px;
-background:#444;
+font-size:22px;
+background:#555;
 color:white;
-font-size:20px;
 font-weight:bold;
+}
+
+.totale{
+font-size:35px;
+color:#4cff4c;
 }
 
 .invia{
 background:#197619;
 }
 
-.cancella{
-background:#8a1616;
-}
-
-.totale{
-color:#4cff4c;
-font-size:32px;
-}
-
 </style>
 
 </head>
 
+
 <body>
 
 
-<h1>🍕 ORDINE TAVOLO</h1>
+<h1>🍕 ORDINE</h1>
 
 
 <div class="box">
 
-Tavolo:
-<span id="tavolo"></span>
-
-<br><br>
-
-Coperto:
-€<span id="coperto"></span>
+<h2>Tavolo:</h2>
+<span id="tavolo">-</span>
 
 </div>
 
@@ -81,16 +74,19 @@ Coperto:
 
 <h2>🍕 Pizze</h2>
 
-<button onclick="aggiungiPizza('Margherita',7)">
-🍕 Margherita €7
+
+<button onclick="aggiungi('Margherita',7)">
+Margherita €7
 </button>
 
-<button onclick="aggiungiPizza('Diavola',8)">
-🍕 Diavola €8
+
+<button onclick="aggiungi('Diavola',8)">
+Diavola €8
 </button>
 
-<button onclick="aggiungiPizza('4 Formaggi',9)">
-🍕 4 Formaggi €9
+
+<button onclick="aggiungi('4 Formaggi',9)">
+4 Formaggi €9
 </button>
 
 
@@ -104,95 +100,50 @@ Coperto:
 <h2>🧾 Ordine</h2>
 
 <div id="lista">
-Vuoto
+Nessun prodotto
 </div>
+
 
 <br>
 
+
 <div class="totale">
 
-€ <span id="totale">0</span>
+Totale € <span id="totale">0.00</span>
 
 </div>
 
 
-<button class="invia" onclick="mandaCucina()">
+</div>
+
+
+
+
+<div class="box">
+
+
+<button class="invia" onclick="inviaCucina()">
+
 👨‍🍳 INVIA IN CUCINA
-</button>
 
-
-<button class="cancella" onclick="cancella()">
-❌ CANCELLA
 </button>
 
 
 </div>
 
-
-
-
-<script src="gestione.js"></script>
-
-<script src="tavoli.js"></script>
 
 
 
 <script>
 
 
-let dati =
-new URLSearchParams(window.location.search);
-
-
-let tavolo =
-dati.get("tavolo");
-
-
-let coperto =
-Number(dati.get("coperto"));
-
-
-
-document.getElementById("tavolo").innerHTML=tavolo;
-
-document.getElementById("coperto").innerHTML=coperto.toFixed(2);
-
-
-
 let prodotti=[];
 
-let totale=coperto;
+let totale=0;
 
 
 
-
-function aggiungiPizza(nome,prezzo){
-
-
-let modifica =
-confirm(
-"Vuoi modificare questa pizza?"
-);
-
-
-if(modifica){
-
-
-window.location.href =
-"modifica_pizza.html?nome="
-+nome+
-"&prezzo="
-+prezzo+
-"&tavolo="
-+tavolo+
-"&coperto="
-+coperto;
-
-
-return;
-
-}
-
+function aggiungi(nome,prezzo){
 
 
 prodotti.push({
@@ -204,7 +155,7 @@ prezzo:prezzo
 });
 
 
-totale += prezzo;
+totale = totale + prezzo;
 
 
 mostra();
@@ -221,23 +172,15 @@ function mostra(){
 let testo="";
 
 
-prodotti.forEach(p=>{
+prodotti.forEach(function(p){
 
 
-testo +=
-"🍕 "+p.nome+
-" €"+p.prezzo+
+testo += 
+p.nome+" €"+p.prezzo+
 "<br>";
 
 
 });
-
-
-if(testo==""){
-
-testo="Vuoto";
-
-}
 
 
 document.getElementById("lista").innerHTML=testo;
@@ -252,52 +195,18 @@ totale.toFixed(2);
 
 
 
-
-function mandaCucina(){
-
-
-let ordine={
-
-tipo:"Tavolo",
-
-tavolo:tavolo,
-
-prodotti:prodotti,
-
-totale:totale,
-
-stato:"In preparazione"
-
-};
+function inviaCucina(){
 
 
-salvaOrdine(ordine);
+alert("Ordine inviato in cucina ✅");
 
-
-occupaTavolo(tavolo);
-
-
-alert("Mandato in cucina ✅");
-
-
-}
-
-
-
-
-function cancella(){
-
-prodotti=[];
-
-totale=coperto;
-
-mostra();
 
 }
 
 
 
 </script>
+
 
 
 </body>
