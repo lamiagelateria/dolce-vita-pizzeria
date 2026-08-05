@@ -10,75 +10,57 @@
 
 <style>
 
-body {
-    margin:0;
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
+body{
+margin:0;
+background:#181818;
+color:white;
+font-family:Arial,sans-serif;
 }
 
-h1 {
-    text-align:center;
-    font-size:40px;
+h1{
+text-align:center;
+font-size:40px;
 }
 
-.box {
-    background:#333;
-    margin:20px;
-    padding:25px;
-    border-radius:20px;
+.box{
+background:#333;
+margin:20px;
+padding:25px;
+border-radius:20px;
 }
 
-
-input {
-
-    width:100%;
-    padding:18px;
-    margin:10px 0;
-    border-radius:15px;
-    border:none;
-    font-size:20px;
-
+input,button{
+width:100%;
+padding:20px;
+margin:10px 0;
+border-radius:15px;
+border:none;
+font-size:22px;
 }
 
-
-button {
-
-    width:100%;
-    padding:22px;
-    margin-top:10px;
-    border:none;
-    border-radius:20px;
-    background:#197619;
-    color:white;
-    font-size:25px;
-    font-weight:bold;
-
+button{
+background:#197619;
+color:white;
+font-weight:bold;
 }
 
-
-.ordine {
-
+.ordine{
 background:#222;
 padding:20px;
 border-radius:15px;
 font-size:22px;
-
 }
 
-
-.indietro {
-
+.indietro{
 display:block;
 margin:20px;
 padding:20px;
 background:#333;
-border-radius:20px;
-text-align:center;
 color:white;
+text-align:center;
+border-radius:20px;
 text-decoration:none;
 font-size:25px;
-
 }
 
 </style>
@@ -92,27 +74,18 @@ font-size:25px;
 <h1>🛍️ ASPORTO</h1>
 
 
-
 <div class="box">
-
-
-<h2>Nuovo ordine</h2>
 
 
 <input id="nome" placeholder="Nome cliente">
 
-
 <input id="telefono" placeholder="Telefono">
-
 
 <input id="ora" type="time">
 
 
-
 <button onclick="creaOrdine()">
-
-✅ CREA ORDINE ASPORTO
-
+✅ SALVA ORDINE ASPORTO
 </button>
 
 
@@ -120,14 +93,13 @@ font-size:25px;
 
 
 
-
 <div class="box">
 
 
-<h2>Ordine</h2>
+<h2>Ordine creato</h2>
 
 
-<div class="ordine" id="ordine">
+<div id="ordine" class="ordine">
 
 Nessun ordine
 
@@ -138,14 +110,13 @@ Nessun ordine
 
 
 
-
 <a class="indietro" href="index.html">
-
 ⬅️ Torna alla cassa
-
 </a>
 
 
+
+<script src="gestione.js"></script>
 
 
 <script>
@@ -154,30 +125,43 @@ Nessun ordine
 function creaOrdine(){
 
 
-let nome =
-document.getElementById("nome").value;
+let ordine={
+
+tipo:"Asporto",
+
+cliente:
+document.getElementById("nome").value,
+
+telefono:
+document.getElementById("telefono").value,
+
+ritiro:
+document.getElementById("ora").value,
+
+prodotti:[],
+
+totale:0,
+
+stato:"In preparazione"
+
+};
 
 
-let telefono =
-document.getElementById("telefono").value;
 
-
-let ora =
-document.getElementById("ora").value;
+salvaOrdine(ordine);
 
 
 
 document.getElementById("ordine").innerHTML =
 
-"🛍️ ASPORTO"+
-"<br><br>"+
-"👤 "+nome+
-"<br>📞 "+telefono+
-"<br>⏰ Ritiro ore "+ora+
-"<br><br>🟡 In preparazione";
+"✅ Ordine salvato<br><br>"+
+"👤 "+ordine.cliente+
+"<br>⏰ "+ordine.ritiro+
+"<br>🟡 "+ordine.stato;
 
 
 }
+
 
 
 </script>
