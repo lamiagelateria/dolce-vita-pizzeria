@@ -31,11 +31,11 @@ border-radius:20px;
 
 button{
 width:100%;
-padding:18px;
-margin:8px 0;
+padding:16px;
+margin:6px 0;
 border:0;
 border-radius:15px;
-font-size:20px;
+font-size:18px;
 font-weight:bold;
 background:#555;
 color:white;
@@ -64,9 +64,9 @@ font-size:35px;
 
 <div class="box">
 
-<h2>🍕 MENU PIZZE</h2>
+<h2>🍕 MENU</h2>
 
-<div id="menuPizze"></div>
+<div id="menu"></div>
 
 </div>
 
@@ -107,15 +107,20 @@ Totale € <span id="totale">0.00</span>
 
 
 
+
 <script src="pizze.js"></script>
+
+<script src="prodotti.js"></script>
+
 
 
 <script>
 
 
-let prodotti=[];
+let prodottiOrdine=[];
 
 let totale=0;
+
 
 
 
@@ -127,7 +132,7 @@ JSON.parse(localStorage.getItem("pizzaModificata"));
 
 if(pizzaSalvata){
 
-prodotti.push(pizzaSalvata);
+prodottiOrdine.push(pizzaSalvata);
 
 totale += pizzaSalvata.prezzo;
 
@@ -141,31 +146,25 @@ localStorage.removeItem("pizzaModificata");
 
 
 
-pizze.forEach(function(p){
+function aggiungi(nome,prezzo){
 
 
-document.getElementById("menuPizze").innerHTML +=
+prodottiOrdine.push({
 
+nome:nome,
 
-`
-
-<button onclick="modificaPizza('${p.nome}',${p.prezzo})">
-
-🍕 ${p.nome} €${p.prezzo}
-
-</button>
-
-
-`;
+prezzo:prezzo
 
 });
 
 
-
-
+totale += prezzo;
 
 
 mostra();
+
+
+}
 
 
 
@@ -193,6 +192,52 @@ prezzo;
 
 
 
+pizze.forEach(function(p){
+
+
+document.getElementById("menu").innerHTML +=
+
+
+`
+
+<button onclick="modificaPizza('${p.nome}',${p.prezzo})">
+
+🍕 ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
+prodotti.forEach(function(p){
+
+
+document.getElementById("menu").innerHTML +=
+
+
+`
+
+<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+
+${p.categoria} - ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
 
 function mostra(){
 
@@ -200,18 +245,19 @@ function mostra(){
 let testo="";
 
 
-prodotti.forEach(function(p){
+prodottiOrdine.forEach(function(p){
 
 
 testo +=
 
-"🍕 "+p.nome+
+"🍽️ "+p.nome+
 " €"+p.prezzo+
 "<br>";
 
 
 
 });
+
 
 
 if(testo==""){
@@ -221,16 +267,23 @@ testo="Nessun prodotto";
 }
 
 
-
 document.getElementById("lista").innerHTML=testo;
 
 
+document.getElementById("totale").innerHTML=
 
-document.getElementById("totale").innerHTML =
 totale.toFixed(2);
 
 
 }
+
+
+
+
+
+
+mostra();
+
 
 
 
@@ -242,21 +295,15 @@ function inviaCucina(){
 
 let ordine={
 
-
 tipo:"Tavolo",
 
-
-prodotti:prodotti,
-
+prodotti:prodottiOrdine,
 
 totale:totale,
 
-
 stato:"In preparazione"
 
-
 };
-
 
 
 
