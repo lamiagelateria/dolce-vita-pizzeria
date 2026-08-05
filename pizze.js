@@ -12,7 +12,6 @@ const pizze = [
 {nome:"4 Stagioni", prezzo:10},
 
 {nome:"4 Formaggi", prezzo:9},
-{nome:"Gorgonzola e noci", prezzo:11},
 {nome:"Bufalina", prezzo:10},
 {nome:"Burrata e pomodorini", prezzo:12},
 {nome:"Parmigiana", prezzo:10},
@@ -21,6 +20,7 @@ const pizze = [
 {nome:"Patate e rosmarino", prezzo:9},
 {nome:"Zucchine e ricotta", prezzo:10},
 {nome:"Melanzane grigliate", prezzo:10},
+{nome:"Gorgonzola e noci", prezzo:11},
 
 {nome:"Tonno e cipolla", prezzo:10},
 {nome:"Frutti di mare", prezzo:14},
@@ -31,31 +31,90 @@ const pizze = [
 {nome:"Speck e brie", prezzo:11},
 {nome:"Bresaola rucola e grana", prezzo:12},
 {nome:"Crudo e mozzarella", prezzo:11},
-{nome:"Salame piccante e nduja", prezzo:11},
-{nome:"Carbonara", prezzo:11},
+{nome:"Salame piccante", prezzo:10},
+{nome:"Nduja", prezzo:11},
 
+{nome:"Carbonara", prezzo:11},
 {nome:"Amatriciana", prezzo:10},
 {nome:"Cacio e pepe", prezzo:10},
 {nome:"Salsiccia e friarielli", prezzo:12},
 {nome:"Salsiccia e patate", prezzo:11},
-{nome:"Porcini", prezzo:12},
 
+{nome:"Porcini", prezzo:12},
 {nome:"Tartufo", prezzo:15},
 {nome:"Tartufo e funghi", prezzo:16},
 {nome:"Dolce Vita Speciale", prezzo:14},
 {nome:"Pizza Chef", prezzo:13},
-{nome:"Pizza Gourmet", prezzo:15},
 
+{nome:"Pizza Gourmet", prezzo:15},
 {nome:"Piccante speciale", prezzo:12},
 {nome:"Inferno", prezzo:12},
 {nome:"Messicana", prezzo:12},
 {nome:"BBQ", prezzo:13},
-{nome:"Americana", prezzo:11},
 
+{nome:"Americana", prezzo:11},
 {nome:"Italia", prezzo:11},
 {nome:"Tricolore", prezzo:12},
 {nome:"Contadina", prezzo:10},
 {nome:"Montanara", prezzo:12},
-{nome:"Campagnola", prezzo:11}
+{nome:"Rustica", prezzo:11},
+{nome:"Delizia", prezzo:12},
+{nome:"Fantasia", prezzo:13},
+{nome:"Speciale Casa", prezzo:14},
+{nome:"Bella Italia", prezzo:12},
 
-];
+{nome:"Boscaiola", prezzo:12},
+{nome:"Funghi e salsiccia", prezzo:11},
+{nome:"Speck e funghi", prezzo:12},
+{nome:"Speck e patate", prezzo:12},
+{nome:"Radicchio e gorgonzola", prezzo:11},
+
+{nome:"Cotto e mozzarella", prezzo:9},
+{nome:"Cotto e carciofi", prezzo:10},
+{nome:"Cotto e olive", prezzo:10},
+{nome:"Salame dolce", prezzo:9},
+{nome:"Salame e peperoni", prezzo:11},
+
+{nome:"Peperoni e salsiccia", prezzo:11},
+{nome:"Pancetta e cipolla", prezzo:11},
+{nome:"Guanciale e pecorino", prezzo:12},
+{nome:"Burrata e crudo", prezzo:13},
+{nome:"Mortadella e pistacchio", prezzo:14},
+
+{nome:"Pistacchio", prezzo:13},
+{nome:"Pistacchio e mortadella", prezzo:15},
+{nome:"Crema di formaggi", prezzo:12},
+{nome:"Blu e noci", prezzo:12},
+{nome:"Ricotta e spinaci", prezzo:10},
+
+{nome:"Zucca e speck", prezzo:12},
+{nome:"Patate e salsiccia", prezzo:11},
+{nome:"Patate e würstel", prezzo:10},
+{nome:"Pugliese", prezzo:10},
+{nome:"Calabrese", prezzo:11},
+
+{nome:"Siciliana", prezzo:11},
+{nome:"Napoletana speciale", prezzo:12},
+{nome:"Genovese", prezzo:11},
+{nome:"Ligure", prezzo:11},
+{nome:"Toscana", prezzo:12},
+
+{nome:"Romagnola", prezzo:11},
+{nome:"Veneta", prezzo:12},
+{nome:"Lombarda", prezzo:12},
+{nome:"Mediterranea", prezzo:13},
+{nome:"Greca", prezzo:12},
+
+{nome:"Feta e olive", prezzo:12},
+{nome:"Kebab", prezzo:12},
+{nome:"Chicken pizza", prezzo:13},
+{nome:"Texas", prezzo:13},
+{nome:"Hamburger pizza", prezzo:14},
+
+{nome:"Super Dolce Vita", prezzo:16},
+{nome:"Regina", prezzo:15},
+{nome:"Imperiale", prezzo:17},
+{nome:"La Preferita", prezzo:14},
+{nome:"Chef Deluxe", prezzo:18}
+
+];  
