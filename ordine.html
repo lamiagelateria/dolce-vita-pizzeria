@@ -35,10 +35,10 @@ padding:18px;
 margin:8px 0;
 border:0;
 border-radius:15px;
-font-size:21px;
+font-size:20px;
+font-weight:bold;
 background:#555;
 color:white;
-font-weight:bold;
 }
 
 .invia{
@@ -46,8 +46,8 @@ background:#197619;
 }
 
 .totale{
-font-size:35px;
 color:#4cff4c;
+font-size:35px;
 }
 
 </style>
@@ -61,10 +61,9 @@ color:#4cff4c;
 <h1>🍕 ORDINE DOLCE VITA</h1>
 
 
-
 <div class="box">
 
-<h2>🍕 PIZZE</h2>
+<h2>🍕 Menu pizze</h2>
 
 <div id="menuPizze"></div>
 
@@ -72,10 +71,9 @@ color:#4cff4c;
 
 
 
-
 <div class="box">
 
-<h2>🧾 ORDINE</h2>
+<h2>🧾 Ordine</h2>
 
 <div id="lista">
 Nessun prodotto
@@ -83,7 +81,6 @@ Nessun prodotto
 
 
 <br>
-
 
 <div class="totale">
 
@@ -108,6 +105,7 @@ Totale € <span id="totale">0.00</span>
 
 
 
+
 <script src="pizze.js"></script>
 
 
@@ -127,10 +125,9 @@ pizze.forEach(function(p){
 
 document.getElementById("menuPizze").innerHTML +=
 
-
 `
 
-<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+<button onclick="modificaPizza('${p.nome}',${p.prezzo})">
 
 🍕 ${p.nome} €${p.prezzo}
 
@@ -139,8 +136,29 @@ document.getElementById("menuPizze").innerHTML +=
 `;
 
 
+
 });
 
+
+
+
+
+
+function modificaPizza(nome,prezzo){
+
+
+window.location.href =
+
+"modifica_pizza.html?nome="
++
+encodeURIComponent(nome)
++
+"&prezzo="
++
+prezzo;
+
+
+}
 
 
 
@@ -180,19 +198,20 @@ prodotti.forEach(function(p){
 
 
 testo +=
-"🍕 "+p.nome+
-" €"+p.prezzo+
+"🍕 "
++p.nome+
+" €"
++p.prezzo+
 "<br>";
 
 
 });
 
 
-document.getElementById("lista").innerHTML =
-testo;
+document.getElementById("lista").innerHTML=testo;
 
 
-document.getElementById("totale").innerHTML =
+document.getElementById("totale").innerHTML=
 totale.toFixed(2);
 
 
@@ -246,7 +265,6 @@ window.location.href="cucina.html";
 
 
 </script>
-
 
 
 </body>
