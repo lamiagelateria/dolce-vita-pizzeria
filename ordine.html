@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
 
 <meta charset="UTF-8">
@@ -17,65 +16,55 @@ body {
     font-family:Arial,sans-serif;
 }
 
-
 h1 {
     text-align:center;
-    font-size:40px;
+    font-size:38px;
 }
-
 
 .box {
-
     background:#333;
     margin:20px;
-    padding:25px;
+    padding:20px;
     border-radius:20px;
-    font-size:25px;
-
 }
-
 
 button {
-
     width:100%;
-    padding:25px;
-    margin:10px 0;
+    padding:22px;
+    margin:8px 0;
+    border:none;
+    border-radius:18px;
     background:#444;
     color:white;
-    border:none;
-    border-radius:20px;
-    font-size:25px;
+    font-size:22px;
     font-weight:bold;
-
 }
 
-
-button:hover {
-
-    background:#555;
-
+button:active {
+    background:#666;
 }
-
 
 .totale {
-
-    color:#39ff39;
-    font-size:35px;
-
+    color:#45ff45;
+    font-size:32px;
 }
 
+.extra {
+    background:#5b3a00;
+}
+
+.rimuovi {
+    background:#6b0000;
+}
 
 </style>
 
 </head>
 
-
-
 <body>
 
 
 <h1>🍕 DOLCE VITA</h1>
-
 
 
 <div class="box">
@@ -99,32 +88,21 @@ button:hover {
 
 <div class="box">
 
+<h2>🍕 Scegli pizza</h2>
 
-<h2>🍕 Menu</h2>
 
-
-<button onclick="aggiungi('Margherita',7)">
-🍕 Margherita - €7
+<button onclick="apriPizza('Margherita',7)">
+🍕 Margherita €7
 </button>
 
 
-<button onclick="aggiungi('Diavola',8)">
-🍕 Diavola - €8
+<button onclick="apriPizza('Diavola',8)">
+🍕 Diavola €8
 </button>
 
 
-<button onclick="aggiungi('4 Formaggi',9)">
-🍕 4 Formaggi - €9
-</button>
-
-
-<button onclick="aggiungi('Patatine',4)">
-🍟 Patatine - €4
-</button>
-
-
-<button onclick="aggiungi('Bibita',3)">
-🥤 Bibita - €3
+<button onclick="apriPizza('4 Formaggi',9)">
+🍕 4 Formaggi €9
 </button>
 
 
@@ -132,8 +110,76 @@ button:hover {
 
 
 
-<div class="box">
 
+<div class="box" id="personalizza" style="display:none;">
+
+
+<h2>🔧 Personalizza pizza</h2>
+
+
+<div id="pizzaScelta"></div>
+
+
+<h3>Ingredienti da togliere</h3>
+
+
+<button class="rimuovi" onclick="togli('Mozzarella')">
+❌ Senza mozzarella
+</button>
+
+
+<button class="rimuovi" onclick="togli('Pomodoro')">
+❌ Senza pomodoro
+</button>
+
+
+<button class="rimuovi" onclick="togli('Basilico')">
+❌ Senza basilico
+</button>
+
+
+
+<h3>Extra</h3>
+
+
+<button class="extra" onclick="extra('Mozzarella extra',0.50)">
+➕ Mozzarella extra +€0,50
+</button>
+
+
+<button class="extra" onclick="extra('Prosciutto',1)">
+➕ Prosciutto +€1,00
+</button>
+
+
+<button class="extra" onclick="extra('Funghi',1)">
+➕ Funghi +€1,00
+</button>
+
+
+<button class="extra" onclick="extra('Patatine',1.50)">
+➕ Patatine +€1,50
+</button>
+
+
+<button class="extra" onclick="extra('Bufala',2)">
+➕ Bufala +€2,00
+</button>
+
+
+
+<button onclick="confermaPizza()">
+✅ Aggiungi all'ordine
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="box">
 
 <h2>🧾 Ordine</h2>
 
@@ -147,56 +193,35 @@ Nessun prodotto
 
 
 <div class="totale">
-
-Totale:
-€ <span id="totale">0.00</span>
-
+Totale € <span id="totale">0.00</span>
 </div>
 
 
 </div>
+
 
 
 
 <script>
 
 
-let totale = 0;
+let parametri = new URLSearchParams(window.location.search);
 
 
-let parametri = new URLSearchParams(
-window.location.search
-);
-
-
-
-let tavolo =
+document.getElementById("tavolo").innerHTML =
 parametri.get("tavolo");
 
 
-let persone =
+document.getElementById("persone").innerHTML =
 parametri.get("persone");
 
 
-let coperto =
+document.getElementById("coperto").innerHTML =
 parametri.get("coperto");
 
 
 
-document.getElementById("tavolo").innerHTML =
-tavolo;
-
-
-document.getElementById("persone").innerHTML =
-persone;
-
-
-document.getElementById("coperto").innerHTML =
-coperto;
-
-
-
-totale = Number(coperto);
+let totale = Number(parametri.get("coperto"));
 
 
 document.getElementById("totale").innerHTML =
@@ -204,14 +229,68 @@ totale.toFixed(2);
 
 
 
+let pizzaAttuale="";
+let prezzoPizza=0;
+
+let modifiche=[];
 
 
-function aggiungi(nome,prezzo){
+
+function apriPizza(nome,prezzo){
+
+pizzaAttuale=nome;
+prezzoPizza=prezzo;
+
+modifiche=[];
+
+document.getElementById("personalizza").style.display="block";
+
+document.getElementById("pizzaScelta").innerHTML =
+"🍕 "+nome+" €"+prezzo;
+
+}
 
 
-let lista =
-document.getElementById("lista");
 
+
+function togli(nome){
+
+modifiche.push("❌ Senza "+nome);
+
+}
+
+
+
+
+function extra(nome,prezzo){
+
+modifiche.push("➕ "+nome);
+
+prezzoPizza += prezzo;
+
+}
+
+
+
+
+function confermaPizza(){
+
+
+let testo =
+"🍕 "+pizzaAttuale+
+" €"+prezzoPizza.toFixed(2);
+
+
+
+if(modifiche.length>0){
+
+testo += "<br>" + modifiche.join("<br>");
+
+}
+
+
+
+let lista=document.getElementById("lista");
 
 
 if(lista.innerHTML=="Nessun prodotto"){
@@ -221,21 +300,19 @@ lista.innerHTML="";
 }
 
 
-
-lista.innerHTML +=
-"🍕 "
-+ nome
-+ " €"
-+ prezzo.toFixed(2)
-+ "<br>";
+lista.innerHTML += testo+"<br><br>";
 
 
 
-totale += prezzo;
+totale += prezzoPizza;
 
 
 document.getElementById("totale").innerHTML =
 totale.toFixed(2);
+
+
+
+document.getElementById("personalizza").style.display="none";
 
 
 }
@@ -245,5 +322,4 @@ totale.toFixed(2);
 
 
 </body>
-
 </html>
