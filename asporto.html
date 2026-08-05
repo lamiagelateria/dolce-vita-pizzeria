@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dolce Vita - Asporto</title>
+
+<style>
+
+body {
+    margin:0;
+    background:#181818;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+h1 {
+    text-align:center;
+    font-size:40px;
+}
+
+.box {
+    background:#333;
+    margin:20px;
+    padding:25px;
+    border-radius:20px;
+}
+
+
+input {
+
+    width:100%;
+    padding:18px;
+    margin:10px 0;
+    border-radius:15px;
+    border:none;
+    font-size:20px;
+
+}
+
+
+button {
+
+    width:100%;
+    padding:22px;
+    margin-top:10px;
+    border:none;
+    border-radius:20px;
+    background:#197619;
+    color:white;
+    font-size:25px;
+    font-weight:bold;
+
+}
+
+
+.ordine {
+
+background:#222;
+padding:20px;
+border-radius:15px;
+font-size:22px;
+
+}
+
+
+.indietro {
+
+display:block;
+margin:20px;
+padding:20px;
+background:#333;
+border-radius:20px;
+text-align:center;
+color:white;
+text-decoration:none;
+font-size:25px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>🛍️ ASPORTO</h1>
+
+
+
+<div class="box">
+
+
+<h2>Nuovo ordine</h2>
+
+
+<input id="nome" placeholder="Nome cliente">
+
+
+<input id="telefono" placeholder="Telefono">
+
+
+<input id="ora" type="time">
+
+
+
+<button onclick="creaOrdine()">
+
+✅ CREA ORDINE ASPORTO
+
+</button>
+
+
+</div>
+
+
+
+
+<div class="box">
+
+
+<h2>Ordine</h2>
+
+
+<div class="ordine" id="ordine">
+
+Nessun ordine
+
+</div>
+
+
+</div>
+
+
+
+
+<a class="indietro" href="index.html">
+
+⬅️ Torna alla cassa
+
+</a>
+
+
+
+
+<script>
+
+
+function creaOrdine(){
+
+
+let nome =
+document.getElementById("nome").value;
+
+
+let telefono =
+document.getElementById("telefono").value;
+
+
+let ora =
+document.getElementById("ora").value;
+
+
+
+document.getElementById("ordine").innerHTML =
+
+"🛍️ ASPORTO"+
+"<br><br>"+
+"👤 "+nome+
+"<br>📞 "+telefono+
+"<br>⏰ Ritiro ore "+ora+
+"<br><br>🟡 In preparazione";
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
