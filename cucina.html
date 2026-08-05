@@ -6,70 +6,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Cucina</title>
+<title>Cucina Dolce Vita</title>
 
 <style>
 
 body{
-margin:0;
 background:#181818;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial;
+margin:0;
 }
 
 h1{
 text-align:center;
-font-size:40px;
+color:#ffd000;
 }
 
+.box{
+background:#333;
+margin:15px;
+padding:20px;
+border-radius:20px;
+}
 
 .ordine{
-
-background:#333;
-margin:20px;
-padding:25px;
-border-radius:20px;
-font-size:22px;
-
+background:#444;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
 }
-
 
 button{
-
 width:100%;
-padding:20px;
+padding:18px;
 margin-top:10px;
-border:none;
-border-radius:18px;
-font-size:22px;
+border:0;
+border-radius:15px;
+font-size:20px;
 font-weight:bold;
-color:white;
-
-}
-
-
-.pronto{
 background:#197619;
-}
-
-
-.elimina{
-background:#8a1616;
-}
-
-
-.indietro{
-
-display:block;
-margin:20px;
-padding:20px;
-background:#333;
 color:white;
-text-align:center;
-border-radius:20px;
-text-decoration:none;
-font-size:25px;
+}
 
+.vuoto{
+text-align:center;
+font-size:25px;
 }
 
 </style>
@@ -77,89 +58,74 @@ font-size:25px;
 </head>
 
 
-
 <body>
 
 
-<h1>👨‍🍳 CUCINA</h1>
+<h1>👨‍🍳 CUCINA DOLCE VITA</h1>
 
 
-
-<div id="lista">
-
-</div>
+<div id="lista"></div>
 
 
-
-<a class="indietro" href="index.html">
-
-⬅️ Torna alla cassa
-
-</a>
-
-
-
-<script src="gestione.js"></script>
 
 
 <script>
 
 
-function mostraOrdini(){
-
-
 let ordini =
-prendiOrdini();
+
+JSON.parse(localStorage.getItem("ordini")) || [];
+
 
 
 let contenuto="";
 
 
 
-if(ordini.length==0){
+
+if(ordini.length===0){
+
 
 contenuto=
 
-"<div class='ordine'>"+
-"Nessun ordine aperto"+
-"</div>";
-
-}
+"<div class='box vuoto'>Nessun ordine</div>";
 
 
 
-ordini.forEach((ordine,index)=>{
+}else{
+
+
+
+ordini.forEach(function(o,index){
+
 
 
 contenuto +=
 
-"<div class='ordine'>"+
 
-"<h2>🍕 "+ordine.tipo+"</h2>"+
+`
 
-"👤 "+(ordine.cliente || "")+
-"<br>"+
-
-"🍽️ "+(ordine.tavolo || "")+
-"<br><br>"+
-
-"Stato: 🟡 "+
-ordine.stato+
-
-"<br><br>"+
+<div class="box">
 
 
-"<button class='pronto' onclick='pronto("+index+")'>"+
-"✅ PRONTO"+
-"</button>"+
+<h2>🍕 Ordine ${index+1}</h2>
 
 
-"<button class='elimina' onclick='elimina("+index+")'>"+
-"❌ ELIMINA"+
-"</button>"+
+<div class="ordine">
 
 
-"</div>";
+`;
+
+
+
+o.prodotti.forEach(function(p){
+
+
+contenuto +=
+
+"🍕 "+p.nome+
+" €"+p.prezzo+
+"<br>";
 
 
 
@@ -167,44 +133,79 @@ ordine.stato+
 
 
 
+contenuto +=
+
+
+`
+
+<br>
+
+💶 Totale: €${o.totale.toFixed(2)}
+
+<br>
+
+
+<button onclick="pronto(${index})">
+
+✅ ORDINE PRONTO
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
 document.getElementById("lista").innerHTML =
 contenuto;
 
 
-}
 
 
 
 
-function pronto(numero){
+function pronto(index){
 
-aggiornaStato(
-numero,
-"Pronto"
+
+ordini.splice(index,1);
+
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
 );
 
-mostraOrdini();
+
+
+location.reload();
+
 
 }
 
-
-
-
-function elimina(numero){
-
-eliminaOrdine(numero);
-
-mostraOrdini();
-
-}
-
-
-
-
-mostraOrdini();
 
 
 </script>
+
 
 
 </body>
