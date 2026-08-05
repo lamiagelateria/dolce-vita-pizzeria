@@ -1,70 +1,74 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Ordine</title>
+<title>Dolce Vita - Ordine Tavolo</title>
 
 <style>
 
-body {
-    margin:0;
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
+body{
+margin:0;
+background:#181818;
+color:white;
+font-family:Arial,sans-serif;
 }
 
-h1 {
-    text-align:center;
-    font-size:38px;
+h1{
+text-align:center;
+font-size:38px;
 }
 
-.box {
-    background:#333;
-    margin:20px;
-    padding:20px;
-    border-radius:20px;
+.box{
+background:#333;
+margin:20px;
+padding:25px;
+border-radius:20px;
+font-size:22px;
 }
 
-button {
-    width:100%;
-    padding:22px;
-    margin:8px 0;
-    border:none;
-    border-radius:18px;
-    background:#444;
-    color:white;
-    font-size:22px;
-    font-weight:bold;
+
+button{
+width:100%;
+padding:22px;
+margin:10px 0;
+border:none;
+border-radius:20px;
+background:#444;
+color:white;
+font-size:23px;
+font-weight:bold;
 }
 
-button:active {
-    background:#666;
+
+.invia{
+background:#197619;
 }
 
-.totale {
-    color:#45ff45;
-    font-size:32px;
+
+.elimina{
+background:#8a1616;
 }
 
-.extra {
-    background:#5b3a00;
+
+.totale{
+color:#4cff4c;
+font-size:35px;
 }
 
-.rimuovi {
-    background:#6b0000;
-}
 
 </style>
 
 </head>
 
+
 <body>
 
 
-<h1>🍕 DOLCE VITA</h1>
+<h1>🍕 ORDINE TAVOLO</h1>
 
 
 <div class="box">
@@ -88,104 +92,50 @@ button:active {
 
 <div class="box">
 
-<h2>🍕 Scegli pizza</h2>
+
+<h2>Menu veloce</h2>
 
 
-<button onclick="apriPizza('Margherita',7)">
+<button onclick="aggiungi('Margherita',7)">
 🍕 Margherita €7
 </button>
 
 
-<button onclick="apriPizza('Diavola',8)">
+<button onclick="aggiungi('Diavola',8)">
 🍕 Diavola €8
 </button>
 
 
-<button onclick="apriPizza('4 Formaggi',9)">
+<button onclick="aggiungi('4 Formaggi',9)">
 🍕 4 Formaggi €9
 </button>
 
 
-</div>
-
-
-
-
-<div class="box" id="personalizza" style="display:none;">
-
-
-<h2>🔧 Personalizza pizza</h2>
-
-
-<div id="pizzaScelta"></div>
-
-
-<h3>Ingredienti da togliere</h3>
-
-
-<button class="rimuovi" onclick="togli('Mozzarella')">
-❌ Senza mozzarella
+<button onclick="aggiungi('Patatine',4)">
+🍟 Patatine €4
 </button>
 
 
-<button class="rimuovi" onclick="togli('Pomodoro')">
-❌ Senza pomodoro
-</button>
-
-
-<button class="rimuovi" onclick="togli('Basilico')">
-❌ Senza basilico
-</button>
-
-
-
-<h3>Extra</h3>
-
-
-<button class="extra" onclick="extra('Mozzarella extra',0.50)">
-➕ Mozzarella extra +€0,50
-</button>
-
-
-<button class="extra" onclick="extra('Prosciutto',1)">
-➕ Prosciutto +€1,00
-</button>
-
-
-<button class="extra" onclick="extra('Funghi',1)">
-➕ Funghi +€1,00
-</button>
-
-
-<button class="extra" onclick="extra('Patatine',1.50)">
-➕ Patatine +€1,50
-</button>
-
-
-<button class="extra" onclick="extra('Bufala',2)">
-➕ Bufala +€2,00
-</button>
-
-
-
-<button onclick="confermaPizza()">
-✅ Aggiungi all'ordine
+<button onclick="aggiungi('Coca Cola',3)">
+🥤 Coca Cola €3
 </button>
 
 
 </div>
-
 
 
 
 
 <div class="box">
 
+
 <h2>🧾 Ordine</h2>
 
 
 <div id="lista">
+
 Nessun prodotto
+
 </div>
 
 
@@ -193,127 +143,164 @@ Nessun prodotto
 
 
 <div class="totale">
-Totale € <span id="totale">0.00</span>
+
+Totale:
+€ <span id="totale">0</span>
+
 </div>
 
 
+<button class="invia" onclick="mandaCucina()">
+
+👨‍🍳 INVIA IN CUCINA
+
+</button>
+
+
+<button class="elimina" onclick="cancella()">
+
+❌ CANCELLA ORDINE
+
+</button>
+
+
 </div>
 
 
+
+<script src="gestione.js"></script>
 
 
 <script>
 
 
-let parametri = new URLSearchParams(window.location.search);
+let parametri =
+new URLSearchParams(window.location.search);
 
 
-document.getElementById("tavolo").innerHTML =
+
+let tavolo =
 parametri.get("tavolo");
 
 
-document.getElementById("persone").innerHTML =
+let persone =
 parametri.get("persone");
 
 
-document.getElementById("coperto").innerHTML =
-parametri.get("coperto");
+let coperto =
+Number(parametri.get("coperto"));
 
 
 
-let totale = Number(parametri.get("coperto"));
+document.getElementById("tavolo").innerHTML=tavolo;
+
+document.getElementById("persone").innerHTML=persone;
+
+document.getElementById("coperto").innerHTML=coperto.toFixed(2);
 
 
-document.getElementById("totale").innerHTML =
+
+let prodotti=[];
+
+
+let totale=coperto;
+
+
+
+function aggiungi(nome,prezzo){
+
+
+prodotti.push({
+
+nome:nome,
+prezzo:prezzo
+
+});
+
+
+totale += prezzo;
+
+
+mostra();
+
+
+}
+
+
+
+function mostra(){
+
+
+let testo="";
+
+
+prodotti.forEach(p=>{
+
+testo +=
+"🍕 "+p.nome+
+" €"+p.prezzo+
+"<br>";
+
+});
+
+
+if(testo==""){
+
+testo="Nessun prodotto";
+
+}
+
+
+document.getElementById("lista").innerHTML=testo;
+
+
+document.getElementById("totale").innerHTML=
 totale.toFixed(2);
 
 
-
-let pizzaAttuale="";
-let prezzoPizza=0;
-
-let modifiche=[];
-
-
-
-function apriPizza(nome,prezzo){
-
-pizzaAttuale=nome;
-prezzoPizza=prezzo;
-
-modifiche=[];
-
-document.getElementById("personalizza").style.display="block";
-
-document.getElementById("pizzaScelta").innerHTML =
-"🍕 "+nome+" €"+prezzo;
-
 }
 
 
 
 
-function togli(nome){
+function mandaCucina(){
 
-modifiche.push("❌ Senza "+nome);
+
+let ordine={
+
+tipo:"Tavolo",
+
+tavolo:tavolo,
+
+persone:persone,
+
+prodotti:prodotti,
+
+totale:totale,
+
+stato:"In preparazione"
+
+};
+
+
+salvaOrdine(ordine);
+
+
+
+alert("Ordine inviato in cucina ✅");
+
 
 }
 
 
 
+function cancella(){
 
-function extra(nome,prezzo){
+prodotti=[];
 
-modifiche.push("➕ "+nome);
+totale=coperto;
 
-prezzoPizza += prezzo;
-
-}
-
-
-
-
-function confermaPizza(){
-
-
-let testo =
-"🍕 "+pizzaAttuale+
-" €"+prezzoPizza.toFixed(2);
-
-
-
-if(modifiche.length>0){
-
-testo += "<br>" + modifiche.join("<br>");
-
-}
-
-
-
-let lista=document.getElementById("lista");
-
-
-if(lista.innerHTML=="Nessun prodotto"){
-
-lista.innerHTML="";
-
-}
-
-
-lista.innerHTML += testo+"<br><br>";
-
-
-
-totale += prezzoPizza;
-
-
-document.getElementById("totale").innerHTML =
-totale.toFixed(2);
-
-
-
-document.getElementById("personalizza").style.display="none";
-
+mostra();
 
 }
 
@@ -322,4 +309,5 @@ document.getElementById("personalizza").style.display="none";
 
 
 </body>
+
 </html>
