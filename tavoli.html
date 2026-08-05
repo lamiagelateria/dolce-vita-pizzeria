@@ -17,66 +17,39 @@ color:white;
 font-family:Arial,sans-serif;
 }
 
-
 h1{
 text-align:center;
 font-size:40px;
 }
 
-
 .sezione{
-
 margin:20px;
-
 }
 
-
 .griglia{
-
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:15px;
-
 }
 
-
 .tavolo{
-
 padding:25px 5px;
 border-radius:18px;
 text-align:center;
-font-size:22px;
+font-size:20px;
 font-weight:bold;
 background:#197619;
-
 }
-
 
 .occupato{
-
 background:#8a1616;
-
 }
-
 
 .prenotato{
-
 background:#8a5a00;
-
 }
-
-
-
-a{
-
-text-decoration:none;
-color:white;
-
-}
-
 
 .indietro{
-
 display:block;
 margin:25px;
 padding:20px;
@@ -84,12 +57,11 @@ background:#333;
 border-radius:20px;
 text-align:center;
 font-size:25px;
-
+color:white;
+text-decoration:none;
 }
 
-
 </style>
-
 
 </head>
 
@@ -102,29 +74,21 @@ font-size:25px;
 
 <div class="sezione">
 
-
 <h2>🏠 Sala interna</h2>
-
 
 <div class="griglia" id="interni"></div>
 
-
 </div>
-
 
 
 
 <div class="sezione">
 
-
 <h2>🌳 Sala esterna</h2>
-
 
 <div class="griglia" id="esterni"></div>
 
-
 </div>
-
 
 
 
@@ -134,14 +98,71 @@ font-size:25px;
 
 
 
+<script src="tavoli.js"></script>
+
+
 <script>
 
 
 let coperto=0.50;
 
 
+let stati =
+caricaStatoTavoli();
 
-function creaTavoli(){
+
+
+function creaTavolo(numero,sala){
+
+
+let stato =
+stati[numero] || "libero";
+
+
+let classe="tavolo";
+
+
+if(stato=="occupato"){
+
+classe+=" occupato";
+
+}
+
+
+if(stato=="prenotato"){
+
+classe+=" prenotato";
+
+}
+
+
+
+return `
+
+<a href="ordine.html?tavolo=${numero}&persone=2&coperto=${coperto}">
+
+<div class="${classe}">
+
+🍽️ ${numero}
+
+<br>
+
+${sala}
+
+<br>
+
+${stato.toUpperCase()}
+
+</div>
+
+</a>
+
+`;
+
+}
+
+
+
 
 let interno="";
 
@@ -152,56 +173,27 @@ let esterno="";
 for(let i=1;i<=120;i++){
 
 
-let sala;
-
-
 if(i<=60){
 
-sala="Interna";
-
-interno +=
-
-`
-<a href="ordine.html?tavolo=${i}&persone=2&coperto=${coperto}">
-<div class="tavolo">
-🍽️ ${i}
-<br>
-Sala interna
-</div>
-</a>
-`;
+interno += creaTavolo(i,"Sala interna");
 
 }
 
 else{
 
-esterno +=
-
-`
-<a href="ordine.html?tavolo=${i}&persone=2&coperto=${coperto}">
-<div class="tavolo">
-🍽️ ${i}
-<br>
-Sala esterna
-</div>
-</a>
-`;
+esterno += creaTavolo(i,"Sala esterna");
 
 }
 
 
 }
+
 
 
 document.getElementById("interni").innerHTML=interno;
 
 document.getElementById("esterni").innerHTML=esterno;
 
-
-}
-
-
-creaTavoli();
 
 
 </script>
