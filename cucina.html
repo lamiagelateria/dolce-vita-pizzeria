@@ -10,63 +10,63 @@
 
 <style>
 
-body {
-    margin:0;
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
+body{
+margin:0;
+background:#181818;
+color:white;
+font-family:Arial,sans-serif;
+}
+
+h1{
+text-align:center;
+font-size:40px;
 }
 
 
-h1 {
-    text-align:center;
-    font-size:40px;
-}
+.ordine{
 
-
-.ordine {
-
-    background:#333;
-    margin:20px;
-    padding:25px;
-    border-radius:20px;
-    font-size:24px;
+background:#333;
+margin:20px;
+padding:25px;
+border-radius:20px;
+font-size:22px;
 
 }
 
 
-button {
+button{
 
-    width:100%;
-    padding:22px;
-    margin-top:10px;
-    border:none;
-    border-radius:20px;
-    font-size:22px;
-    font-weight:bold;
-    color:white;
+width:100%;
+padding:20px;
+margin-top:10px;
+border:none;
+border-radius:18px;
+font-size:22px;
+font-weight:bold;
+color:white;
+
 }
 
 
-.pronto {
-    background:#168a16;
+.pronto{
+background:#197619;
 }
 
 
-.elimina {
-    background:#8a1616;
+.elimina{
+background:#8a1616;
 }
 
 
-.indietro {
+.indietro{
 
 display:block;
 margin:20px;
 padding:20px;
 background:#333;
-border-radius:20px;
-text-align:center;
 color:white;
+text-align:center;
+border-radius:20px;
 text-decoration:none;
 font-size:25px;
 
@@ -77,6 +77,7 @@ font-size:25px;
 </head>
 
 
+
 <body>
 
 
@@ -84,53 +85,126 @@ font-size:25px;
 
 
 
-<div class="ordine">
-
-<h2>🍕 Ordine #1</h2>
-
-<b>Tavolo 12</b>
-
-<br><br>
-
-1x Margherita
-
-<br>
-
-➕ Extra mozzarella
-
-<br>
-
-❌ Senza basilico
-
-<br><br>
-
-1x Diavola
-
-<br>
-
-➕ Extra salame
-
-
-<button class="pronto">
-✅ PRONTO
-</button>
-
-
-<button class="elimina">
-❌ ELIMINA ORDINE
-</button>
-
+<div id="lista">
 
 </div>
 
 
 
-
-
 <a class="indietro" href="index.html">
+
 ⬅️ Torna alla cassa
+
 </a>
 
+
+
+<script src="gestione.js"></script>
+
+
+<script>
+
+
+function mostraOrdini(){
+
+
+let ordini =
+prendiOrdini();
+
+
+let contenuto="";
+
+
+
+if(ordini.length==0){
+
+contenuto=
+
+"<div class='ordine'>"+
+"Nessun ordine aperto"+
+"</div>";
+
+}
+
+
+
+ordini.forEach((ordine,index)=>{
+
+
+contenuto +=
+
+"<div class='ordine'>"+
+
+"<h2>🍕 "+ordine.tipo+"</h2>"+
+
+"👤 "+(ordine.cliente || "")+
+"<br>"+
+
+"🍽️ "+(ordine.tavolo || "")+
+"<br><br>"+
+
+"Stato: 🟡 "+
+ordine.stato+
+
+"<br><br>"+
+
+
+"<button class='pronto' onclick='pronto("+index+")'>"+
+"✅ PRONTO"+
+"</button>"+
+
+
+"<button class='elimina' onclick='elimina("+index+")'>"+
+"❌ ELIMINA"+
+"</button>"+
+
+
+"</div>";
+
+
+
+});
+
+
+
+document.getElementById("lista").innerHTML =
+contenuto;
+
+
+}
+
+
+
+
+function pronto(numero){
+
+aggiornaStato(
+numero,
+"Pronto"
+);
+
+mostraOrdini();
+
+}
+
+
+
+
+function elimina(numero){
+
+eliminaOrdine(numero);
+
+mostraOrdini();
+
+}
+
+
+
+
+mostraOrdini();
+
+
+</script>
 
 
 </body>
