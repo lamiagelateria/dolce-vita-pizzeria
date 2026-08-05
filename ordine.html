@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dolce Vita - Ordine</title>
+
+<style>
+
+body {
+    margin:0;
+    background:#181818;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+
+h1 {
+    text-align:center;
+    font-size:38px;
+}
+
+
+.box {
+    background:#333;
+    margin:20px;
+    padding:25px;
+    border-radius:20px;
+    font-size:25px;
+}
+
+
+button {
+    width:100%;
+    padding:25px;
+    margin:10px 0;
+    border-radius:20px;
+    border:none;
+    background:#444;
+    color:white;
+    font-size:25px;
+    font-weight:bold;
+}
+
+
+button:hover {
+    background:#555;
+}
+
+
+.totale {
+    color:#4cff4c;
+    font-size:35px;
+}
+
+
+.indietro {
+    display:block;
+    text-align:center;
+    margin:20px;
+    padding:20px;
+    background:#333;
+    border-radius:20px;
+    color:white;
+    text-decoration:none;
+    font-size:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>🍕 ORDINE</h1>
+
+
+<div class="box">
+
+Tavolo:
+<span id="tavolo">-</span>
+
+<br><br>
+
+Persone:
+<span id="persone">-</span>
+
+<br><br>
+
+Coperto:
+€ <span id="coperto">0.00</span>
+
+</div>
+
+
+
+<div class="box">
+
+<h2>Menu</h2>
+
+<button onclick="aggiungi('Margherita',7)">
+🍕 Margherita €7,00
+</button>
+
+
+<button onclick="aggiungi('Diavola',8)">
+🍕 Diavola €8,00
+</button>
+
+
+<button onclick="aggiungi('Quattro Formaggi',9)">
+🍕 Quattro Formaggi €9,00
+</button>
+
+
+<button onclick="aggiungi('Patatine',4)">
+🍟 Patatine €4,00
+</button>
+
+
+<button onclick="aggiungi('Bibita',3)">
+🥤 Bibita €3,00
+</button>
+
+
+</div>
+
+
+
+<div class="box">
+
+<h2>Ordine</h2>
+
+<div id="lista">
+Nessun prodotto
+</div>
+
+
+<br>
+
+<div class="totale">
+
+Totale: € <span id="totale">0.00</span>
+
+</div>
+
+
+</div>
+
+
+
+<a class="indietro" href="tavoli.html">
+⬅️ Torna ai tavoli
+</a>
+
+
+
+
+<script>
+
+let totale = 0;
+
+
+function aggiungi(nome,prezzo){
+
+let lista=document.getElementById("lista");
+
+
+if(lista.innerHTML=="Nessun prodotto"){
+    lista.innerHTML="";
+}
+
+
+lista.innerHTML += 
+"🍕 " + nome + " €" + prezzo.toFixed(2) + "<br>";
+
+
+totale += prezzo;
+
+
+document.getElementById("totale").innerHTML =
+totale.toFixed(2);
+
+}
+
+
+</script>
+
+
+</body>
+</html>
