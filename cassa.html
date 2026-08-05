@@ -33,48 +33,37 @@ font-size:22px;
 
 
 button{
-
 width:100%;
 padding:22px;
 margin:10px 0;
 border:none;
 border-radius:20px;
-font-size:23px;
+font-size:22px;
 font-weight:bold;
 color:white;
-
 }
 
 
-.contanti{
-background:#197619;
-}
-
-
-.bancomat{
+.pagamento{
 background:#005f9e;
 }
 
 
-.stampa{
-background:#8a5a00;
-}
-
-
-.chiudi{
-background:#8a1616;
+.ordine{
+background:#222;
+padding:15px;
+border-radius:15px;
 }
 
 
 .totale{
-
 color:#4cff4c;
 font-size:38px;
-
 }
 
 
 </style>
+
 
 </head>
 
@@ -89,10 +78,10 @@ font-size:38px;
 <div class="box">
 
 
-<h2>🧾 Conto aperto</h2>
+<h2>🧾 Ordini aperti</h2>
 
 
-<div id="conto">
+<div id="lista" class="ordine">
 
 Nessun ordine
 
@@ -117,69 +106,20 @@ Totale € <span id="totale">0</span>
 <div class="box">
 
 
-<h2>Pagamento</h2>
+<button class="pagamento" onclick="vaiPagamento()">
 
-
-<button class="contanti">
-
-💶 CONTANTI
-
-</button>
-
-
-<button class="bancomat">
-
-💳 BANCOMAT
+💳 VAI AL PAGAMENTO
 
 </button>
 
 
 </div>
 
-
-
-
-
-<div class="box">
-
-
-<h2>Scontrino</h2>
-
-
-<button class="stampa">
-
-🧾 STAMPA SCONTRINO
-
-</button>
-
-
-<button>
-
-❌ NON STAMPARE
-
-</button>
-
-
-</div>
-
-
-
-
-<div class="box">
-
-
-<button class="chiudi" onclick="chiudi()">
-
-✅ CHIUDI CONTO
-
-</button>
-
-
-</div>
 
 
 
 <script src="gestione.js"></script>
+
 
 
 
@@ -194,15 +134,15 @@ prendiOrdini();
 let totale=0;
 
 
-
 let testo="";
 
 
 
-ordini.forEach((ordine,index)=>{
+ordini.forEach(ordine=>{
 
 
 totale += ordine.totale;
+
 
 
 testo +=
@@ -231,8 +171,7 @@ testo="Nessun ordine aperto";
 
 
 
-document.getElementById("conto").innerHTML=
-testo;
+document.getElementById("lista").innerHTML=testo;
 
 
 document.getElementById("totale").innerHTML=
@@ -242,19 +181,14 @@ totale.toFixed(2);
 
 
 
-function chiudi(){
+function vaiPagamento(){
 
 
-svuotaOrdini();
-
-
-alert("Conto chiuso ✅");
-
-
-location.reload();
+window.location.href="pagamento.html";
 
 
 }
+
 
 
 </script>
