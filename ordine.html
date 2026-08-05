@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Ordine Tavolo</title>
+<title>Dolce Vita - Ordine</title>
 
 <style>
 
@@ -24,21 +24,20 @@ font-size:38px;
 
 .box{
 background:#333;
-margin:20px;
-padding:25px;
+margin:15px;
+padding:20px;
 border-radius:20px;
-font-size:22px;
 }
 
 button{
 width:100%;
-padding:22px;
-margin:10px 0;
+padding:18px;
+margin:8px 0;
 border:none;
-border-radius:20px;
+border-radius:15px;
 background:#444;
 color:white;
-font-size:23px;
+font-size:22px;
 font-weight:bold;
 }
 
@@ -46,8 +45,12 @@ font-weight:bold;
 background:#197619;
 }
 
-.elimina{
+.cancella{
 background:#8a1616;
+}
+
+.prodotto{
+background:#222;
 }
 
 .totale{
@@ -87,33 +90,27 @@ font-size:35px;
 
 <div class="box">
 
-<h2>Menu</h2>
+<h2>🍕 Pizze</h2>
 
-
-<button onclick="aggiungi('Margherita',7)">
-🍕 Margherita €7
+<button class="prodotto" onclick="aggiungi('Margherita',7)">
+Margherita €7
 </button>
 
-
-<button onclick="aggiungi('Diavola',8)">
-🍕 Diavola €8
+<button class="prodotto" onclick="aggiungi('Marinara',6)">
+Marinara €6
 </button>
 
-
-<button onclick="aggiungi('4 Formaggi',9)">
-🍕 4 Formaggi €9
+<button class="prodotto" onclick="aggiungi('Diavola',8)">
+Diavola €8
 </button>
 
-
-<button onclick="aggiungi('Patatine',4)">
-🍟 Patatine €4
+<button class="prodotto" onclick="aggiungi('4 Formaggi',9)">
+4 Formaggi €9
 </button>
 
-
-<button onclick="aggiungi('Coca Cola',3)">
-🥤 Coca Cola €3
+<button class="prodotto" onclick="aggiungi('Capricciosa',10)">
+Capricciosa €10
 </button>
-
 
 </div>
 
@@ -122,37 +119,131 @@ font-size:35px;
 
 <div class="box">
 
+<h2>🍟 Fritti</h2>
+
+<button onclick="aggiungi('Patatine',4)">
+🍟 Patatine €4
+</button>
+
+</div>
+
+
+
+
+<div class="box">
+
+<h2>🥤 Bibite</h2>
+
+<button onclick="aggiungi('Coca Cola',3)">
+Coca Cola €3
+</button>
+
+<button onclick="aggiungi('Fanta',3)">
+Fanta €3
+</button>
+
+<button onclick="aggiungi('Sprite',3)">
+Sprite €3
+</button>
+
+<button onclick="aggiungi('The freddo',3)">
+The freddo €3
+</button>
+
+</div>
+
+
+
+
+<div class="box">
+
+<h2>🍺 Birre</h2>
+
+<button onclick="aggiungi('Moretti',4)">
+Moretti €4
+</button>
+
+<button onclick="aggiungi('Ichnusa',4)">
+Ichnusa €4
+</button>
+
+<button onclick="aggiungi('Heineken',4)">
+Heineken €4
+</button>
+
+<button onclick="aggiungi('Artigianale',6)">
+Birra artigianale €6
+</button>
+
+</div>
+
+
+
+
+<div class="box">
+
+<h2>🍰 Dolci</h2>
+
+<button onclick="aggiungi('Tiramisù',5)">
+Tiramisù €5
+</button>
+
+<button onclick="aggiungi('Panna cotta',5)">
+Panna cotta €5
+</button>
+
+<button onclick="aggiungi('Cheesecake',5)">
+Cheesecake €5
+</button>
+
+</div>
+
+
+
+
+<div class="box">
+
+<h2>👧 Menu bambini</h2>
+
+<button onclick="aggiungi('Pasta pomodoro + bibita',8)">
+Pasta pomodoro + bibita €8
+</button>
+
+<button onclick="aggiungi('Pasta ragù + bibita',8)">
+Pasta ragù + bibita €8
+</button>
+
+<button onclick="aggiungi('Cotoletta patatine + bibita',9)">
+Cotoletta + patatine + bibita €9
+</button>
+
+</div>
+
+
+
+
+<div class="box">
 
 <h2>🧾 Ordine</h2>
-
 
 <div id="lista">
 Nessun prodotto
 </div>
 
-
 <br>
 
-
 <div class="totale">
-
 Totale € <span id="totale">0</span>
-
 </div>
 
 
-
 <button class="invia" onclick="mandaCucina()">
-
 👨‍🍳 INVIA IN CUCINA
-
 </button>
 
 
-<button class="elimina" onclick="cancella()">
-
-❌ CANCELLA ORDINE
-
+<button class="cancella" onclick="cancella()">
+❌ CANCELLA
 </button>
 
 
@@ -161,9 +252,7 @@ Totale € <span id="totale">0</span>
 
 
 <script src="gestione.js"></script>
-
 <script src="tavoli.js"></script>
-
 
 
 <script>
@@ -202,36 +291,29 @@ let totale=coperto;
 
 function aggiungi(nome,prezzo){
 
-
 prodotti.push({
-
 nome:nome,
 prezzo:prezzo
-
 });
 
 
 totale += prezzo;
 
-
 mostra();
-
 
 }
 
 
 
-
 function mostra(){
-
 
 let testo="";
 
 
-prodotti.forEach(p=>{
+prodotti.forEach((p,i)=>{
 
-testo +=
-"🍕 "+p.nome+
+testo += 
+(i+1)+") "+p.nome+
 " €"+p.prezzo+
 "<br>";
 
@@ -239,9 +321,7 @@ testo +=
 
 
 if(testo==""){
-
 testo="Nessun prodotto";
-
 }
 
 
@@ -253,7 +333,6 @@ totale.toFixed(2);
 
 
 }
-
 
 
 
@@ -277,14 +356,9 @@ stato:"In preparazione"
 };
 
 
-
 salvaOrdine(ordine);
 
-
-// cambia stato tavolo
-
 occupaTavolo(tavolo);
-
 
 
 alert("Ordine inviato in cucina ✅");
@@ -297,13 +371,11 @@ alert("Ordine inviato in cucina ✅");
 
 function cancella(){
 
-
 prodotti=[];
 
 totale=coperto;
 
 mostra();
-
 
 }
 
