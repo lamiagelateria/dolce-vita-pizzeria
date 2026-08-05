@@ -68,7 +68,7 @@ background:#005f9e;
 <h2 id="pizza"></h2>
 
 <h2>
-Prezzo: € <span id="prezzo"></span>
+Prezzo € <span id="prezzo"></span>
 </h2>
 
 </div>
@@ -78,19 +78,23 @@ Prezzo: € <span id="prezzo"></span>
 
 <div class="box">
 
-<h2>❌ Togli ingredienti</h2>
+<h2>❌ Senza</h2>
+
 
 <button class="togli" onclick="modifica('senza mozzarella',0)">
 ❌ Senza mozzarella
 </button>
 
+
 <button class="togli" onclick="modifica('senza pomodoro',0)">
 ❌ Senza pomodoro
 </button>
 
+
 <button class="togli" onclick="modifica('senza basilico',0)">
 ❌ Senza basilico
 </button>
+
 
 </div>
 
@@ -103,27 +107,27 @@ Prezzo: € <span id="prezzo"></span>
 
 
 <button class="extra" onclick="modifica('bufala',2)">
-➕ Bufala +2 €
+➕ Bufala +2€
 </button>
 
 
 <button class="extra" onclick="modifica('prosciutto',1.5)">
-➕ Prosciutto +1,50 €
+➕ Prosciutto +1,50€
 </button>
 
 
 <button class="extra" onclick="modifica('funghi',1)">
-➕ Funghi +1 €
+➕ Funghi +1€
 </button>
 
 
 <button class="extra" onclick="modifica('olive',1)">
-➕ Olive +1 €
+➕ Olive +1€
 </button>
 
 
 <button class="extra" onclick="modifica('salame piccante',1.5)">
-➕ Salame piccante +1,50 €
+➕ Salame piccante +1,50€
 </button>
 
 
@@ -152,15 +156,19 @@ let dati =
 new URLSearchParams(window.location.search);
 
 
+
 let nome =
 dati.get("nome");
+
 
 
 let prezzo =
 Number(dati.get("prezzo"));
 
 
+
 let modifiche=[];
+
 
 
 
@@ -168,8 +176,11 @@ document.getElementById("pizza").innerHTML =
 "🍕 "+nome;
 
 
+
 document.getElementById("prezzo").innerHTML =
 prezzo.toFixed(2);
+
+
 
 
 
@@ -183,6 +194,7 @@ modifiche.push(tipo);
 prezzo += costo;
 
 
+
 document.getElementById("prezzo").innerHTML =
 prezzo.toFixed(2);
 
@@ -192,19 +204,42 @@ prezzo.toFixed(2);
 
 
 
+
 function conferma(){
 
 
 let descrizione =
-nome+" ("+modifiche.join(", ")+")";
+nome;
+
+
+if(modifiche.length>0){
+
+descrizione +=
+" ("+
+modifiche.join(", ")+
+")";
+
+}
 
 
 
-window.location.href =
-"ordine.html?pizza="+
-encodeURIComponent(descrizione)+
-"&prezzo="+
-prezzo;
+localStorage.setItem(
+
+"pizzaModificata",
+
+JSON.stringify({
+
+nome:descrizione,
+
+prezzo:prezzo
+
+})
+
+);
+
+
+
+window.location.href="ordine.html";
 
 
 }
