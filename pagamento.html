@@ -8,7 +8,6 @@
 
 <title>Dolce Vita - Pagamento</title>
 
-
 <style>
 
 body{
@@ -18,59 +17,45 @@ color:white;
 font-family:Arial,sans-serif;
 }
 
-
 h1{
 text-align:center;
-font-size:40px;
 }
 
-
 .box{
-
 background:#333;
 margin:20px;
 padding:25px;
 border-radius:20px;
-
 }
-
 
 button{
-
 width:100%;
-padding:22px;
+padding:20px;
 margin:10px 0;
-border:none;
+border:0;
 border-radius:20px;
-font-size:23px;
+font-size:22px;
 font-weight:bold;
 color:white;
-
 }
-
 
 .contanti{
 background:#197619;
 }
 
-
 .bancomat{
 background:#005f9e;
 }
-
 
 .stampa{
 background:#8a5a00;
 }
 
-
 .chiudi{
 background:#8a1616;
 }
 
-
 </style>
-
 
 </head>
 
@@ -81,41 +66,18 @@ background:#8a1616;
 <h1>💳 PAGAMENTO</h1>
 
 
-
 <div class="box">
-
-
-<h2>
-Totale conto:
-€ <span id="totale">0</span>
-</h2>
-
-
-</div>
-
-
-
-<div class="box">
-
 
 <h2>Metodo pagamento</h2>
 
-
-<button class="contanti" onclick="pagamento('Contanti')">
-
+<button class="contanti" onclick="scegli('Contanti')">
 💶 CONTANTI
-
 </button>
 
 
-
-<button class="bancomat" onclick="pagamento('Bancomat')">
-
+<button class="bancomat" onclick="scegli('Bancomat')">
 💳 BANCOMAT
-
 </button>
-
-
 
 </div>
 
@@ -123,25 +85,17 @@ Totale conto:
 
 
 <div class="box">
-
 
 <h2>Scontrino</h2>
 
-
-<button class="stampa" onclick="scontrino(true)">
-
+<button class="stampa" onclick="scontrino('SI')">
 🧾 STAMPA SCONTRINO
-
 </button>
 
 
-
-<button onclick="scontrino(false)">
-
+<button onclick="scontrino('NO')">
 ❌ NON STAMPARE
-
 </button>
-
 
 
 </div>
@@ -151,58 +105,43 @@ Totale conto:
 
 <div class="box">
 
-
 <button class="chiudi" onclick="chiudiConto()">
-
 ✅ CHIUDI CONTO
-
 </button>
-
 
 </div>
 
 
+
+
+<script src="tavoli.js"></script>
 
 
 <script>
 
 
-let metodo="";
+let pagamento="";
+
+let stampa="";
 
 
-let stampa=false;
 
+function scegli(tipo){
 
+pagamento=tipo;
 
-function pagamento(tipo){
-
-metodo=tipo;
-
-
-alert(
-"Pagamento scelto: "+tipo
-);
+alert("Pagamento: "+tipo);
 
 }
 
 
 
 
-function scontrino(scelta){
+function scontrino(tipo){
 
-stampa=scelta;
+stampa=tipo;
 
-
-if(scelta){
-
-alert("Scontrino pronto 🧾");
-
-}
-else{
-
-alert("Senza stampa");
-
-}
+alert("Scontrino: "+tipo);
 
 }
 
@@ -212,19 +151,33 @@ alert("Senza stampa");
 function chiudiConto(){
 
 
-alert(
-"Conto chiuso ✅\n"+
-"Pagamento: "+metodo
+let conferma =
+confirm(
+"Chiudere il conto?"
 );
 
 
+if(conferma){
+
+
 localStorage.removeItem("ordini");
+
+
+
+alert(
+"Conto chiuso ✅"
+);
+
 
 
 window.location.href="tavoli.html";
 
 
 }
+
+
+}
+
 
 
 </script>
