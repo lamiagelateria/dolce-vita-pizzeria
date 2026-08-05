@@ -6,60 +6,101 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Cassa</title>
+<title>Dolce Vita</title>
+
 
 <style>
 
-body {
-    margin:0;
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
+body{
+margin:0;
+background:#181818;
+color:white;
+font-family:Arial,sans-serif;
 }
 
-.header {
-    text-align:center;
-    font-size:42px;
-    font-weight:bold;
-    padding:30px;
+
+h1{
+text-align:center;
+font-size:55px;
+color:#ffd000;
+margin-top:30px;
 }
 
-.subtitle {
-    text-align:center;
-    font-size:22px;
-    color:#ccc;
-    margin-bottom:30px;
-}
 
-.container {
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-    padding:25px;
-}
+.sottotitolo{
 
-a {
-    text-decoration:none;
-    color:white;
-}
-
-.button {
-
-    background:#333;
-    border:3px solid #555;
-    border-radius:25px;
-    padding:45px 10px;
-    text-align:center;
-    font-size:30px;
-    font-weight:bold;
+text-align:center;
+font-size:25px;
 
 }
 
-.button:active {
-    background:#555;
+
+
+.menu{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+padding:30px;
+
 }
+
+
+
+a{
+
+text-decoration:none;
+
+}
+
+
+
+button{
+
+width:100%;
+height:130px;
+border:none;
+border-radius:30px;
+font-size:32px;
+font-weight:bold;
+color:white;
+
+}
+
+
+
+.tavoli{
+background:#197619;
+}
+
+
+.cassa{
+background:#005f9e;
+}
+
+
+.cucina{
+background:#8a1616;
+}
+
+
+.asporto{
+background:#8a5a00;
+}
+
+
+.menuBtn{
+background:#555;
+}
+
+
+.prenota{
+background:#9b2f9b;
+}
+
 
 </style>
+
 
 </head>
 
@@ -67,85 +108,82 @@ a {
 <body>
 
 
-<div class="header">
-🍕 DOLCE VITA
+<h1>🍕 DOLCE VITA</h1>
+
+
+<div class="sottotitolo">
+
+Cassa Pizzeria
+
 </div>
 
 
-<div class="subtitle">
-Gestione Pizzeria
-</div>
 
-
-
-<div class="container">
+<div class="menu">
 
 
 <a href="tavoli.html">
-<div class="button">
-🍽️<br>
-TAVOLI
-</div>
+
+<button class="tavoli">
+🍽️ TAVOLI
+</button>
+
 </a>
 
-
-<a href="asporto.html">
-<div class="button">
-🛍️<br>
-ASPORTO
-</div>
-</a>
-
-
-<a href="prenotazioni.html">
-<div class="button">
-📅<br>
-PRENOTAZIONI
-</div>
-</a>
-
-
-<a href="cucina.html">
-<div class="button">
-👨‍🍳<br>
-CUCINA
-</div>
-</a>
 
 
 <a href="cassa.html">
-<div class="button">
-💳<br>
-CASSA
-</div>
+
+<button class="cassa">
+💳 CASSA
+</button>
+
 </a>
 
 
-<a href="ordini.html">
-<div class="button">
-📋<br>
-ORDINI
-</div>
+
+<a href="cucina.html">
+
+<button class="cucina">
+👨‍🍳 CUCINA
+</button>
+
 </a>
+
+
+
+<a href="asporto.html">
+
+<button class="asporto">
+🛍️ ASPORTO
+</button>
+
+</a>
+
 
 
 <a href="menu.html">
-<div class="button">
-🍕<br>
-MENU
-</div>
+
+<button class="menuBtn">
+📖 MENU
+</button>
+
 </a>
 
 
-<a href="impostazioni.html">
-<div class="button">
-⚙️<br>
-IMPOSTAZIONI
-</div>
+
+<a href="prenotazioni.html">
+
+<button class="prenota">
+📅 PRENOTAZIONI
+</button>
+
 </a>
 
 
+
 </div>
+
 
 
 </body>
