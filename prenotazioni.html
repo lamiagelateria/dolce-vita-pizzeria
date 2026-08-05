@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dolce Vita - Prenotazioni</title>
+
+<style>
+
+body {
+    margin:0;
+    background:#181818;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+
+h1 {
+    text-align:center;
+    font-size:40px;
+}
+
+
+.box {
+    background:#333;
+    margin:20px;
+    padding:25px;
+    border-radius:20px;
+}
+
+
+input, select {
+
+    width:100%;
+    padding:18px;
+    margin:10px 0;
+    border-radius:15px;
+    border:none;
+    font-size:20px;
+
+}
+
+
+button {
+
+    width:100%;
+    padding:22px;
+    margin-top:15px;
+    border:none;
+    border-radius:20px;
+    background:#197619;
+    color:white;
+    font-size:25px;
+    font-weight:bold;
+
+}
+
+
+.lista {
+
+    background:#222;
+    padding:20px;
+    border-radius:15px;
+    font-size:22px;
+
+}
+
+
+.indietro {
+
+display:block;
+margin:20px;
+padding:20px;
+background:#333;
+border-radius:20px;
+text-align:center;
+color:white;
+text-decoration:none;
+font-size:25px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>📅 PRENOTAZIONI</h1>
+
+
+
+<div class="box">
+
+
+<h2>Nuova prenotazione</h2>
+
+
+<input id="nome" placeholder="Nome cliente">
+
+
+<input id="telefono" placeholder="Telefono">
+
+
+<input id="data" type="date">
+
+
+<input id="ora" type="time">
+
+
+<input id="persone" type="number" placeholder="Numero persone">
+
+
+
+<select id="sala">
+
+<option>Sala interna</option>
+
+<option>Sala esterna</option>
+
+</select>
+
+
+
+<input id="tavolo" placeholder="Numero tavolo">
+
+
+
+<button onclick="salva()">
+
+✅ PRENOTA TAVOLO
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="box">
+
+
+<h2>📋 Prenotazioni</h2>
+
+
+<div class="lista" id="lista">
+
+Nessuna prenotazione
+
+</div>
+
+
+</div>
+
+
+
+
+<a class="indietro" href="index.html">
+
+⬅️ Torna alla cassa
+
+</a>
+
+
+
+
+
+<script>
+
+
+function salva(){
+
+
+let nome =
+document.getElementById("nome").value;
+
+
+let data =
+document.getElementById("data").value;
+
+
+let ora =
+document.getElementById("ora").value;
+
+
+let persone =
+document.getElementById("persone").value;
+
+
+let sala =
+document.getElementById("sala").value;
+
+
+let tavolo =
+document.getElementById("tavolo").value;
+
+
+
+document.getElementById("lista").innerHTML =
+
+"👤 "+nome+
+"<br>📅 "+data+
+"<br>⏰ "+ora+
+"<br>👥 "+persone+" persone"+
+"<br>"+sala+
+"<br>🍽️ Tavolo "+tavolo;
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
