@@ -6,59 +6,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Tavoli</title>
+<title>Tavoli Dolce Vita</title>
 
 <style>
 
 body{
-margin:0;
 background:#181818;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial;
 }
 
 h1{
 text-align:center;
-font-size:40px;
+color:#ffd000;
 }
 
-.sezione{
-margin:20px;
-}
-
-.griglia{
+.container{
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(2,1fr);
 gap:15px;
+padding:15px;
 }
 
 .tavolo{
-padding:25px 5px;
-border-radius:18px;
+padding:25px;
+border-radius:20px;
 text-align:center;
-font-size:20px;
+font-size:22px;
 font-weight:bold;
 background:#197619;
 }
 
 .occupato{
-background:#8a1616;
-}
-
-.prenotato{
-background:#8a5a00;
-}
-
-.indietro{
-display:block;
-margin:25px;
-padding:20px;
-background:#333;
-border-radius:20px;
-text-align:center;
-font-size:25px;
-color:white;
-text-decoration:none;
+background:#9b1616;
 }
 
 </style>
@@ -69,130 +49,88 @@ text-decoration:none;
 <body>
 
 
-<h1>🍽️ TAVOLI</h1>
+<h1>🍽️ TAVOLI DOLCE VITA</h1>
 
 
-<div class="sezione">
-
-<h2>🏠 Sala interna</h2>
-
-<div class="griglia" id="interni"></div>
-
-</div>
+<div class="container" id="tavoli"></div>
 
 
-
-<div class="sezione">
-
-<h2>🌳 Sala esterna</h2>
-
-<div class="griglia" id="esterni"></div>
-
-</div>
-
-
-
-<a class="indietro" href="index.html">
-⬅️ Torna alla cassa
-</a>
-
-
-
-<script src="tavoli.js"></script>
 
 
 <script>
 
 
-let coperto=0.50;
+let ordini =
 
-
-let stati =
-caricaStatoTavoli();
-
-
-
-function creaTavolo(numero,sala){
-
-
-let stato =
-stati[numero] || "libero";
-
-
-let classe="tavolo";
-
-
-if(stato=="occupato"){
-
-classe+=" occupato";
-
-}
-
-
-if(stato=="prenotato"){
-
-classe+=" prenotato";
-
-}
+JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 
-return `
 
-<a href="ordine.html?tavolo=${numero}&persone=2&coperto=${coperto}">
+let area = document.getElementById("tavoli");
 
-<div class="${classe}">
 
-🍽️ ${numero}
+
+
+
+for(let i=1;i<=20;i++){
+
+
+let occupato = ordini.some(function(o){
+
+return o.tavolo == i;
+
+});
+
+
+
+let classe = occupato ? "tavolo occupato" : "tavolo";
+
+
+
+area.innerHTML +=
+
+
+`
+
+<div class="${classe}" onclick="apriTavolo(${i})">
+
+🍽️ Tavolo ${i}
 
 <br>
 
-${sala}
-
-<br>
-
-${stato.toUpperCase()}
+${occupato ? "🔴 Occupato" : "🟢 Libero"}
 
 </div>
 
-</a>
-
 `;
 
-}
-
-
-
-
-let interno="";
-
-let esterno="";
-
-
-
-for(let i=1;i<=120;i++){
-
-
-if(i<=60){
-
-interno += creaTavolo(i,"Sala interna");
-
-}
-
-else{
-
-esterno += creaTavolo(i,"Sala esterna");
-
-}
 
 
 }
 
 
 
-document.getElementById("interni").innerHTML=interno;
 
-document.getElementById("esterni").innerHTML=esterno;
+
+
+function apriTavolo(numero){
+
+
+localStorage.setItem(
+
+"tavoloAttivo",
+
+numero
+
+);
+
+
+
+window.location.href="ordine.html";
+
+
+}
 
 
 
