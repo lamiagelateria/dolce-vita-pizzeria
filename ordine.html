@@ -30,7 +30,6 @@ border-radius:20px;
 font-size:22px;
 }
 
-
 button{
 width:100%;
 padding:22px;
@@ -43,22 +42,18 @@ font-size:23px;
 font-weight:bold;
 }
 
-
 .invia{
 background:#197619;
 }
-
 
 .elimina{
 background:#8a1616;
 }
 
-
 .totale{
 color:#4cff4c;
 font-size:35px;
 }
-
 
 </style>
 
@@ -92,8 +87,7 @@ font-size:35px;
 
 <div class="box">
 
-
-<h2>Menu veloce</h2>
+<h2>Menu</h2>
 
 
 <button onclick="aggiungi('Margherita',7)">
@@ -133,9 +127,7 @@ font-size:35px;
 
 
 <div id="lista">
-
 Nessun prodotto
-
 </div>
 
 
@@ -144,10 +136,10 @@ Nessun prodotto
 
 <div class="totale">
 
-Totale:
-€ <span id="totale">0</span>
+Totale € <span id="totale">0</span>
 
 </div>
+
 
 
 <button class="invia" onclick="mandaCucina()">
@@ -170,13 +162,15 @@ Totale:
 
 <script src="gestione.js"></script>
 
+<script src="tavoli.js"></script>
+
+
 
 <script>
 
 
 let parametri =
 new URLSearchParams(window.location.search);
-
 
 
 let tavolo =
@@ -202,7 +196,6 @@ document.getElementById("coperto").innerHTML=coperto.toFixed(2);
 
 let prodotti=[];
 
-
 let totale=coperto;
 
 
@@ -225,6 +218,7 @@ mostra();
 
 
 }
+
 
 
 
@@ -283,7 +277,13 @@ stato:"In preparazione"
 };
 
 
+
 salvaOrdine(ordine);
+
+
+// cambia stato tavolo
+
+occupaTavolo(tavolo);
 
 
 
@@ -294,7 +294,9 @@ alert("Ordine inviato in cucina ✅");
 
 
 
+
 function cancella(){
+
 
 prodotti=[];
 
@@ -302,7 +304,9 @@ totale=coperto;
 
 mostra();
 
+
 }
+
 
 
 </script>
