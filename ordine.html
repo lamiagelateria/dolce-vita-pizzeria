@@ -32,7 +32,7 @@ border-radius:20px;
 button{
 width:100%;
 padding:18px;
-margin:8px 0;
+margin:8px;
 border:0;
 border-radius:15px;
 font-size:22px;
@@ -41,13 +41,13 @@ color:white;
 font-weight:bold;
 }
 
+.invia{
+background:#197619;
+}
+
 .totale{
 font-size:35px;
 color:#4cff4c;
-}
-
-.invia{
-background:#197619;
 }
 
 </style>
@@ -58,21 +58,12 @@ background:#197619;
 <body>
 
 
-<h1>🍕 ORDINE</h1>
+<h1>🍕 ORDINE DOLCE VITA</h1>
 
 
 <div class="box">
 
-<h2>Tavolo:</h2>
-<span id="tavolo">-</span>
-
-</div>
-
-
-
-<div class="box">
-
-<h2>🍕 Pizze</h2>
+<h2>🍕 Menu</h2>
 
 
 <button onclick="aggiungi('Margherita',7)">
@@ -90,14 +81,24 @@ Diavola €8
 </button>
 
 
-</div>
+<button onclick="aggiungi('Patatine',4)">
+Patatine €4
+</button>
 
+
+<button onclick="aggiungi('Coca Cola',3)">
+Coca Cola €3
+</button>
+
+
+</div>
 
 
 
 <div class="box">
 
 <h2>🧾 Ordine</h2>
+
 
 <div id="lista">
 Nessun prodotto
@@ -155,7 +156,7 @@ prezzo:prezzo
 });
 
 
-totale = totale + prezzo;
+totale += prezzo;
 
 
 mostra();
@@ -175,9 +176,7 @@ let testo="";
 prodotti.forEach(function(p){
 
 
-testo += 
-p.nome+" €"+p.prezzo+
-"<br>";
+testo += "🍕 "+p.nome+" €"+p.prezzo+"<br>";
 
 
 });
@@ -186,7 +185,7 @@ p.nome+" €"+p.prezzo+
 document.getElementById("lista").innerHTML=testo;
 
 
-document.getElementById("totale").innerHTML=
+document.getElementById("totale").innerHTML =
 totale.toFixed(2);
 
 
@@ -198,7 +197,41 @@ totale.toFixed(2);
 function inviaCucina(){
 
 
+let ordine={
+
+tipo:"Tavolo",
+
+prodotti:prodotti,
+
+totale:totale,
+
+stato:"In preparazione"
+
+};
+
+
+
+let ordini =
+JSON.parse(localStorage.getItem("ordini")) || [];
+
+
+
+ordini.push(ordine);
+
+
+
+localStorage.setItem(
+"ordini",
+JSON.stringify(ordini)
+);
+
+
+
 alert("Ordine inviato in cucina ✅");
+
+
+
+window.location.href="cucina.html";
 
 
 }
@@ -206,7 +239,6 @@ alert("Ordine inviato in cucina ✅");
 
 
 </script>
-
 
 
 </body>
