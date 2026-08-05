@@ -64,6 +64,7 @@ background:#9b1616;
 <h1>🍽️ TAVOLI DOLCE VITA</h1>
 
 
+
 <button class="home" onclick="vaiHome()">
 
 🏠 TORNA ALLA HOME
@@ -134,11 +135,33 @@ ${occupato ? "🔴 Occupato" : "🟢 Libero"}
 function apriTavolo(numero){
 
 
+let persone = prompt("👥 Quante persone ci sono al tavolo?");
+
+
+
+if(!persone){
+
+persone = 1;
+
+}
+
+
+
 localStorage.setItem(
 
 "tavoloAttivo",
 
 numero
+
+);
+
+
+
+localStorage.setItem(
+
+"personeTavolo",
+
+persone
 
 );
 
