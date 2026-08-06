@@ -44,8 +44,16 @@ background:#197619;
 background:#555;
 }
 
-.storico{
+.stampa{
 background:#005f9e;
+}
+
+.chiudi{
+background:#8a1616;
+}
+
+.storico{
+background:#006666;
 }
 
 </style>
@@ -62,7 +70,6 @@ background:#005f9e;
 
 <div class="box">
 
-
 <button class="home" onclick="home()">
 
 🏠 HOME
@@ -70,12 +77,11 @@ background:#005f9e;
 </button>
 
 
-<button class="storico" onclick="vaiStorico()">
+<button class="storico" onclick="storico()">
 
 📊 STORICO INCASSI
 
 </button>
-
 
 </div>
 
@@ -97,6 +103,7 @@ JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 let area=document.getElementById("conti");
+
 
 
 
@@ -129,6 +136,7 @@ testo=
 }else{
 
 
+
 ordini.forEach(function(o,index){
 
 
@@ -141,10 +149,29 @@ testo +=
 <div class="box">
 
 
-<h2>🍽️ Tavolo ${o.tavolo || "1"}</h2>
+<h2>
 
+${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "1")}
+
+</h2>
+
+
+${o.tipo=="Asporto" ?
+
+"👤 "+o.cliente+"<br>📞 "+o.telefono+"<br>⏰ "+o.orario
+
+:
+
+"👥 Persone: "+(o.persone || "1")
+
+}
+
+
+
+<br><br>
 
 `;
+
 
 
 
@@ -174,115 +201,4 @@ testo +=
 
 
 
-<button onclick="chiudiConto(${index})">
-
-✅ CHIUDI CONTO
-
-</button>
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-}
-
-
-
-area.innerHTML=testo;
-
-
-}
-
-
-
-
-
-
-
-function chiudiConto(index){
-
-
-let storico =
-
-JSON.parse(localStorage.getItem("storico")) || [];
-
-
-
-storico.push(ordini[index]);
-
-
-
-localStorage.setItem(
-
-"storico",
-
-JSON.stringify(storico)
-
-);
-
-
-
-ordini.splice(index,1);
-
-
-
-localStorage.setItem(
-
-"ordini",
-
-JSON.stringify(ordini)
-
-);
-
-
-
-alert("Conto chiuso e salvato ✅");
-
-
-
-mostra();
-
-
-}
-
-
-
-
-
-function vaiStorico(){
-
-
-window.location.href="storico.html";
-
-
-}
-
-
-
-
-function home(){
-
-
-window.location.href="index.html";
-
-
-}
-
-
-
-mostra();
-
-
-</script>
-
-
-</body>
-
-</html>
+<button class="stampa" onclick="stampaCont
