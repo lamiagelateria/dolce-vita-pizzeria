@@ -28,32 +28,24 @@ padding:20px;
 border-radius:20px;
 }
 
-.asporto{
-border:3px solid #8a5a00;
-}
-
-.tavolo{
-border:3px solid #197619;
-}
-
-.pronto{
-border:3px solid #00aa00;
-}
-
 button{
 width:100%;
 padding:15px;
 margin-top:10px;
 border:0;
 border-radius:15px;
-background:#197619;
-color:white;
 font-size:18px;
 font-weight:bold;
+color:white;
+background:#197619;
 }
 
 .home{
 background:#555;
+}
+
+.pronto{
+background:#006600;
 }
 
 </style>
@@ -67,7 +59,6 @@ background:#555;
 <h1>👨‍🍳 CUCINA DOLCE VITA</h1>
 
 
-
 <div class="box">
 
 <button class="home" onclick="home()">
@@ -79,9 +70,7 @@ background:#555;
 </div>
 
 
-
 <div id="lista"></div>
-
 
 
 
@@ -91,8 +80,7 @@ background:#555;
 let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
 
-let lista=document.getElementById("lista");
-
+let lista = document.getElementById("lista");
 
 
 
@@ -100,16 +88,14 @@ let lista=document.getElementById("lista");
 function mostra(){
 
 
-let testo="";
+let html="";
 
 
 
 if(ordini.length==0){
 
 
-testo=
-
-`
+html=`
 
 <div class="box">
 
@@ -124,3 +110,129 @@ testo=
 }else{
 
 
+
+ordini.forEach(function(o,index){
+
+
+
+html += `
+
+<div class="box">
+
+
+<h2>
+
+🍽️ TAVOLO ${o.tavolo || "1"}
+
+</h2>
+
+
+👥 Persone: ${o.persone || "1"}
+
+<br><br>
+
+`;
+
+
+
+o.prodotti.forEach(function(p){
+
+
+html +=
+
+p.nome+" €"+p.prezzo+
+"<br>";
+
+
+
+});
+
+
+
+html += `
+
+
+<br>
+
+💶 Totale: €${Number(o.totale).toFixed(2)}
+
+<br>
+
+📌 Stato: ${o.stato || "In preparazione"}
+
+
+
+<button class="pronto" onclick="pronto(${index})">
+
+✅ ORDINE PRONTO
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+lista.innerHTML=html;
+
+
+}
+
+
+
+
+
+function pronto(index){
+
+
+ordini[index].stato="Pronto";
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
+);
+
+
+
+mostra();
+
+
+}
+
+
+
+
+
+function home(){
+
+
+window.location.href="index.html";
+
+
+}
+
+
+
+mostra();
+
+
+</script>
+
+
+</body>
+
+</html>
