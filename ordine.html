@@ -168,3 +168,273 @@ Totale € <span id="totale">0.00</span>
 <script src="pizze.js"></script>
 
 <script src="prodotti.js"></script>
+ <script>
+
+
+let prodottiOrdine=[];
+
+let totale=0;
+
+
+
+let tavolo = localStorage.getItem("tavoloAttivo") || "1";
+
+let persone = localStorage.getItem("personeTavolo") || "1";
+
+
+
+document.getElementById("infoTavolo").innerHTML =
+
+"🍽️ Tavolo " + tavolo + 
+" 👥 Persone: " + persone;
+
+
+
+
+
+let salvata =
+
+JSON.parse(localStorage.getItem("pizzaModificata"));
+
+
+
+if(salvata){
+
+prodottiOrdine.push(salvata);
+
+totale += salvata.prezzo;
+
+localStorage.removeItem("pizzaModificata");
+
+}
+
+
+
+
+
+
+pizze.forEach(function(p){
+
+
+document.getElementById("menuPizze").innerHTML +=
+
+
+`
+
+<button onclick="modificaPizza('${p.nome}',${p.prezzo})">
+
+🍕 ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
+prodotti.forEach(function(p){
+
+
+let box="menuBibite";
+
+
+if(p.categoria.includes("Birre"))
+
+box="menuBirre";
+
+
+if(p.categoria.includes("Vini"))
+
+box="menuVini";
+
+
+if(p.categoria.includes("Fritti"))
+
+box="menuFritti";
+
+
+
+document.getElementById(box).innerHTML +=
+
+
+`
+
+<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+
+${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
+
+function aggiungi(nome,prezzo){
+
+
+prodottiOrdine.push({
+
+nome:nome,
+
+prezzo:prezzo
+
+});
+
+
+totale += prezzo;
+
+
+mostra();
+
+}
+
+
+
+
+
+
+function modificaPizza(nome,prezzo){
+
+
+window.location.href =
+
+"modifica_pizza.html?nome="
++
+encodeURIComponent(nome)
++
+"&prezzo="
++
+prezzo;
+
+
+}
+
+
+
+
+
+
+
+function mostra(){
+
+
+let testo="";
+
+
+prodottiOrdine.forEach(function(p){
+
+
+testo +=
+
+"🍽️ "+p.nome+
+" €"+p.prezzo+
+"<br>";
+
+
+
+});
+
+
+
+if(testo=="")
+testo="Nessun prodotto";
+
+
+
+document.getElementById("lista").innerHTML=testo;
+
+
+document.getElementById("totale").innerHTML=
+
+totale.toFixed(2);
+
+
+}
+
+
+
+
+
+mostra();
+
+
+
+
+
+
+
+function inviaCucina(){
+
+
+let ordine={
+
+
+tipo:"Tavolo",
+
+
+tavolo:tavolo,
+
+
+persone:persone,
+
+
+prodotti:prodottiOrdine,
+
+
+totale:totale,
+
+
+stato:"In preparazione"
+
+
+};
+
+
+
+
+let ordini =
+
+JSON.parse(localStorage.getItem("ordini")) || [];
+
+
+
+ordini.push(ordine);
+
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
+);
+
+
+
+alert("Ordine inviato in cucina ✅");
+
+
+
+window.location.href="cucina.html";
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html> 
