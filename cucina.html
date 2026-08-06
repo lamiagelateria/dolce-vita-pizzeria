@@ -46,8 +46,8 @@ color:white;
 background:#197619;
 }
 
-.cassa{
-background:#005f9e;
+.home{
+background:#555;
 }
 
 </style>
@@ -61,15 +61,17 @@ background:#005f9e;
 <h1>👨‍🍳 CUCINA DOLCE VITA</h1>
 
 
+
 <div class="box">
 
-<button class="cassa" onclick="tornaCassa()">
+<button class="home" onclick="home()">
 
-💶 TORNA AI TAVOLI
+🏠 TORNA ALLA HOME
 
 </button>
 
 </div>
+
 
 
 
@@ -91,10 +93,13 @@ let lista = document.getElementById("lista");
 
 
 
+
+
 function mostra(){
 
 
 let testo="";
+
 
 
 if(ordini.length==0){
@@ -129,11 +134,15 @@ testo +=
 <div class="box">
 
 
-<h2>🍽️ Tavolo ${o.tavolo || "1"}</h2>
+<h2>
+🍽️ Tavolo ${o.tavolo || "1"}
+<br>
+👥 Persone: ${o.persone || "1"}
+</h2>
+
 
 
 <div class="ordine">
-
 
 `;
 
@@ -164,6 +173,7 @@ testo +=
 💶 Totale: €${o.totale.toFixed(2)}
 
 
+
 <button onclick="pronto(${index})">
 
 ✅ ORDINE PRONTO
@@ -171,7 +181,9 @@ testo +=
 </button>
 
 
+
 </div>
+
 
 </div>
 
@@ -191,6 +203,8 @@ lista.innerHTML=testo;
 
 
 }
+
+
 
 
 
@@ -221,13 +235,15 @@ mostra();
 
 
 
-function tornaCassa(){
+function home(){
 
 
-window.location.href="tavoli.html";
+window.location.href="index.html";
 
 
 }
+
+
 
 
 
