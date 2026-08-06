@@ -91,11 +91,10 @@ function mostra(){
 let html="";
 
 
+if(ordini.length === 0){
 
-if(ordini.length==0){
 
-
-html=`
+html = `
 
 <div class="box">
 
@@ -106,13 +105,10 @@ html=`
 `;
 
 
-
 }else{
 
 
-
 ordini.forEach(function(o,index){
-
 
 
 html += `
@@ -122,12 +118,16 @@ html += `
 
 <h2>
 
-🍽️ TAVOLO ${o.tavolo || "1"}
+🍽️ Tavolo ${o.tavolo}
 
 </h2>
 
 
-👥 Persone: ${o.persone || "1"}
+👥 Persone: ${o.persone || 1}
+
+<br>
+
+📌 Stato: ${o.stato || "In preparazione"}
 
 <br><br>
 
@@ -140,9 +140,9 @@ o.prodotti.forEach(function(p){
 
 html +=
 
-p.nome+" €"+p.prezzo+
+"🍕 "+p.nome+
+" €"+p.prezzo+
 "<br>";
-
 
 
 });
@@ -154,12 +154,7 @@ html += `
 
 <br>
 
-💶 Totale: €${Number(o.totale).toFixed(2)}
-
-<br>
-
-📌 Stato: ${o.stato || "In preparazione"}
-
+💶 Totale €${Number(o.totale).toFixed(2)}
 
 
 <button class="pronto" onclick="pronto(${index})">
@@ -178,12 +173,11 @@ html += `
 });
 
 
-
 }
 
 
 
-lista.innerHTML=html;
+lista.innerHTML = html;
 
 
 }
@@ -207,7 +201,6 @@ JSON.stringify(ordini)
 );
 
 
-
 mostra();
 
 
@@ -219,9 +212,7 @@ mostra();
 
 function home(){
 
-
 window.location.href="index.html";
-
 
 }
 
