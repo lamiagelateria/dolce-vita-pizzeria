@@ -6,61 +6,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dolce Vita - Asporto</title>
+<title>Asporto Dolce Vita</title>
 
 <style>
 
 body{
-margin:0;
 background:#181818;
 color:white;
-font-family:Arial,sans-serif;
+font-family:Arial;
 }
 
 h1{
 text-align:center;
-font-size:40px;
+color:#ffd000;
 }
 
 .box{
 background:#333;
-margin:20px;
-padding:25px;
+margin:15px;
+padding:20px;
 border-radius:20px;
 }
 
-input,button{
+h2{
+color:#ffd000;
+}
+
+input{
 width:100%;
-padding:20px;
-margin:10px 0;
-border-radius:15px;
-border:none;
-font-size:22px;
+padding:15px;
+margin:8px 0;
+border-radius:10px;
+border:0;
+font-size:18px;
 }
 
 button{
-background:#197619;
+width:100%;
+padding:15px;
+margin:5px 0;
+border:0;
+border-radius:15px;
+background:#555;
 color:white;
+font-size:18px;
 font-weight:bold;
 }
 
-.ordine{
-background:#222;
-padding:20px;
-border-radius:15px;
-font-size:22px;
+.invia{
+background:#8a5a00;
 }
 
-.indietro{
-display:block;
-margin:20px;
-padding:20px;
-background:#333;
-color:white;
-text-align:center;
-border-radius:20px;
-text-decoration:none;
-font-size:25px;
+.totale{
+font-size:30px;
+color:#4cff4c;
 }
 
 </style>
@@ -71,21 +70,96 @@ font-size:25px;
 <body>
 
 
-<h1>🛍️ ASPORTO</h1>
+<h1>🛍️ ASPORTO DOLCE VITA</h1>
+
 
 
 <div class="box">
 
 
+<h2>👤 Cliente</h2>
+
+
 <input id="nome" placeholder="Nome cliente">
+
 
 <input id="telefono" placeholder="Telefono">
 
-<input id="ora" type="time">
+
+<input id="orario" placeholder="Orario ritiro">
 
 
-<button onclick="creaOrdine()">
-✅ SALVA ORDINE ASPORTO
+</div>
+
+
+
+
+<div class="box">
+
+
+<h2>🍕 PIZZE</h2>
+
+<div id="menuPizze"></div>
+
+
+
+<h2>🥤 BIBITE</h2>
+
+<div id="menuBibite"></div>
+
+
+
+<h2>🍺 BIRRE</h2>
+
+<div id="menuBirre"></div>
+
+
+
+<h2>🍷 VINI</h2>
+
+<div id="menuVini"></div>
+
+
+
+<h2>🍟 FRITTI</h2>
+
+<div id="menuFritti"></div>
+
+
+
+</div>
+
+
+
+
+<div class="box">
+
+
+<h2>🧾 ORDINE</h2>
+
+
+<div id="lista">
+
+Nessun prodotto
+
+</div>
+
+
+<br>
+
+
+<div class="totale">
+
+Totale € <span id="totale">0.00</span>
+
+</div>
+
+
+
+<button class="invia" onclick="inviaAsporto()">
+
+🛍️ INVIA ASPORTO IN CUCINA
+
 </button>
 
 
@@ -93,75 +167,234 @@ font-size:25px;
 
 
 
-<div class="box">
 
+<script src="pizze.js"></script>
 
-<h2>Ordine creato</h2>
-
-
-<div id="ordine" class="ordine">
-
-Nessun ordine
-
-</div>
-
-
-</div>
-
-
-
-<a class="indietro" href="index.html">
-⬅️ Torna alla cassa
-</a>
-
-
-
-<script src="gestione.js"></script>
-
-
+<script src="prodotti.js"></script>
 <script>
 
 
-function creaOrdine(){
+let prodottiOrdine=[];
+
+let totale=0;
+
+
+
+
+
+pizze.forEach(function(p){
+
+
+document.getElementById("menuPizze").innerHTML +=
+
+
+`
+
+<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+
+🍕 ${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
+
+
+prodotti.forEach(function(p){
+
+
+let box="menuBibite";
+
+
+
+if(p.categoria.includes("Birre"))
+
+box="menuBirre";
+
+
+
+if(p.categoria.includes("Vini"))
+
+box="menuVini";
+
+
+
+if(p.categoria.includes("Fritti"))
+
+box="menuFritti";
+
+
+
+
+
+document.getElementById(box).innerHTML +=
+
+
+`
+
+<button onclick="aggiungi('${p.nome}',${p.prezzo})">
+
+${p.nome} €${p.prezzo}
+
+</button>
+
+`;
+
+});
+
+
+
+
+
+
+
+
+function aggiungi(nome,prezzo){
+
+
+prodottiOrdine.push({
+
+nome:nome,
+
+prezzo:prezzo
+
+});
+
+
+
+totale += prezzo;
+
+
+
+mostra();
+
+
+}
+
+
+
+
+
+
+
+function mostra(){
+
+
+let testo="";
+
+
+
+prodottiOrdine.forEach(function(p){
+
+
+testo +=
+
+"🍽️ "+p.nome+
+" €"+p.prezzo+
+"<br>";
+
+
+
+});
+
+
+
+if(testo=="")
+testo="Nessun prodotto";
+
+
+
+document.getElementById("lista").innerHTML=testo;
+
+
+
+document.getElementById("totale").innerHTML=
+
+totale.toFixed(2);
+
+
+}
+
+
+
+
+
+
+
+function inviaAsporto(){
+
 
 
 let ordine={
 
+
 tipo:"Asporto",
 
-cliente:
-document.getElementById("nome").value,
 
-telefono:
-document.getElementById("telefono").value,
+cliente:document.getElementById("nome").value || "Cliente",
 
-ritiro:
-document.getElementById("ora").value,
 
-prodotti:[],
+telefono:document.getElementById("telefono").value || "",
 
-totale:0,
+
+orario:document.getElementById("orario").value || "",
+
+
+prodotti:prodottiOrdine,
+
+
+totale:totale,
+
 
 stato:"In preparazione"
+
 
 };
 
 
 
-salvaOrdine(ordine);
+
+
+let ordini =
+
+JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 
-document.getElementById("ordine").innerHTML =
+ordini.push(ordine);
 
-"✅ Ordine salvato<br><br>"+
-"👤 "+ordine.cliente+
-"<br>⏰ "+ordine.ritiro+
-"<br>🟡 "+ordine.stato;
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
+);
+
+
+
+alert("Asporto inviato in cucina ✅");
+
+
+
+window.location.href="cucina.html";
 
 
 }
 
+
+
+
+mostra();
 
 
 </script>
