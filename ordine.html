@@ -34,10 +34,10 @@ padding:15px;
 margin:5px 0;
 border:0;
 border-radius:15px;
-background:#555;
-color:white;
 font-size:18px;
 font-weight:bold;
+background:#555;
+color:white;
 }
 
 .aggiungi{
@@ -45,18 +45,17 @@ background:#197619;
 }
 
 .invia{
-background:#197619;
+background:#006600;
 }
 
 .totale{
-font-size:32px;
+font-size:30px;
 color:#4cff4c;
 }
 
 .info{
 color:#00d9ff;
 font-size:22px;
-font-weight:bold;
 }
 
 </style>
@@ -79,14 +78,9 @@ font-weight:bold;
 
 <div class="box">
 
-<h2>🍕 PIZZE</h2>
+<h2>🍕 MENU</h2>
 
-<div id="pizze"></div>
-
-
-<h2>🥤 PRODOTTI</h2>
-
-<div id="prodotti"></div>
+<div id="menu"></div>
 
 </div>
 
@@ -123,9 +117,9 @@ Totale € <span id="totale">0.00</span>
 
 
 <script src="pizze.js"></script>
-
 <script src="prodotti.js"></script>
 <script>
+
 
 let prodottiOrdine = [];
 
@@ -147,13 +141,17 @@ document.getElementById("info").innerHTML =
 
 
 
+function creaMenu(){
+
+
+let menu = document.getElementById("menu");
+
+
+
 pizze.forEach(function(p){
 
 
-document.getElementById("pizze").innerHTML +=
-
-
-`
+menu.innerHTML += `
 
 <button class="aggiungi" onclick="aggiungi('${p.nome}',${p.prezzo})">
 
@@ -164,20 +162,15 @@ document.getElementById("pizze").innerHTML +=
 `;
 
 
+
 });
-
-
-
 
 
 
 prodotti.forEach(function(p){
 
 
-document.getElementById("prodotti").innerHTML +=
-
-
-`
+menu.innerHTML += `
 
 <button class="aggiungi" onclick="aggiungi('${p.nome}',${p.prezzo})">
 
@@ -188,8 +181,12 @@ ${p.nome} €${p.prezzo}
 `;
 
 
+
 });
 
+
+
+}
 
 
 
@@ -219,7 +216,6 @@ mostra();
 
 
 
-
 function mostra(){
 
 
@@ -231,7 +227,9 @@ prodottiOrdine.forEach(function(p){
 
 testo +=
 
-p.nome+" €"+p.prezzo+"<br>";
+"🍽️ "+p.nome+
+" €"+p.prezzo+
+"<br>";
 
 
 });
@@ -256,10 +254,16 @@ totale.toFixed(2);
 
 
 }
+
+
+
+creaMenu();
+mostra();
+
 function invia(){
 
 
-if(prodottiOrdine.length==0){
+if(prodottiOrdine.length === 0){
 
 alert("Aggiungi almeno un prodotto");
 
@@ -269,8 +273,9 @@ return;
 
 
 
-let ordine = {
+let nuovoOrdine = {
 
+id: Date.now(),
 
 tipo:"Tavolo",
 
@@ -280,10 +285,9 @@ persone:persone,
 
 prodotti:prodottiOrdine,
 
-totale:totale,
+totale:Number(totale),
 
 stato:"In preparazione"
-
 
 };
 
@@ -294,7 +298,7 @@ let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 
-ordini.push(ordine);
+ordini.push(nuovoOrdine);
 
 
 
@@ -318,13 +322,9 @@ window.location.href="cucina.html";
 }
 
 
-
-mostra();
-
-
 </script>
 
 
 </body>
 
-</html> 
+</html>
