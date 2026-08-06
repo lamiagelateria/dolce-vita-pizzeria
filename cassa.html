@@ -31,10 +31,10 @@ border-radius:20px;
 button{
 width:100%;
 padding:15px;
-margin:8px 0;
+margin:10px 0;
 border:0;
 border-radius:15px;
-font-size:18px;
+font-size:20px;
 font-weight:bold;
 color:white;
 }
@@ -45,10 +45,6 @@ background:#555;
 
 .storico{
 background:#006666;
-}
-
-.stampa{
-background:#005f9e;
 }
 
 .paga{
@@ -66,18 +62,17 @@ background:#197619;
 <h1>💶 CASSA DOLCE VITA</h1>
 
 
+
 <div class="box">
 
-
-<button class="home" onclick="vaiHome()">
+<button class="home" onclick="home()">
 
 🏠 HOME
 
 </button>
 
 
-
-<button class="storico" onclick="vaiStorico()">
+<button class="storico" onclick="storico()">
 
 📊 STORICO INCASSI
 
@@ -88,35 +83,40 @@ background:#197619;
 
 
 
-<div id="lista"></div>
+<div id="ordini"></div>
+
+
+
+
+
 <script>
 
 
 let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
-let area = document.getElementById("lista");
+
+let area = document.getElementById("ordini");
 
 
 
 
+function carica(){
 
-function mostra(){
 
-
-let testo="";
+let html="";
 
 
 
 if(ordini.length==0){
 
 
-testo=
+html=
 
 `
 
 <div class="box">
 
-<h2>Nessun conto aperto</h2>
+<h2>Nessun ordine aperto</h2>
 
 </div>
 
@@ -131,8 +131,7 @@ testo=
 ordini.forEach(function(o,index){
 
 
-
-testo +=
+html +=
 
 
 `
@@ -142,7 +141,7 @@ testo +=
 
 <h2>
 
-${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "1")}
+${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+o.tavolo}
 
 </h2>
 
@@ -152,42 +151,12 @@ ${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "1")}
 
 
 
-if(o.tipo=="Asporto"){
-
-
-testo +=
-
-"👤 "+(o.cliente || "Cliente")+
-"<br>";
-
-
-
-}else{
-
-
-testo +=
-
-"👥 Persone: "+(o.persone || "1")+
-"<br>";
-
-
-
-}
-
-
-
-testo += "<br>";
-
-
-
-
 o.prodotti.forEach(function(p){
 
 
-testo +=
+html +=
 
-"🍕 "+p.nome+
-" €"+p.prezzo+
+p.nome+" €"+p.prezzo+
 "<br>";
 
 
@@ -196,26 +165,17 @@ testo +=
 
 
 
-testo +=
+html +=
 
 
 `
 
 <br>
 
-💶 Totale: €${o.totale.toFixed(2)}
+<b>Totale €${o.totale.toFixed(2)}</b>
 
 
-
-<button class="stampa" onclick="stampa(${index})">
-
-🖨️ STAMPA CONTO
-
-</button>
-
-
-
-<button class="paga" onclick="paga(${index})">
+<button class="paga" onclick="pagato(${index})">
 
 ✅ PAGATO
 
@@ -231,61 +191,39 @@ testo +=
 });
 
 
+}
+
+
+
+area.innerHTML=html;
+
 
 }
 
 
 
-area.innerHTML=testo;
-
-
-}
 
 
 
-
-
-
-
-function paga(index){
+function pagato(index){
 
 
 let storico = JSON.parse(localStorage.getItem("storico")) || [];
 
 
-
 storico.push(ordini[index]);
 
 
-
-localStorage.setItem(
-
-"storico",
-
-JSON.stringify(storico)
-
-);
-
+localStorage.setItem("storico",JSON.stringify(storico));
 
 
 ordini.splice(index,1);
 
 
-
-localStorage.setItem(
-
-"ordini",
-
-JSON.stringify(ordini)
-
-);
+localStorage.setItem("ordini",JSON.stringify(ordini));
 
 
-
-alert("Pagamento completato ✅");
-
-
-mostra();
+carica();
 
 
 }
@@ -294,80 +232,24 @@ mostra();
 
 
 
-
-
-function stampa(index){
-
-
-let o=ordini[index];
-
-
-let testo=
-
-"DOLCE VITA\n\n";
-
-
-
-o.prodotti.forEach(function(p){
-
-
-testo +=
-
-p.nome+
-" €"+
-p.prezzo+
-"\n";
-
-
-
-});
-
-
-
-testo +=
-
-"\nTotale €"+
-o.totale.toFixed(2);
-
-
-
-let win=window.open();
-
-
-win.document.write("<pre>"+testo+"</pre>");
-
-
-win.print();
-
-
-}
-
-
-
-
-
-
-function vaiHome(){
-
+function home(){
 
 window.location.href="index.html";
 
-
 }
 
 
 
-function vaiStorico(){
 
+function storico(){
 
 window.location.href="storico.html";
 
-
 }
 
 
 
-mostra();
+carica();
 
 
 </script>
