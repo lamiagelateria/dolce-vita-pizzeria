@@ -28,14 +28,6 @@ padding:20px;
 border-radius:20px;
 }
 
-input{
-width:100%;
-padding:15px;
-font-size:20px;
-border-radius:10px;
-border:0;
-}
-
 button{
 width:100%;
 padding:15px;
@@ -55,6 +47,14 @@ background:#555;
 background:#197619;
 }
 
+input{
+width:100%;
+padding:15px;
+border-radius:10px;
+border:0;
+font-size:18px;
+}
+
 </style>
 
 </head>
@@ -70,16 +70,14 @@ background:#197619;
 
 <button class="home" onclick="home()">
 
-🏠 HOME
+🏠 TORNA ALLA HOME
 
 </button>
 
 </div>
 
 
-
 <div id="lista"></div>
-
 
 
 
@@ -90,8 +88,7 @@ background:#197619;
 let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
 
-let area=document.getElementById("lista");
-
+let area = document.getElementById("lista");
 
 
 
@@ -102,13 +99,10 @@ function mostra(){
 let html="";
 
 
-
 if(ordini.length==0){
 
 
-html=
-
-`
+html=`
 
 <div class="box">
 
@@ -119,19 +113,14 @@ html=
 `;
 
 
-
 }else{
-
 
 
 ordini.forEach(function(o,index){
 
 
 
-html +=
-
-
-`
+html += `
 
 <div class="box">
 
@@ -142,8 +131,6 @@ ${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "")}
 
 </h2>
 
-
-
 `;
 
 
@@ -153,9 +140,7 @@ o.prodotti.forEach(function(p){
 
 html +=
 
-p.nome+
-" €"+
-p.prezzo+
+p.nome+" €"+p.prezzo+
 "<br>";
 
 
@@ -164,27 +149,22 @@ p.prezzo+
 
 
 
-html +=
+html += `
 
-
-`
 
 <br>
 
 <h2>
-Totale: €${o.totale.toFixed(2)}
+
+Totale €${Number(o.totale).toFixed(2)}
+
 </h2>
 
 
-<input id="pagato${index}" placeholder="💶 Ricevuto dal cliente">
+<input id="soldi${index}" placeholder="💶 Soldi ricevuti">
 
 
-<div id="resto${index}">
-
-</div>
-
-
-<button class="incassa" onclick="calcola(${index})">
+<button class="incassa" onclick="incassa(${index})">
 
 💰 INCASSA
 
@@ -201,7 +181,6 @@ Totale: €${o.totale.toFixed(2)}
 });
 
 
-
 }
 
 
@@ -216,4 +195,97 @@ area.innerHTML=html;
 
 
 
+function incassa(index){
 
+
+
+let ricevuto = Number(
+
+document.getElementById("soldi"+index).value
+
+);
+
+
+
+let totale = Number(ordini[index].totale);
+
+
+
+if(ricevuto < totale){
+
+
+alert("Soldi insufficienti");
+
+
+return;
+
+
+}
+
+
+
+let resto = ricevuto - totale;
+
+
+
+alert("Resto da dare: €"+resto.toFixed(2));
+
+
+
+let storico = JSON.parse(localStorage.getItem("storico")) || [];
+
+
+storico.push(ordini[index]);
+
+
+localStorage.setItem(
+
+"storico",
+
+JSON.stringify(storico)
+
+);
+
+
+
+ordini.splice(index,1);
+
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
+);
+
+
+
+mostra();
+
+
+}
+
+
+
+
+
+function home(){
+
+window.location.href="./index.html";
+
+}
+
+
+
+
+mostra();
+
+
+</script>
+
+
+</body>
+
+</html>
