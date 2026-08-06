@@ -37,7 +37,6 @@ border-radius:15px;
 font-size:18px;
 font-weight:bold;
 color:white;
-background:#197619;
 }
 
 .home{
@@ -45,7 +44,7 @@ background:#555;
 }
 
 .pronto{
-background:#006600;
+background:#197619;
 }
 
 </style>
@@ -80,7 +79,7 @@ background:#006600;
 let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
 
-let lista = document.getElementById("lista");
+let lista=document.getElementById("lista");
 
 
 
@@ -91,10 +90,10 @@ function mostra(){
 let html="";
 
 
-if(ordini.length === 0){
+if(ordini.length==0){
 
 
-html = `
+html=`
 
 <div class="box">
 
@@ -105,13 +104,14 @@ html = `
 `;
 
 
+
 }else{
 
 
 ordini.forEach(function(o,index){
 
 
-html += `
+html+=`
 
 <div class="box">
 
@@ -125,11 +125,8 @@ html += `
 
 👥 Persone: ${o.persone || 1}
 
-<br>
-
-📌 Stato: ${o.stato || "In preparazione"}
-
 <br><br>
+
 
 `;
 
@@ -138,28 +135,31 @@ html += `
 o.prodotti.forEach(function(p){
 
 
-html +=
+html+=
 
-"🍕 "+p.nome+
-" €"+p.prezzo+
+p.nome+" €"+p.prezzo+
 "<br>";
+
 
 
 });
 
 
 
-html += `
-
+html+=`
 
 <br>
 
 💶 Totale €${Number(o.totale).toFixed(2)}
 
+<br>
+
+📌 ${o.stato}
+
 
 <button class="pronto" onclick="pronto(${index})">
 
-✅ ORDINE PRONTO
+✅ MANDA IN CASSA
 
 </button>
 
@@ -177,7 +177,7 @@ html += `
 
 
 
-lista.innerHTML = html;
+lista.innerHTML=html;
 
 
 }
@@ -189,7 +189,24 @@ lista.innerHTML = html;
 function pronto(index){
 
 
-ordini[index].stato="Pronto";
+let contiAperti = JSON.parse(localStorage.getItem("contiAperti")) || [];
+
+
+contiAperti.push(ordini[index]);
+
+
+localStorage.setItem(
+
+"contiAperti",
+
+JSON.stringify(contiAperti)
+
+);
+
+
+
+ordini.splice(index,1);
+
 
 
 localStorage.setItem(
@@ -199,6 +216,7 @@ localStorage.setItem(
 JSON.stringify(ordini)
 
 );
+
 
 
 mostra();
