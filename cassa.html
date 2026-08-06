@@ -28,13 +28,21 @@ padding:20px;
 border-radius:20px;
 }
 
+input{
+width:100%;
+padding:15px;
+font-size:20px;
+border-radius:10px;
+border:0;
+}
+
 button{
 width:100%;
 padding:15px;
-margin:10px 0;
+margin-top:10px;
 border:0;
 border-radius:15px;
-font-size:20px;
+font-size:18px;
 font-weight:bold;
 color:white;
 }
@@ -43,11 +51,7 @@ color:white;
 background:#555;
 }
 
-.storico{
-background:#006666;
-}
-
-.paga{
+.incassa{
 background:#197619;
 }
 
@@ -62,7 +66,6 @@ background:#197619;
 <h1>💶 CASSA DOLCE VITA</h1>
 
 
-
 <div class="box">
 
 <button class="home" onclick="home()">
@@ -71,19 +74,11 @@ background:#197619;
 
 </button>
 
-
-<button class="storico" onclick="storico()">
-
-📊 STORICO INCASSI
-
-</button>
-
-
 </div>
 
 
 
-<div id="ordini"></div>
+<div id="lista"></div>
 
 
 
@@ -95,12 +90,13 @@ background:#197619;
 let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
 
-let area = document.getElementById("ordini");
+let area=document.getElementById("lista");
 
 
 
 
-function carica(){
+
+function mostra(){
 
 
 let html="";
@@ -116,7 +112,7 @@ html=
 
 <div class="box">
 
-<h2>Nessun ordine aperto</h2>
+<h2>Nessun conto aperto</h2>
 
 </div>
 
@@ -131,6 +127,7 @@ html=
 ordini.forEach(function(o,index){
 
 
+
 html +=
 
 
@@ -141,7 +138,7 @@ html +=
 
 <h2>
 
-${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+o.tavolo}
+${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "")}
 
 </h2>
 
@@ -156,7 +153,9 @@ o.prodotti.forEach(function(p){
 
 html +=
 
-p.nome+" €"+p.prezzo+
+p.nome+
+" €"+
+p.prezzo+
 "<br>";
 
 
@@ -172,23 +171,35 @@ html +=
 
 <br>
 
-<b>Totale €${o.totale.toFixed(2)}</b>
+<h2>
+Totale: €${o.totale.toFixed(2)}
+</h2>
 
 
-<button class="paga" onclick="pagato(${index})">
+<input id="pagato${index}" placeholder="💶 Ricevuto dal cliente">
 
-✅ PAGATO
+
+<div id="resto${index}">
+
+</div>
+
+
+<button class="incassa" onclick="calcola(${index})">
+
+💰 INCASSA
 
 </button>
 
 
 </div>
 
+
 `;
 
 
 
 });
+
 
 
 }
@@ -205,56 +216,4 @@ area.innerHTML=html;
 
 
 
-function pagato(index){
 
-
-let storico = JSON.parse(localStorage.getItem("storico")) || [];
-
-
-storico.push(ordini[index]);
-
-
-localStorage.setItem("storico",JSON.stringify(storico));
-
-
-ordini.splice(index,1);
-
-
-localStorage.setItem("ordini",JSON.stringify(ordini));
-
-
-carica();
-
-
-}
-
-
-
-
-
-function home(){
-
-window.location.href="index.html";
-
-}
-
-
-
-
-function storico(){
-
-window.location.href="storico.html";
-
-}
-
-
-
-carica();
-
-
-</script>
-
-
-</body>
-
-</html>
