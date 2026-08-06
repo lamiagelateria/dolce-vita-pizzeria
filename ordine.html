@@ -126,6 +126,28 @@ let prodottiOrdine = [];
 let totale = 0;
 
 
+
+let pizzaModificata = JSON.parse(
+localStorage.getItem("pizzaModificata")
+);
+
+
+
+if(pizzaModificata){
+
+
+prodottiOrdine.push(pizzaModificata);
+
+
+totale += Number(pizzaModificata.prezzo);
+
+
+localStorage.removeItem("pizzaModificata");
+
+
+}
+
+
 let tavolo = localStorage.getItem("tavoloAttivo") || "1";
 
 let persone = localStorage.getItem("personeTavolo") || "1";
