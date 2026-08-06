@@ -31,29 +31,28 @@ border-radius:20px;
 button{
 width:100%;
 padding:15px;
-margin-top:10px;
+margin:8px 0;
 border:0;
 border-radius:15px;
 font-size:18px;
 font-weight:bold;
 color:white;
-background:#197619;
 }
 
 .home{
 background:#555;
 }
 
+.storico{
+background:#006666;
+}
+
 .stampa{
 background:#005f9e;
 }
 
-.chiudi{
-background:#8a1616;
-}
-
-.storico{
-background:#006666;
+.paga{
+background:#197619;
 }
 
 </style>
@@ -67,41 +66,35 @@ background:#006666;
 <h1>💶 CASSA DOLCE VITA</h1>
 
 
-
 <div class="box">
 
-<button class="home" onclick="home()">
+
+<button class="home" onclick="vaiHome()">
 
 🏠 HOME
 
 </button>
 
 
-<button class="storico" onclick="storico()">
+
+<button class="storico" onclick="vaiStorico()">
 
 📊 STORICO INCASSI
 
 </button>
 
+
 </div>
 
 
 
-<div id="conti"></div>
-
-
-
-
-
+<div id="lista"></div>
 <script>
 
 
-let ordini =JSON.parse(localStorage.getItem("ordini")) || [];
+let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
-
-
-let area=document.getElementById("conti");
-
+let area = document.getElementById("lista");
 
 
 
@@ -154,21 +147,36 @@ ${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "1")}
 </h2>
 
 
-${o.tipo=="Asporto" ?
 
-"👤 "+o.cliente+"<br>📞 "+o.telefono+"<br>⏰ "+o.orario
+`;
 
-:
 
-"👥 Persone: "+(o.persone || "1")
+
+if(o.tipo=="Asporto"){
+
+
+testo +=
+
+"👤 "+(o.cliente || "Cliente")+
+"<br>";
+
+
+
+}else{
+
+
+testo +=
+
+"👥 Persone: "+(o.persone || "1")+
+"<br>";
+
+
 
 }
 
 
 
-<br><br>
-
-`;
+testo += "<br>";
 
 
 
@@ -199,4 +207,172 @@ testo +=
 
 
 
-<button class="stampa" onclick="stampaCont
+<button class="stampa" onclick="stampa(${index})">
+
+🖨️ STAMPA CONTO
+
+</button>
+
+
+
+<button class="paga" onclick="paga(${index})">
+
+✅ PAGATO
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+area.innerHTML=testo;
+
+
+}
+
+
+
+
+
+
+
+function paga(index){
+
+
+let storico = JSON.parse(localStorage.getItem("storico")) || [];
+
+
+
+storico.push(ordini[index]);
+
+
+
+localStorage.setItem(
+
+"storico",
+
+JSON.stringify(storico)
+
+);
+
+
+
+ordini.splice(index,1);
+
+
+
+localStorage.setItem(
+
+"ordini",
+
+JSON.stringify(ordini)
+
+);
+
+
+
+alert("Pagamento completato ✅");
+
+
+mostra();
+
+
+}
+
+
+
+
+
+
+
+function stampa(index){
+
+
+let o=ordini[index];
+
+
+let testo=
+
+"DOLCE VITA\n\n";
+
+
+
+o.prodotti.forEach(function(p){
+
+
+testo +=
+
+p.nome+
+" €"+
+p.prezzo+
+"\n";
+
+
+
+});
+
+
+
+testo +=
+
+"\nTotale €"+
+o.totale.toFixed(2);
+
+
+
+let win=window.open();
+
+
+win.document.write("<pre>"+testo+"</pre>");
+
+
+win.print();
+
+
+}
+
+
+
+
+
+
+function vaiHome(){
+
+
+window.location.href="index.html";
+
+
+}
+
+
+
+function vaiStorico(){
+
+
+window.location.href="storico.html";
+
+
+}
+
+
+
+mostra();
+
+
+</script>
+
+
+</body>
+
+</html>
