@@ -44,6 +44,18 @@ color:white;
 background:#197619;
 }
 
+.quantita{
+display:flex;
+gap:10px;
+align-items:center;
+justify-content:center;
+}
+
+.quantita button{
+width:70px;
+background:#197619;
+}
+
 .invia{
 background:#006600;
 }
@@ -117,14 +129,14 @@ Totale € <span id="totale">0.00</span>
 
 
 <script src="pizze.js"></script>
-<script src="prodotti.js"></script>
-<script>
 
+<script src="prodotti.js"></script>
+
+<script>
 
 let prodottiOrdine = [];
 
 let totale = 0;
-
 
 
 let pizzaModificata = JSON.parse(
@@ -132,18 +144,13 @@ localStorage.getItem("pizzaModificata")
 );
 
 
-
 if(pizzaModificata){
 
+pizzaModificata.quantita = 1;
 
 prodottiOrdine.push(pizzaModificata);
 
-
-totale += Number(pizzaModificata.prezzo);
-
-
 localStorage.removeItem("pizzaModificata");
-
 
 }
 
@@ -153,25 +160,16 @@ let tavolo = localStorage.getItem("tavoloAttivo") || "1";
 let persone = localStorage.getItem("personeTavolo") || "1";
 
 
-
 document.getElementById("info").innerHTML =
 
 "🍽️ Tavolo " + tavolo +
 " 👥 Persone: " + persone;
-
-
-
-
-
 function creaMenu(){
-
 
 let menu = document.getElementById("menu");
 
 
-
 pizze.forEach(function(p){
-
 
 menu.innerHTML += `
 
@@ -183,14 +181,10 @@ menu.innerHTML += `
 
 `;
 
-
-
 });
 
 
-
 prodotti.forEach(function(p){
-
 
 menu.innerHTML += `
 
@@ -202,32 +196,45 @@ ${p.nome} €${p.prezzo}
 
 `;
 
-
-
 });
-
 
 
 }
 
 
 
-
-
 function aggiungi(nome,prezzo){
+
+
+let trovato = prodottiOrdine.find(function(p){
+
+return p.nome === nome;
+
+});
+
+
+if(trovato){
+
+trovato.quantita++;
+
+}else{
 
 
 prodottiOrdine.push({
 
 nome:nome,
 
-prezzo:Number(prezzo)
+prezzo:Number(prezzo),
+
+quantita:1
 
 });
 
 
-totale += Number(prezzo);
+}
 
+
+ricalcolaTotale();
 
 mostra();
 
@@ -235,6 +242,45 @@ mostra();
 }
 
 
+
+function cambiaQuantita(index,valore){
+
+
+prodottiOrdine[index].quantita += valore;
+
+
+if(prodottiOrdine[index].quantita <= 0){
+
+prodottiOrdine.splice(index,1);
+
+}
+
+
+ricalcolaTotale();
+
+mostra();
+
+
+}
+
+
+
+function ricalcolaTotale(){
+
+
+totale=0;
+
+
+prodottiOrdine.forEach(function(p){
+
+
+totale += p.prezzo * p.quantita;
+
+
+});
+
+
+}
 
 
 
@@ -244,18 +290,29 @@ function mostra(){
 let testo="";
 
 
-prodottiOrdine.forEach(function(p){
+prodottiOrdine.forEach(function(p,index){
 
 
 testo +=
 
 "🍽️ "+p.nome+
 " €"+p.prezzo+
-"<br>";
+"<br>"+
+
+
+"<div class='quantita'>"+
+
+"<button onclick='cambiaQuantita("+index+",-1)'>➖</button>"+
+
+"<b> Quantità: "+p.quantita+"</b>"+
+
+"<button onclick='cambiaQuantita("+index+",1)'>➕</button>"+
+
+"</div><br>";
+
 
 
 });
-
 
 
 if(testo==""){
@@ -269,7 +326,6 @@ testo="Nessun prodotto";
 document.getElementById("lista").innerHTML=testo;
 
 
-
 document.getElementById("totale").innerHTML=
 
 totale.toFixed(2);
@@ -278,10 +334,9 @@ totale.toFixed(2);
 }
 
 
-
 creaMenu();
-mostra();
 
+mostra();  
 function invia(){
 
 
@@ -297,19 +352,27 @@ return;
 
 let nuovoOrdine = {
 
+
 id: Date.now(),
+
 
 tipo:"Tavolo",
 
+
 tavolo:tavolo,
+
 
 persone:persone,
 
+
 prodotti:prodottiOrdine,
+
 
 totale:Number(totale),
 
+
 stato:"In preparazione"
+
 
 };
 
@@ -344,9 +407,10 @@ window.location.href="cucina.html";
 }
 
 
+
 </script>
 
 
 </body>
 
-</html>
+</html>  
