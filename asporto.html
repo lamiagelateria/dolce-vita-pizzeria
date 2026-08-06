@@ -36,8 +36,8 @@ input{
 width:100%;
 padding:15px;
 margin:8px 0;
-border-radius:10px;
 border:0;
+border-radius:10px;
 font-size:18px;
 }
 
@@ -73,87 +73,64 @@ color:#4cff4c;
 <h1>🛍️ ASPORTO DOLCE VITA</h1>
 
 
-
 <div class="box">
-
 
 <h2>👤 Cliente</h2>
 
-
 <input id="nome" placeholder="Nome cliente">
-
 
 <input id="telefono" placeholder="Telefono">
 
-
 <input id="orario" placeholder="Orario ritiro">
 
-
 </div>
 
 
 
-
 <div class="box">
-
 
 <h2>🍕 PIZZE</h2>
-
 <div id="menuPizze"></div>
 
-
+<hr>
 
 <h2>🥤 BIBITE</h2>
-
 <div id="menuBibite"></div>
 
-
+<hr>
 
 <h2>🍺 BIRRE</h2>
-
 <div id="menuBirre"></div>
 
-
+<hr>
 
 <h2>🍷 VINI</h2>
-
 <div id="menuVini"></div>
 
-
+<hr>
 
 <h2>🍟 FRITTI</h2>
-
 <div id="menuFritti"></div>
-
-
 
 </div>
 
 
 
-
 <div class="box">
-
 
 <h2>🧾 ORDINE</h2>
 
-
 <div id="lista">
-
 Nessun prodotto
-
 </div>
 
-
 <br>
-
 
 <div class="totale">
 
 Totale € <span id="totale">0.00</span>
 
 </div>
-
 
 
 <button class="invia" onclick="inviaAsporto()">
@@ -169,8 +146,9 @@ Totale € <span id="totale">0.00</span>
 
 
 <script src="pizze.js"></script>
-
 <script src="prodotti.js"></script>
+
+
 <script>
 
 
@@ -181,27 +159,20 @@ let totale=0;
 
 
 
-
 pizze.forEach(function(p){
 
 
 document.getElementById("menuPizze").innerHTML +=
 
-
 `
-
 <button onclick="aggiungi('${p.nome}',${p.prezzo})">
 
 🍕 ${p.nome} €${p.prezzo}
 
 </button>
-
 `;
 
 });
-
-
-
 
 
 
@@ -210,45 +181,33 @@ document.getElementById("menuPizze").innerHTML +=
 prodotti.forEach(function(p){
 
 
-let box="menuBibite";
+let sezione="menuBibite";
+
+
+if(p.categoria=="Birre")
+sezione="menuBirre";
+
+
+if(p.categoria=="Vini")
+sezione="menuVini";
+
+
+if(p.categoria=="Fritti")
+sezione="menuFritti";
 
 
 
-if(p.categoria.includes("Birre"))
-
-box="menuBirre";
-
-
-
-if(p.categoria.includes("Vini"))
-
-box="menuVini";
-
-
-
-if(p.categoria.includes("Fritti"))
-
-box="menuFritti";
-
-
-
-
-
-document.getElementById(box).innerHTML +=
-
+document.getElementById(sezione).innerHTML +=
 
 `
-
 <button onclick="aggiungi('${p.nome}',${p.prezzo})">
 
 ${p.nome} €${p.prezzo}
 
 </button>
-
 `;
 
 });
-
 
 
 
@@ -268,9 +227,7 @@ prezzo:prezzo
 });
 
 
-
 totale += prezzo;
-
 
 
 mostra();
@@ -288,7 +245,6 @@ function mostra(){
 
 
 let testo="";
-
 
 
 prodottiOrdine.forEach(function(p){
@@ -327,9 +283,7 @@ totale.toFixed(2);
 
 
 
-
 function inviaAsporto(){
-
 
 
 let ordine={
@@ -360,9 +314,7 @@ stato:"In preparazione"
 
 
 
-
-
-let ordini =
+let ordini=
 
 JSON.parse(localStorage.getItem("ordini")) || [];
 
@@ -383,7 +335,6 @@ JSON.stringify(ordini)
 
 
 alert("Asporto inviato in cucina ✅");
-
 
 
 window.location.href="cucina.html";
