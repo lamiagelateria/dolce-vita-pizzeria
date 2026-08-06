@@ -28,10 +28,12 @@ padding:20px;
 border-radius:20px;
 }
 
-.ordine{
-background:#444;
-padding:15px;
-border-radius:15px;
+.asporto{
+border:3px solid #8a5a00;
+}
+
+.tavolo{
+border:3px solid #197619;
 }
 
 button{
@@ -40,10 +42,10 @@ padding:15px;
 margin-top:10px;
 border:0;
 border-radius:15px;
+background:#197619;
+color:white;
 font-size:18px;
 font-weight:bold;
-color:white;
-background:#197619;
 }
 
 .home{
@@ -74,12 +76,7 @@ background:#555;
 
 
 
-
 <div id="lista"></div>
-
-
-
-
 <script>
 
 
@@ -89,7 +86,7 @@ JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 
-let lista = document.getElementById("lista");
+let lista=document.getElementById("lista");
 
 
 
@@ -105,9 +102,7 @@ let testo="";
 if(ordini.length==0){
 
 
-testo=
-
-`
+testo=`
 
 <div class="box">
 
@@ -126,25 +121,74 @@ ordini.forEach(function(o,index){
 
 
 
+let tipo = o.tipo || "Tavolo";
+
+
+
+if(tipo=="Asporto"){
+
+
+
 testo +=
 
 
 `
 
-<div class="box">
+<div class="box asporto">
+
+
+<h2>🛍️ ASPORTO</h2>
+
+
+👤 Cliente: ${o.cliente || "Cliente"}
+
+<br>
+
+📞 Telefono: ${o.telefono || "-"}
+
+<br>
+
+⏰ Ritiro: ${o.orario || "-"}
+
+
+<br><br>
+
+
+`;
+
+
+
+}else{
+
+
+
+testo +=
+
+
+`
+
+<div class="box tavolo">
 
 
 <h2>
-🍽️ Tavolo ${o.tavolo || "1"}
-<br>
-👥 Persone: ${o.persone || "1"}
+
+🍽️ TAVOLO ${o.tavolo || "1"}
+
 </h2>
 
 
+👥 Persone: ${o.persone || "1"}
 
-<div class="ordine">
+<br><br>
+
 
 `;
+
+
+
+}
+
+
 
 
 
@@ -160,6 +204,7 @@ testo +=
 
 
 });
+
 
 
 
@@ -181,10 +226,6 @@ testo +=
 </button>
 
 
-
-</div>
-
-
 </div>
 
 
@@ -195,6 +236,7 @@ testo +=
 });
 
 
+
 }
 
 
@@ -203,6 +245,8 @@ lista.innerHTML=testo;
 
 
 }
+
+
 
 
 
@@ -235,6 +279,7 @@ mostra();
 
 
 
+
 function home(){
 
 
@@ -242,7 +287,6 @@ window.location.href="index.html";
 
 
 }
-
 
 
 
