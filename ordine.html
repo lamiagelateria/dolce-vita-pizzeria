@@ -46,14 +46,18 @@ background:#197619;
 
 .quantita{
 display:flex;
-gap:10px;
 align-items:center;
 justify-content:center;
+gap:10px;
 }
 
 .quantita button{
-width:70px;
+width:60px;
 background:#197619;
+}
+
+.rimuovi{
+background:#8a1616;
 }
 
 .invia{
@@ -102,9 +106,7 @@ font-size:22px;
 <h2>🧾 ORDINE</h2>
 
 <div id="lista">
-
 Nessun prodotto
-
 </div>
 
 
@@ -132,11 +134,24 @@ Totale € <span id="totale">0.00</span>
 
 <script src="prodotti.js"></script>
 
+
 <script>
 
 let prodottiOrdine = [];
 
 let totale = 0;
+
+
+let tavolo = localStorage.getItem("tavoloAttivo") || "1";
+
+let persone = localStorage.getItem("personeTavolo") || "1";
+
+
+document.getElementById("info").innerHTML =
+
+"🍽️ Tavolo " + tavolo +
+" 👥 Persone: " + persone;
+
 
 
 let pizzaModificata = JSON.parse(
@@ -153,17 +168,6 @@ prodottiOrdine.push(pizzaModificata);
 localStorage.removeItem("pizzaModificata");
 
 }
-
-
-let tavolo = localStorage.getItem("tavoloAttivo") || "1";
-
-let persone = localStorage.getItem("personeTavolo") || "1";
-
-
-document.getElementById("info").innerHTML =
-
-"🍽️ Tavolo " + tavolo +
-" 👥 Persone: " + persone;
 function creaMenu(){
 
 let menu = document.getElementById("menu");
@@ -215,7 +219,9 @@ return p.nome === nome;
 
 if(trovato){
 
-trovato.quantita++;
+
+trovato.quantita = trovato.quantita + 1;
+
 
 }else{
 
@@ -243,17 +249,22 @@ mostra();
 
 
 
-function cambiaQuantita(index,valore){
+
+function cambiaQuantita(index,numero){
 
 
-prodottiOrdine[index].quantita += valore;
+prodottiOrdine[index].quantita += numero;
+
 
 
 if(prodottiOrdine[index].quantita <= 0){
 
+
 prodottiOrdine.splice(index,1);
 
+
 }
+
 
 
 ricalcolaTotale();
@@ -265,10 +276,12 @@ mostra();
 
 
 
+
+
 function ricalcolaTotale(){
 
 
-totale=0;
+totale = 0;
 
 
 prodottiOrdine.forEach(function(p){
@@ -284,6 +297,7 @@ totale += p.prezzo * p.quantita;
 
 
 
+
 function mostra(){
 
 
@@ -293,26 +307,50 @@ let testo="";
 prodottiOrdine.forEach(function(p,index){
 
 
+
 testo +=
 
 "🍽️ "+p.nome+
-" €"+p.prezzo+
-"<br>"+
+" €"+(p.prezzo*p.quantita).toFixed(2)+
+"<br>";
 
 
-"<div class='quantita'>"+
 
-"<button onclick='cambiaQuantita("+index+",-1)'>➖</button>"+
+testo += `
 
-"<b> Quantità: "+p.quantita+"</b>"+
+<div class="quantita">
 
-"<button onclick='cambiaQuantita("+index+",1)'>➕</button>"+
+<button onclick="cambiaQuantita(${index},-1)">
 
-"</div><br>";
+➖
+
+</button>
+
+
+<b>
+
+${p.quantita}
+
+</b>
+
+
+<button onclick="cambiaQuantita(${index},1)">
+
+➕
+
+</button>
+
+
+</div>
+
+<br>
+
+`;
 
 
 
 });
+
 
 
 if(testo==""){
@@ -353,7 +391,7 @@ return;
 let nuovoOrdine = {
 
 
-id: Date.now(),
+id:Date.now(),
 
 
 tipo:"Tavolo",
@@ -405,7 +443,6 @@ window.location.href="cucina.html";
 
 
 }
-
 
 
 </script>
