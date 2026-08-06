@@ -29,30 +29,52 @@ border-radius:20px;
 }
 
 button{
-width:100%;
-padding:15px;
-margin-top:10px;
 border:0;
 border-radius:15px;
-font-size:18px;
+font-size:22px;
 font-weight:bold;
 color:white;
+padding:15px;
+margin:5px;
 }
 
 .home{
+width:100%;
 background:#555;
 }
 
-.incassa{
+.pagamento{
+width:48%;
+background:#005f9e;
+}
+
+.pagamento.attivo{
 background:#197619;
+}
+
+.tasto{
+width:30%;
+background:#555;
+font-size:30px;
+}
+
+.cancella{
+background:#8a1616;
+}
+
+.incassa{
+width:100%;
+background:#197619;
+font-size:25px;
 }
 
 input{
 width:100%;
+font-size:35px;
+text-align:center;
 padding:15px;
-border-radius:10px;
+border-radius:15px;
 border:0;
-font-size:18px;
 }
 
 </style>
@@ -69,9 +91,7 @@ font-size:18px;
 <div class="box">
 
 <button class="home" onclick="home()">
-
-🏠 TORNA ALLA HOME
-
+🏠 HOME
 </button>
 
 </div>
@@ -81,14 +101,17 @@ font-size:18px;
 
 
 
-
 <script>
 
 
 let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
+let area=document.getElementById("lista");
 
-let area = document.getElementById("lista");
+let metodo="Contanti";
+
+let ricevuto="";
+
 
 
 
@@ -113,23 +136,23 @@ html=`
 `;
 
 
+
 }else{
+
 
 
 ordini.forEach(function(o,index){
 
 
 
-html += `
+html+=`
 
 <div class="box">
 
-
 <h2>
-
-${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "")}
-
+${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+o.tavolo}
 </h2>
+
 
 `;
 
@@ -138,10 +161,7 @@ ${o.tipo=="Asporto" ? "🛍️ ASPORTO" : "🍽️ TAVOLO "+(o.tavolo || "")}
 o.prodotti.forEach(function(p){
 
 
-html +=
-
-p.nome+" €"+p.prezzo+
-"<br>";
+html+=p.nome+" €"+p.prezzo+"<br>";
 
 
 
@@ -149,143 +169,47 @@ p.nome+" €"+p.prezzo+
 
 
 
-html += `
-
-
-<br>
+html+=`
 
 <h2>
-
 Totale €${Number(o.totale).toFixed(2)}
-
 </h2>
 
 
-<input id="soldi${index}" placeholder="💶 Soldi ricevuti">
+<button class="pagamento attivo" onclick="setMetodo('Contanti')">
 
-
-<button class="incassa" onclick="incassa(${index})">
-
-💰 INCASSA
+💵 CONTANTI
 
 </button>
 
 
-</div>
+<button class="pagamento" onclick="setMetodo('Carta')">
 
+💳 CARTA
 
-`;
+</button>
 
 
 
-});
+<input id="display${index}" value="${ricevuto}" readonly>
 
 
-}
 
+<div>
 
 
-area.innerHTML=html;
+<button class="tasto" onclick="numero('7',${index})">7</button>
+<button class="tasto" onclick="numero('8',${index})">8</button>
+<button class="tasto" onclick="numero('9',${index})">9</button>
 
+<br>
 
-}
+<button class="tasto" onclick="numero('4',${index})">4</button>
+<button class="tasto" onclick="numero('5',${index})">5</button>
+<button class="tasto" onclick="numero('6',${index})">6</button>
 
+<br>
 
-
-
-
-
-function incassa(index){
-
-
-
-let ricevuto = Number(
-
-document.getElementById("soldi"+index).value
-
-);
-
-
-
-let totale = Number(ordini[index].totale);
-
-
-
-if(ricevuto < totale){
-
-
-alert("Soldi insufficienti");
-
-
-return;
-
-
-}
-
-
-
-let resto = ricevuto - totale;
-
-
-
-alert("Resto da dare: €"+resto.toFixed(2));
-
-
-
-let storico = JSON.parse(localStorage.getItem("storico")) || [];
-
-
-storico.push(ordini[index]);
-
-
-localStorage.setItem(
-
-"storico",
-
-JSON.stringify(storico)
-
-);
-
-
-
-ordini.splice(index,1);
-
-
-
-localStorage.setItem(
-
-"ordini",
-
-JSON.stringify(ordini)
-
-);
-
-
-
-mostra();
-
-
-}
-
-
-
-
-
-function home(){
-
-window.location.href="./index.html";
-
-}
-
-
-
-
-mostra();
-
-
-</script>
-
-
-</body>
-
-</html>
+<button class="tasto" onclick="numero('1',${index})">1</button>
+<button class="tasto" onclick="numero('2',${index})">2</button>
+<button class="tasto" onclick="
