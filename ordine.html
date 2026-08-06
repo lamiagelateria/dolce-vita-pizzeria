@@ -311,8 +311,18 @@ prodottiOrdine.forEach(function(p,index){
 testo +=
 
 "🍽️ "+p.nome+
-" €"+(p.prezzo*p.quantita).toFixed(2)+
+" €"+(p.prezzo * p.quantita).toFixed(2)+
 "<br>";
+
+testo +=
+
+"<button onclick='cambiaQuantita("+index+",-1)'>➖</button>" +
+
+" Quantità: "+p.quantita+
+
+"<button onclick='cambiaQuantita("+index+",1)'>➕</button>" +
+
+"<br><br>";
 
 
 
