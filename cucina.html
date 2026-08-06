@@ -36,6 +36,10 @@ border:3px solid #8a5a00;
 border:3px solid #197619;
 }
 
+.pronto{
+border:3px solid #00aa00;
+}
+
 button{
 width:100%;
 padding:15px;
@@ -77,13 +81,14 @@ background:#555;
 
 
 <div id="lista"></div>
+
+
+
+
 <script>
 
 
-let ordini =
-
-JSON.parse(localStorage.getItem("ordini")) || [];
-
+let ordini = JSON.parse(localStorage.getItem("ordini")) || [];
 
 
 let lista=document.getElementById("lista");
@@ -102,7 +107,9 @@ let testo="";
 if(ordini.length==0){
 
 
-testo=`
+testo=
+
+`
 
 <div class="box">
 
@@ -117,186 +124,3 @@ testo=`
 }else{
 
 
-ordini.forEach(function(o,index){
-
-
-
-let tipo = o.tipo || "Tavolo";
-
-
-
-if(tipo=="Asporto"){
-
-
-
-testo +=
-
-
-`
-
-<div class="box asporto">
-
-
-<h2>🛍️ ASPORTO</h2>
-
-
-👤 Cliente: ${o.cliente || "Cliente"}
-
-<br>
-
-📞 Telefono: ${o.telefono || "-"}
-
-<br>
-
-⏰ Ritiro: ${o.orario || "-"}
-
-
-<br><br>
-
-
-`;
-
-
-
-}else{
-
-
-
-testo +=
-
-
-`
-
-<div class="box tavolo">
-
-
-<h2>
-
-🍽️ TAVOLO ${o.tavolo || "1"}
-
-</h2>
-
-
-👥 Persone: ${o.persone || "1"}
-
-<br><br>
-
-
-`;
-
-
-
-}
-
-
-
-
-
-o.prodotti.forEach(function(p){
-
-
-testo +=
-
-"🍕 "+p.nome+
-" €"+p.prezzo+
-"<br>";
-
-
-
-});
-
-
-
-
-testo +=
-
-
-`
-
-<br>
-
-💶 Totale: €${o.totale.toFixed(2)}
-
-
-
-<button onclick="pronto(${index})">
-
-✅ ORDINE PRONTO
-
-</button>
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-lista.innerHTML=testo;
-
-
-}
-
-
-
-
-
-
-
-
-function pronto(index){
-
-
-ordini.splice(index,1);
-
-
-
-localStorage.setItem(
-
-"ordini",
-
-JSON.stringify(ordini)
-
-);
-
-
-
-mostra();
-
-
-}
-
-
-
-
-
-
-function home(){
-
-
-window.location.href="index.html";
-
-
-}
-
-
-
-
-mostra();
-
-
-</script>
-
-
-</body>
-
-</html>
